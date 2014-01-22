@@ -1,2 +1,5 @@
 require_relative 'app'
-run CMS
+
+use Rack::ShowExceptions
+
+run CMS.new
