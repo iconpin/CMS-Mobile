@@ -23,4 +23,21 @@ class CMS < Sinatra::Base
     mustache :home
   end
 
+  post '/user/new' do
+    name = request["name"]
+    password = request["password"]
+    # TODO validations?
+    CMS::Models::User.create(
+      :name => name,
+      :password => password
+    )
+    # TODO success page
+  end
+
+  get '/user/:name' do
+    name = request["name"]
+    user = CMS::Models::User.first(:name => name)
+    # TODO
+  end
+
 end
