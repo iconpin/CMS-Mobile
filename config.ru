@@ -1,2 +1,2 @@
-require_relative 'cms/app'
+require_relative 'app'
 run CMS
