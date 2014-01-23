@@ -8,6 +8,7 @@ class CMS < Sinatra::Base
   register Mustache::Sinatra
   require_relative 'views/layout'
   require_relative 'views/home'
+  require_relative 'views/email'
 
   require_relative 'models'
   enable :sessions
@@ -26,15 +27,31 @@ class CMS < Sinatra::Base
     mustache :home
   end
 
-  post '/user/new' do
+  post '/register' do
     name = request["name"]
     password = request["password"]
-    # TODO validations?
+    email = request["email"]
     CMS::Models::User.create(
+      :name => name,
+      :email => email
+      :password => password
+    )
+    # Send email
+    Pony.mail :to => email,
+              :from => 'cheesemousesystem@i2cat.net',
+              :subject => 'Welcome to Cheese Mouse System',
+              :body => mustache(:email)
+    mustache :home
+  end
+
+  post '/login' do
+    name = request["name"]
+    password = request["password"]
+    @user = CMS::Models::User.first(
       :name => name,
       :password => password
     )
-    # TODO success page
+    mustache :home
   end
 
   get '/user/:name' do
