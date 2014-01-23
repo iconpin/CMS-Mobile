@@ -27,6 +27,10 @@ class CMS < Sinatra::Base
     mustache :home
   end
 
+  get '/register' do
+    mustache :register
+  end
+
   post '/register' do
     name = request["name"]
     password = request["password"]
@@ -42,6 +46,10 @@ class CMS < Sinatra::Base
               :subject => 'Welcome to Cheese Mouse System',
               :body => mustache(:email)
     mustache :home
+  end
+
+  get '/login' do
+    mustache :login
   end
 
   post '/login' do
