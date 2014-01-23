@@ -5,20 +5,20 @@ class CMS
     class User
       include DataMapper::Resource
       property :id, Serial
-      property :name, String
-      property :email, String
-      property :password, BCryptHash
+      property :name, String, :required => true, :unique => true
+      property :email, String, :required => true, :unique => true
+      property :password, BCryptHash, :required => true
       property :created_at, DateTime
 
-      validates_presence_of :name
-      validates_uniqueness_of :name
-
-      validaes_uniqueness_of :email
-      validates_presence_of :email
       validates_format_of :email, :as => :email_address
-
-      validates_presence_of :password
       validates_length_of :password, :min => 5
+    end
+
+    class Point
+      include DataMapper::Resource
+      property :id, Serial
+      property :name, String, :length => 255, :required => true, :unique => true
+      property :description, Text, :required => true
     end
   end
 end
