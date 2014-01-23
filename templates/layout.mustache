@@ -10,6 +10,12 @@ li { list-style: none !important; }
 </style>
 </head>
 <body>
+<div class="flash">
+  {{# flash }}
+  <span class="notice">{{ notice }}</span>
+  <span class="error">{{ error }}</span>
+  {{/ flash }}
+</div>
 <div id="main">
   {{{yield}}}
 </div>
