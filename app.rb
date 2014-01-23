@@ -14,6 +14,7 @@ class CMS < Sinatra::Base
   require_relative 'views/email'
   require_relative 'views/register'
   require_relative 'views/login'
+  require_relative 'views/users'
 
   set :mustache, {
     :views => 'views',
