@@ -1,7 +1,8 @@
 body {
-  padding-top: 50px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
-.starter-template {
-  padding: 40px 15px;
-  text-align: center;
+
+.navbar {
+  margin-bottom: 20px;
 }
