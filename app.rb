@@ -1,6 +1,6 @@
 require 'sinatra/base'
 require 'warden'
-require 'rack-flash'
+require 'rack/flash'
 require 'mustache/sinatra'
 require 'data_mapper'
 require 'pony'
