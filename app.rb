@@ -46,8 +46,9 @@ class CMS < Sinatra::Base
     Pony.mail :to => email,
               :from => 'cheesemousesystem@i2cat.net',
               :subject => 'Welcome to Cheese Mouse System',
-              :body => mustache(:email)
-    mustache :home
+              :body => mustache(:email),
+              :via => :sendmail
+    redirect to('/login')
   end
 
   get '/login' do
@@ -64,14 +65,12 @@ class CMS < Sinatra::Base
     if user.nil?
       redirect to('/login')
     end
-    session["user"] = user.name
-    mustache :home
+    mustache :home, :user => user
   end
 
   post '/logout' do
     # TODO update session hash?
     @user = nil
-    session["user"] = nil
   end
 
   get '/user/:name' do

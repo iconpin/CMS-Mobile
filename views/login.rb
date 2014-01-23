@@ -1,6 +1,6 @@
 class CMS
   module Views
-    class Register < Layout
+    class Login < Layout
     end
   end
 end
