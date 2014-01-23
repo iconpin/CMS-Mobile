@@ -19,6 +19,7 @@ class CMS
         else
           false
         end
+      end
     end
 
     class Point
