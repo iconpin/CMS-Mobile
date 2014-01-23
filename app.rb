@@ -1,15 +1,13 @@
 require 'sinatra/base'
-require 'sinatra/flash'
+require 'data_mapper'
 require 'warden'
 require 'mustache/sinatra'
-require 'data_mapper'
 require 'pony'
 
 
 class CMS < Sinatra::Base
   # Mustache configuration
   register Mustache::Sinatra
-  register Sinatra::Flash
 
   require_relative 'views/layout'
   require_relative 'views/home'
@@ -35,7 +33,7 @@ class CMS < Sinatra::Base
 
   use Warden::Manager do |config|
     config.serialize_into_session { |user| user.id }
-    config.serialize_from_session { |id| User.get(id) }
+    config.serialize_from_session { |id| CMS::Models::User.get(id) }
     config.scope_defaults :default,
                           :strategies => [:password],
                           :action => 'unauthenticated'
@@ -56,9 +54,7 @@ class CMS < Sinatra::Base
 
       if user.nil?
         fail!("El nom d'usuari introduït no existeix")
-        flash[:error] = ""
       elsif user.authenticate(params['password'])
-        flash[:success] = "Login fet amb èxit"
         success!(user)
       else
         fail!("No s'ha pogut fet login")
@@ -68,7 +64,6 @@ class CMS < Sinatra::Base
 
   # Mustache Flash hook
   before do
-    @flash = flash
   end
 
   get '/' do
@@ -104,8 +99,6 @@ class CMS < Sinatra::Base
   post '/login' do
     env['warden'].authenticate!
 
-    flash[:success] = env['warden'].message
-
     if session[:return_to].nil?
       redirect '/'
     else
@@ -116,7 +109,6 @@ class CMS < Sinatra::Base
   get '/logout' do
     env['warden'].raw_session.inspect
     env['warden'].logout
-    flash[:success] = "Logout fet amb èxit"
     redirect '/'
   end
 
@@ -126,7 +118,6 @@ class CMS < Sinatra::Base
 
   post '/unauthenticated' do
     session[:return_to] = env['warden.options'][:attempted_path]
-    flash[:error] = env['warden'].message || "Has de fer login"
     redirect '/login'
   end
 
