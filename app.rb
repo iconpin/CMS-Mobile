@@ -9,6 +9,8 @@ class CMS < Sinatra::Base
   require_relative 'views/layout'
   require_relative 'views/home'
   require_relative 'views/email'
+  require_relative 'views/register'
+  require_relative 'views/login'
 
   require_relative 'models'
   enable :sessions
@@ -59,7 +61,17 @@ class CMS < Sinatra::Base
       :name => name,
       :password => password
     )
+    if user.nil?
+      redirect to('/login')
+    end
+    session["user"] = user.name
     mustache :home
+  end
+
+  post '/logout' do
+    # TODO update session hash?
+    @user = nil
+    session["user"] = nil
   end
 
   get '/user/:name' do
