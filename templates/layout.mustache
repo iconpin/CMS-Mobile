@@ -31,32 +31,34 @@
 <div class="container">
 
   <!-- Static navbar -->
-  <div class="navbar navbar-default" role="navigation">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">Cheese Mouse System</a>
+  <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Cheese Mouse System</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="/points">Points</a></li>
+          <li><a href="/users">Users</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          {{#user}}
+          <li><a href="#">Hola, {{name}}</a></li>
+          <li><a href="/logout">Surt</a></li>
+          {{/user}}
+          {{^user}}
+          <li><a href="/login">Entra</a></li>
+          {{/user}}
+        </ul>
+      </div><!--/.nav-collapse -->
     </div>
-    <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Home</a></li>
-        <li><a href="/points">Points</a></li>
-        <li><a href="/users">Users</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        {{#user}}
-        <li><a href="#">Hola, {{name}}</a></li>
-        <li><a href="/logout">Surt</a></li>
-        {{/user}}
-        {{^user}}
-        <li><a href="/login">Entra</a></li>
-        {{/user}}
-      </ul>
-    </div><!--/.nav-collapse -->
   </div>
 
   <!-- Main component for a primary marketing message or call to action -->
