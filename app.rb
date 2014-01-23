@@ -7,7 +7,9 @@ class CMS < Sinatra::Base
   register Mustache::Sinatra
   require_relative 'views/layout'
   require_relative 'views/home'
+
   require_relative 'models'
+  enable :sessions
 
   DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/database.db")
   DataMapper.finalize
