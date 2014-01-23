@@ -132,9 +132,9 @@ class CMS < Sinatra::Base
     redirect '/login'
   end
 
-  get '/user/:name' do
-    name = params["name"]
-    user = CMS::Models::User.first(:name => name)
-    # TODO
+  get '/users' do
+    env['warden'].authenticate! # I <3 Ruby
+    mustache :users
   end
+
 end
