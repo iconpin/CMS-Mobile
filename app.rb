@@ -6,21 +6,6 @@ require 'pony'
 
 
 class CMS < Sinatra::Base
-  # Mustache configuration
-  register Mustache::Sinatra
-
-  require_relative 'views/layout'
-  require_relative 'views/home'
-  require_relative 'views/email'
-  require_relative 'views/register'
-  require_relative 'views/login'
-  require_relative 'views/users'
-
-  set :mustache, {
-    :views => 'views',
-    :templates => 'templates'
-  }
-
   # DataMapper configuration
   require_relative 'models'
 
@@ -61,6 +46,25 @@ class CMS < Sinatra::Base
         fail!("No s'ha pogut fet login")
       end
     end
+  end
+
+  # Mustache configuration
+  register Mustache::Sinatra
+
+  require_relative 'views/layout'
+  require_relative 'views/home'
+  require_relative 'views/email'
+  require_relative 'views/register'
+  require_relative 'views/login'
+  require_relative 'views/users'
+
+  set :mustache, {
+    :views => 'views',
+    :templates => 'templates'
+  }
+
+  before do
+    @current_user = env['warden'].user
   end
 
   get '/' do
