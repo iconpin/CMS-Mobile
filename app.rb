@@ -34,9 +34,9 @@ class CMS < Sinatra::Base
   end
 
   post '/register' do
-    name = request["name"]
-    password = request["password"]
-    email = request["email"]
+    name = params["name"]
+    password = params["password"]
+    email = params["email"]
     CMS::Models::User.create(
       :name => name,
       :email => email,
@@ -55,8 +55,8 @@ class CMS < Sinatra::Base
   end
 
   post '/login' do
-    name = request["name"]
-    password = request["password"]
+    name = params["name"]
+    password = params["password"]
     @user = CMS::Models::User.first(
       :name => name,
       :password => password
@@ -75,7 +75,7 @@ class CMS < Sinatra::Base
   end
 
   get '/user/:name' do
-    name = request["name"]
+    name = params["name"]
     user = CMS::Models::User.first(:name => name)
     # TODO
   end
