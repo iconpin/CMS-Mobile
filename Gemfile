@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 gem 'sinatra'
+gem 'sinatra-flash'
 gem 'rack'
-gem 'rack-flash3', :require => 'rack-flash'
 gem 'warden'
 gem 'mustache'
 gem 'streamio-ffmpeg'
