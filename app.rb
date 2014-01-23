@@ -68,6 +68,11 @@ class CMS < Sinatra::Base
 
   end
 
+  # Mustache Flash hook
+  before do
+    @flash = flash
+  end
+
   get '/' do
     mustache :home
   end
