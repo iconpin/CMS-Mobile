@@ -43,18 +43,18 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
+        <li class="active"><a href="/">Home</a></li>
         <li><a href="/points">Points</a></li>
         <li><a href="/users">Users</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {{#user}}
-        <li><a href="#">{{name}}</a></li>
+        <li><a href="#">Hola, {{name}}</a></li>
         <li><a href="/logout">Surt</a></li>
         {{/user}}
         {{^user}}
         <li><a href="/login">Entra</a></li>
-        {{/user}} 
+        {{/user}}
       </ul>
     </div><!--/.nav-collapse -->
   </div>
