@@ -1,6 +1,7 @@
 require 'sinatra/base'
 require 'mustache/sinatra'
 require 'data_mapper'
+require 'pony'
 
 
 class CMS < Sinatra::Base
