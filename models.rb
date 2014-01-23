@@ -12,6 +12,13 @@ class CMS
 
       validates_format_of :email, :as => :email_address
       validates_length_of :password, :min => 5
+
+      def authenticate(attempted_password)
+        if self.password == attempted_password
+          true
+        else
+          false
+        end
     end
 
     class Point
