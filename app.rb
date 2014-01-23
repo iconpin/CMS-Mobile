@@ -33,7 +33,7 @@ class CMS < Sinatra::Base
     email = request["email"]
     CMS::Models::User.create(
       :name => name,
-      :email => email
+      :email => email,
       :password => password
     )
     # Send email
