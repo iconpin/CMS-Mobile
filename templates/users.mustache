@@ -4,8 +4,8 @@
     <th>Correu electrònic</th>
     <th>Accions</th>
   </tr>
+  {{#list_user}}
   <tr>
-    {{#list_user}}
     <td>{{name}}</td>
     <td>{{email}}</td>
     <td>
@@ -13,8 +13,8 @@
       <a class="btn btn-sm btn-danger" href="/user/{{name}}/delete">Esborra</a>
       {{/is_admin}}
     </td>
-    {{/list_user}}
   </tr>
+  {{/list_user}}
   <tr>
     <td><a class="btn btn-sm btn-success" href="/user/create">Nou Usuari</a></td>
     <td></td>
