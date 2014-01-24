@@ -43,6 +43,7 @@ class CMS < Sinatra::Base
       if user.nil?
         fail!("El nom d'usuari introduït no existeix")
       elsif user.authenticate(params['password'])
+        user.udpate(:last_login => Time.now)
         success!(user)
       else
         fail!("No s'ha pogut fet login")
@@ -86,7 +87,9 @@ class CMS < Sinatra::Base
     success = CMS::Models::User.create(
       :name => name,
       :email => email,
-      :password => password
+      :password => password,
+      :created_at => Time.now,
+      :updated_at => Time.now
     )
     unless success
       redirect '/register'
@@ -118,7 +121,9 @@ class CMS < Sinatra::Base
     success = CMS::Models::User.create(
       :name => name,
       :email => email,
-      :password => password
+      :password => password,
+      :created_at => Time.now,
+      :updated_at => Time.now
     )
     unless success
       redirect '/user/create'

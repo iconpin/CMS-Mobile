@@ -8,7 +8,9 @@ class CMS
       property :name, String, :required => true, :unique => true
       property :email, String, :required => true, :unique => true
       property :password, BCryptHash, :required => true
-      property :created_at, DateTime
+      property :created_at, DateTime, :required => true
+      property :updated_at, DateTime, :required => true
+      property :last_login, DateTime
 
       validates_format_of :email, :as => :email_address
       validates_length_of :password, :min => 5
