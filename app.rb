@@ -223,11 +223,11 @@ class CMS < Sinatra::Base
   post '/image/create' do
     env['warden'].authenticate!
 
-    name = params['name']
-    file = params['tempfile']
-    filename = params['filename']
+    file = params['file'][:tempfile]
+    filename = params['file'][:filename]
     extension = File.extname(filename)
-    description = params['name']
+    name = params['name']
+    description = params['description']
 
     image = CMS::Models::Image.new(
       :name => name,
@@ -243,7 +243,7 @@ class CMS < Sinatra::Base
     end
 
     # If we're here, the upload was successful: let's save that image!
-    image.path = File.join(CMS::DIR, "/#{image.id}.jpg")
+    image.path = File.join(CMS::MULTIMEDIA_DIR, "/#{image.id}.jpg")
     if image.save
       CMS::Workers::ImageConverter.perform_async(image_id)  # First Sidekiq usage here!
       redirect '/images'
