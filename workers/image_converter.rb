@@ -1,5 +1,5 @@
 require 'sidekiq'
-require 'minimagick'
+require 'mini_magick'
 
 class CMS
   module Workers
