@@ -6,7 +6,9 @@ class CMS
       include DataMapper::Resource
       property :id, Serial
       property :name, String, :required => true
-      property :path, FilePath, :required => true
+      property :path_tmp, FilePath, :required => true
+      property :path, FilePath
+      property :ready, Boolean, :required => true, :default => false
       property :description, Text, :required => false
       property :weight, Integer, :required => true, :default => 0
       property :published, Boolean, :required => true, :default => false

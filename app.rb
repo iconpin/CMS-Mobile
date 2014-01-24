@@ -6,6 +6,10 @@ require 'pony'
 
 
 class CMS < Sinatra::Base
+  # Multimedia storage configuration
+  MULTIMEDIA_DIR = './multimedia'
+  TMP_DIR = './tmp'
+
   # DataMapper configuration
   require_relative 'models/user'
   require_relative 'models/point'
@@ -216,7 +220,26 @@ class CMS < Sinatra::Base
 
   post '/image/create' do
     env['warden'].authenticate!
-    # TODO
+
+    name = params['name']
+    filename = params['filename']
+    extension = File.extname(filename)
+    description = params['name']
+
+    image = CMS::Models::Image.new(
+      :name => name,
+      :description => description,
+      :created_at => Time.now,
+      :updated_at => Time.now
+    )
+
+    image.path_tmp = CMS::TMP_DIR + "/#{image.id}.#{extension}"
+    if image.save
+      CMS::Workers::ImageConverter.perform_async(image)
+      redirect '/images'
+    else
+      redirect '/image/create'
+    end
   end
 
   get '/video/create' do
