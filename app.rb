@@ -178,4 +178,56 @@ class CMS < Sinatra::Base
     mustache :users
   end
 
+  get '/point/create' do
+    env['warden'].authenticate!
+
+    mustache :point_create
+  end
+
+  post '/point/create' do
+    env['warden'].authenticate!
+
+    name = params['name']
+    description = params['description']
+    coord_x = params['coord_x']
+    coord_y = params['coord_y']
+
+    success = CMS::Models::Point.create(
+      :name => name,
+      :description => description,
+      :coord_x => coord_x,
+      :coord_y => coord_y,
+      :created_at => Time.now,
+      :updated_at => Time.now
+    )
+
+    if success
+      redirect '/points'
+    else
+      redirect '/point/create'
+    end
+  end
+
+  get '/image/create' do
+    env['warden'].authenticate!
+
+    mustache :image_create
+  end
+
+  post '/image/create' do
+    env['warden'].authenticate!
+    # TODO
+  end
+
+  get '/video/create' do
+    env['warden'].authenticate!
+
+    mustache :video_create
+  end
+
+  post '/video/create' do
+    env['warden'].authenticate!
+    # TODO
+  end
+
 end
