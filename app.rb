@@ -124,6 +124,7 @@ class CMS < Sinatra::Base
       redirect '/user/create'
     else
       redirect '/users'
+    end
   end
 
   post '/user/:name/delete' do
@@ -134,6 +135,7 @@ class CMS < Sinatra::Base
       redirect '/'
     else
       CMS::Models::User.delete(:name => name)
+    end
   end
 
   get '/login' do
