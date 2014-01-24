@@ -12,6 +12,8 @@ class CMS
       property :weight, Integer, :required => true, :default => 0
       property :created_at, DateTime, :required => true
       property :updated_at, DateTime, :required => true
+
+      has n, :multimedias
     end
   end
 end
