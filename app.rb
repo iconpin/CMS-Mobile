@@ -65,6 +65,7 @@ class CMS < Sinatra::Base
   require_relative 'views/register'
   require_relative 'views/login'
   require_relative 'views/users'
+  require_relative 'views/image_create'
 
   set :mustache, {
     :views => 'views',
