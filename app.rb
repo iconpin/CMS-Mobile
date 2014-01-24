@@ -80,19 +80,54 @@ class CMS < Sinatra::Base
   post '/register' do
     name = params["name"]
     password = params["password"]
+    password_confirm = params["password_confirm"]
     email = params["email"]
-    CMS::Models::User.create(
+    redirect '/register' unless password == password_confirm
+    success = CMS::Models::User.create(
       :name => name,
       :email => email,
       :password => password
     )
-    # Send email
-    # Pony.mail :to => email,
-    #           :from => 'cheesemousesystem@i2cat.net',
-    #           :subject => 'Welcome to Cheese Mouse System',
-    #           :body => mustache(:email),
-    #           :via => :sendmail
-    redirect '/login'
+    unless success
+      redirect '/register'
+    else
+      # Send email
+      # Pony.mail :to => email,
+      #           :from => 'cheesemousesystem@i2cat.net',
+      #           :subject => 'Welcome to Cheese Mouse System',
+      #           :body => mustache(:email),
+      #           :via => :sendmail
+      redirect '/login'
+    end
+  end
+
+  get '/user/create' do
+    mustache :user_create
+  end
+
+  post '/user/create' do
+    name = params["name"]
+    password = params["password"]
+    password_confirm = params["password_confirm"]
+    email = params["email"]
+    redirect '/user/create' unless password == password_confirm
+    success = CMS::Models::User.create(
+      :name => name,
+      :email => email,
+      :password => password
+    )
+    unless success
+      redirect '/user/create'
+    else
+      redirect '/users'
+  end
+
+  post '/user/:name/delete' do
+    name = params["name"]
+    if @current_user.name == name
+      redirect '/'
+    else
+      CMS::Models::User.delete(:name => name)
   end
 
   get '/login' do
