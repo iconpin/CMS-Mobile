@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'rack/flash'
 require 'data_mapper'
 require 'warden'
 require 'mustache/sinatra'
@@ -234,6 +235,7 @@ class CMS < Sinatra::Base
     )
 
     image.path_tmp = CMS::TMP_DIR + "/#{image.id}.#{extension}"
+    image.path = CMS::DIR + "/#{image.id}.jpg"
     if image.save
       CMS::Workers::ImageConverter.perform_async(image)
       redirect '/images'
