@@ -2,12 +2,25 @@
   <tr>
     <th>Nom</th>
     <th>Correu electrònic</th>
+    <th>Data creació</th>
+    <th>Data última actualizació</th>
+    <th>Data últim accés</th>
     <th>Accions</th>
   </tr>
   {{#list_user}}
   <tr>
     <td>{{name}}</td>
     <td>{{email}}</td>
+    <td>{{created_at}}</td>
+    <td>{{updated_at}}</td>
+    <td>
+      {{#last_login}}
+      {{last_login}}
+      {{/last_login}}
+      {{^last_login}}
+      Mai
+      {{/last_login}}
+    </td>
     <td>
       {{^is_admin}}
       <a class="btn btn-sm btn-danger" href="/user/{{name}}/delete">Esborra</a>
