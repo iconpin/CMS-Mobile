@@ -11,10 +11,6 @@ class CMS < Sinatra::Base
   MULTIMEDIA_DIR = './multimedia'
   TMP_DIR = './tmp'
 
-  # Rack::Flash configuration
-  enable :sessions
-  use Rack::Flash
-
   # DataMapper configuration
   require_relative 'models/user'
   require_relative 'models/point'
@@ -60,6 +56,11 @@ class CMS < Sinatra::Base
     end
   end
 
+  # Rack::Flash configuration
+  #enable :sessions
+  use Rack::Flash, :accessorize => [:error, :success]
+
+
   # Mustache configuration
   register Mustache::Sinatra
 
@@ -103,6 +104,7 @@ class CMS < Sinatra::Base
       :updated_at => Time.now
     )
     unless success
+      flash.error = "Hi ha hagut un problema amb el registre. Prova un altre cop"
       redirect '/register'
     else
       # Send email
@@ -111,6 +113,7 @@ class CMS < Sinatra::Base
       #           :subject => 'Welcome to Cheese Mouse System',
       #           :body => mustache(:email),
       #           :via => :sendmail
+      flash.success = "T'has registrat amb èxit. Ara ja pots entrar"
       redirect '/login'
     end
   end
@@ -137,8 +140,10 @@ class CMS < Sinatra::Base
       :updated_at => Time.now
     )
     unless success
+      flash.success = "Usuari creat amb èxit"
       redirect '/user/create'
     else
+      flash.error = "Hi ha hagut un problema. Comprova les dades"
       redirect '/users'
     end
   end
@@ -148,10 +153,13 @@ class CMS < Sinatra::Base
 
     name = params["name"]
     if @current_user.name == name
-      redirect '/'
+      flash.error = "No pots esborrar-te a tu mateix"
+    elsif CMS::Models::User.delete(:name => name)
+      flash.success = "Usuari esborrat amb èxit"
     else
-      CMS::Models::User.delete(:name => name)
+      flash.error = "No s'ha pogut esborrar l'usuari"
     end
+    redirect '/users'
   end
 
   get '/login' do
@@ -161,6 +169,7 @@ class CMS < Sinatra::Base
   post '/login' do
     env['warden'].authenticate!
 
+    flash.success = "T'has indentificat amb èxit"
     if session[:return_to].nil?
       redirect '/'
     else
@@ -171,6 +180,7 @@ class CMS < Sinatra::Base
   get '/logout' do
     env['warden'].raw_session.inspect
     env['warden'].logout
+    flash.success = "Has sortit amb èxti"
     redirect '/'
   end
 
