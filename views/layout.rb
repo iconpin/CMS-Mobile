@@ -8,6 +8,10 @@ class CMS
       def user
         @current_user
       end
+
+      def flash
+        @flash
+      end
     end
   end
 end

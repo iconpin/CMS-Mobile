@@ -11,6 +11,10 @@ class CMS < Sinatra::Base
   MULTIMEDIA_DIR = './multimedia'
   TMP_DIR = './tmp'
 
+  # Rack::Flash configuration
+  enable :sessions
+  use Rack::Flash
+
   # DataMapper configuration
   require_relative 'models/user'
   require_relative 'models/point'
@@ -74,6 +78,7 @@ class CMS < Sinatra::Base
 
   before do
     @current_user = env['warden'].user
+    @flash = flash
   end
 
   get '/' do
