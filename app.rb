@@ -237,7 +237,7 @@ class CMS < Sinatra::Base
     image.path_tmp = CMS::TMP_DIR + "/#{image.id}.#{extension}"
     image.path = CMS::DIR + "/#{image.id}.jpg"
     if image.save
-      CMS::Workers::ImageConverter.perform_async(image)
+      CMS::Workers::ImageConverter.perform_async(image_id)
       redirect '/images'
     else
       redirect '/image/create'
