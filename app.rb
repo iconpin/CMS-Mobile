@@ -245,7 +245,7 @@ class CMS < Sinatra::Base
     # If we're here, the upload was successful: let's save that image!
     image.path = File.join(CMS::MULTIMEDIA_DIR, "/#{image.id}.jpg")
     if image.save
-      CMS::Workers::ImageConverter.perform_async(image_id)  # First Sidekiq usage here!
+      CMS::Workers::ImageConverter.perform_async(image.id)  # First Sidekiq usage here!
       redirect '/images'
     else
       redirect '/image/create'
