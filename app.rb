@@ -102,10 +102,14 @@ class CMS < Sinatra::Base
   end
 
   get '/user/create' do
+    env['warden'].authenticate!
+
     mustache :user_create
   end
 
   post '/user/create' do
+    env['warden'].authenticate!
+
     name = params["name"]
     password = params["password"]
     password_confirm = params["password_confirm"]
@@ -123,6 +127,8 @@ class CMS < Sinatra::Base
   end
 
   post '/user/:name/delete' do
+    env['warden'].authenticate!
+
     name = params["name"]
     if @current_user.name == name
       redirect '/'
@@ -161,6 +167,7 @@ class CMS < Sinatra::Base
 
   get '/users' do
     env['warden'].authenticate! # I <3 Ruby
+
     mustache :users
   end
 
