@@ -9,8 +9,24 @@ class CMS
         @current_user
       end
 
-      def flash
-        @flash
+      def error
+        if @flash
+          @flash[:error]
+        end
+      end
+
+      def success
+        if @flash
+          @flash[:success]
+        end
+      end
+
+      def alert
+        if @flash.nil?
+          false
+        else
+          true
+        end
       end
     end
   end
