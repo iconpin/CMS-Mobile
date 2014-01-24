@@ -223,6 +223,7 @@ class CMS < Sinatra::Base
     env['warden'].authenticate!
 
     name = params['name']
+    file = params['tempfile']
     filename = params['filename']
     extension = File.extname(filename)
     description = params['name']
@@ -234,10 +235,16 @@ class CMS < Sinatra::Base
       :updated_at => Time.now
     )
 
-    image.path_tmp = CMS::TMP_DIR + "/#{image.id}.#{extension}"
-    image.path = CMS::DIR + "/#{image.id}.jpg"
+    image.path_tmp = File.join(CMS::TMP_DIR, "#{image.id}.#{extension}")
+
+    File.open(image.path_tmp, 'wb') do |f|
+      f.write file.read
+    end
+
+    # If we're here, the upload was successful: let's save that image!
+    image.path = File.join(CMS::DIR, "/#{image.id}.jpg")
     if image.save
-      CMS::Workers::ImageConverter.perform_async(image_id)
+      CMS::Workers::ImageConverter.perform_async(image_id)  # First Sidekiq usage here!
       redirect '/images'
     else
       redirect '/image/create'
