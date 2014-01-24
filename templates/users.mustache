@@ -1,5 +1,23 @@
-<ul>
-  {{#list_user}}
-  <li>{{name}} - {{email}}</li>
-  {{/list_user}}
-</ul>
+<table class="table table-stripped">
+  <tr>
+    <th>Nom</th>
+    <th>Correu electrònic</th>
+    <th>Accions</th>
+  </tr>
+  <tr>
+    {{#list_user}}
+    <td>{{name}}</td>
+    <td>{{email}}</td>
+    <td>
+      {{^is_admin}}
+      <a class="btn btn-sm btn-danger" href="/user/{{name}}/delete">Esborra</a>
+      {{/is_admin}}
+    </td>
+    {{/list_user}}
+  </tr>
+  <tr>
+    <td><a class="btn btn-sm btn-success" href="/user/create">Nou Usuari</a></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
