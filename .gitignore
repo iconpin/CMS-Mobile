@@ -1,3 +1,5 @@
 Gemfile.lock
 database.db
 *.swp
+multimedia/
+tmp/
