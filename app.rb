@@ -3,7 +3,6 @@ require 'rack/flash'
 require 'data_mapper'
 require 'warden'
 require 'mustache/sinatra'
-require 'pony'
 
 
 class CMS < Sinatra::Base
@@ -78,6 +77,10 @@ class CMS < Sinatra::Base
     :views => 'views',
     :templates => 'templates'
   }
+
+  # Sidekiq configuration
+  require_relative 'workers/image_converter'
+
 
   before do
     @current_user = env['warden'].user
@@ -252,14 +255,14 @@ class CMS < Sinatra::Base
       :created_at => Time.now,
       :updated_at => Time.now
     )
+    image.save  # Now we'll have and ID
 
     image.path_tmp = File.join(CMS::TMP_DIR, "#{image.id}.#{extension}")
-
     File.open(image.path_tmp, 'wb') do |f|
       f.write file.read
     end
 
-    # If we're here, the upload was successful: let's save that image!
+    # If we're here, the upload was successful
     image.path = File.join(CMS::MULTIMEDIA_DIR, "/#{image.id}.jpg")
     if image.save
       CMS::Workers::ImageConverter.perform_async(image.id)  # First Sidekiq usage here!
