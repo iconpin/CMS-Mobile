@@ -1,6 +1,6 @@
 # Cheese Mouse System
 
-RAT's CMS.
+A CMS.
 
 ## What it should do?
 
@@ -10,8 +10,15 @@ RAT's CMS.
 ## Dependencies
 
 - sinatra
-- rackup
-- mustache
 - data\_mapper
+- warden
+- mustache
 - streamio-ffmpeg
-- rmagick
+- mini\_magick
+- sidekiq
+
+## Deployment Requirements
+
+- Application tested with Ruby 2.0 and 2.1.
+- SQL DB (defaults to SQLite3)
+- Redis (needed by Sidekiq for background asynchronous processing)
