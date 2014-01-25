@@ -20,6 +20,8 @@ class CMS < Sinatra::Base
   DataMapper.finalize
 
   CMS::Models::User.auto_upgrade!
+  CMS::Models::Point.auto_upgrade!
+  CMS::Models::Multimedia.auto_upgrade!
 
   # Warden configuration
   use Rack::Session::Cookie, :secret => "i2cheese"
