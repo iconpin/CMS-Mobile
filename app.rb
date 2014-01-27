@@ -158,7 +158,7 @@ class CMS < Sinatra::Base
     password = params['password']
     password_confirm = params['password_confirm']
     email = params['email']
-    admin = params['admin'] || false
+    admin = (params['admin'] == 'on')
     if password != password_confirm
       flash[:error] = "Les contrasenyes no coincideixen"
       redirect '/user/create'
