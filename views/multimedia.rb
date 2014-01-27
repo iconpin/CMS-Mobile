@@ -8,12 +8,15 @@ class CMS
             :id => m.id,
             :weight => m.weight,
             :name => m.name,
+            :image => m.type_sym == :image,
+            :video => m.type_sym == :video,
             :description => m.description[0..50],
             # TODO: maybe there's a better way to add the time zone offset?
             :created_at => (m.created_at + Rational(1, 24)).strftime("%Y/%m/%d %H:%M:%S"),
             :updated_at =>  (m.updated_at + Rational(1, 24)).strftime("%Y/%m/%d %H:%M:%S"),
             :published => m.published,
-            :ready => m.ready
+            :ready => m.ready,
+            :link => "/multimedia/#{m.id}"
           }
         end
         list

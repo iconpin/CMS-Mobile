@@ -3,6 +3,7 @@
     <th>Ordre</th>
     <th>Nom</th>
     <th>Estat</th>
+    <th>Tipus</th>
     <th>Descripció curta</th>
     <th>Data creació</th>
     <th>Data última actualizació</th>
@@ -11,7 +12,7 @@
   {{#list_multimedia}}
   <tr>
     <td>{{weight}}</td>
-    <td>{{name}}</td>
+    <td><a href="{{link}}">{{name}}</a></td>
     <td>
       {{#ready}}
         {{#published}}
@@ -24,6 +25,14 @@
       {{^ready}}
         <span class="label label-danger">pendent</span>
       {{/ready}}
+    </td>
+    <td>
+      {{#image}}
+        <span class="glyphicon glyphicon-picture"></span>
+      {{/image}}
+      {{#video}}
+        <span class="glyphicon glyphicon-play"></span>
+      {{/video}}
     </td>
     <td>{{description}}</td>
     <td>{{created_at}}</td>
@@ -46,6 +55,7 @@
         <button type="submit" class="btn btn-sm btn-success">Nou Vídeo</button>
       </form>
     </td>
+    <td></td>
     <td></td>
     <td></td>
     <td></td>

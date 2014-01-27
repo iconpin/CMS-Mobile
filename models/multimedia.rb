@@ -19,9 +19,21 @@ class CMS
       property :type, Discriminator  # Allows Single Table Inheritance
 
       belongs_to :point, :required => false
+
+      def type_sym
+        nil
+      end
     end
 
-    class Image < Multimedia; end
-    class Video < Multimedia; end
+    class Image < Multimedia
+      def type_sym
+        :image
+      end
+    end
+    class Video < Multimedia
+      def type_sym
+        :video
+      end
+    end
   end
 end
