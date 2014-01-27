@@ -5,7 +5,7 @@ class CMS
     class User
       include DataMapper::Resource
       property :id, Serial
-      property :name, String, :required => true, :unique => true
+      property :name, String, :required => true
       property :email, String, :required => true, :unique => true
       property :password, BCryptHash, :required => true
       property :created_at, DateTime, :required => true

@@ -40,14 +40,14 @@ class CMS < Sinatra::Base
 
   Warden::Strategies.add(:password) do
     def valid?
-      params['name'] && params['password']
+      params['email'] && params['password']
     end
 
     def authenticate!
-      user = CMS::Models::User.first(:name => params['name'])
+      user = CMS::Models::User.first(:email => params['name'])
 
       if user.nil?
-        fail!("El nom d'usuari introduït no existeix")
+        fail!("No hi ha cap usuari amb el correu electrònic introduït")
       elsif user.authenticate(params['password'])
         user.update(:last_login => Time.now)
         success!(user)
