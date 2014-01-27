@@ -208,7 +208,7 @@ class CMS < Sinatra::Base
   get '/logout' do
     env['warden'].raw_session.inspect
     env['warden'].logout
-    flash.success = "Has sortit amb èxti"
+    flash.success = "Has sortit amb èxit"
     redirect '/'
   end
 
