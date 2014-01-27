@@ -1,7 +1,14 @@
 <form class="form-signin" role="form" action="/point/create" method="POST">
-  <input type="text" name="name" class="form-control" placeholder="Nom" required autofocus>
-  <input type="text" name="email" class="form-control" placeholder="Correu electrònic" required autofocus>
-  <input type="password" name="password" class="form-control" placeholder="Contrasenya" required>
-  <input type="password" name="password_confirm" class="form-control" placeholder="Confirma la contrasenya" required>
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Crea</button>
+  <div class="form-group">
+    <input type="text" name="name" class="form-control" placeholder="Nom" required autofocus>
+  </div>
+  <div class="form-group">
+    <textarea rows="3" name="description" class="form-control" placeholder="Descripció" required autofocus></textarea>
+  </div>
+  <div class="form-group">
+    <input type="text" name="coords" class="form-control" placeholder="Coordenades (latitud i longitud)" required>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Crea</button>
+  </div>
 </form>

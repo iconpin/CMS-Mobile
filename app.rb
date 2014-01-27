@@ -85,6 +85,9 @@ class CMS < Sinatra::Base
   # Require workers
   require_relative 'workers/image_converter'
 
+  # Utils
+  require_relative 'utils/coordinates'
+
   before do
     @current_user = env['warden'].user || Models::Guest.new
     @flash = flash
@@ -360,8 +363,7 @@ class CMS < Sinatra::Base
 
     name = params['name']
     description = params['description']
-    coord_x = params['coord_x']
-    coord_y = params['coord_y']
+    coord_x, coord_y = Utils::Coordinates.parse(params['coords'])
 
     success = Models::Point.create(
       :name => name,
