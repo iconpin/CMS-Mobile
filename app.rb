@@ -89,7 +89,7 @@ class CMS < Sinatra::Base
   end
 
   get '/' do
-    unless ::Models::User.has_admin?
+    unless Models::User.has_admin?
       flash.info = "Aquest nou usuari serà l'administrador"
       redirect '/register'
     end
