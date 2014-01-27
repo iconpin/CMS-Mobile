@@ -96,10 +96,19 @@ class CMS < Sinatra::Base
   end
 
   get '/register' do
+    if Models::User.has_admin?
+      flash.error = "Ja existeix un usuari administrador. Demana-li accés"
+      redirect '/'
+    end
     mustache :register
   end
 
   post '/register' do
+    if Models::User.has_admin?
+      flash.error = "Ja existeix un usuari administrador. Demana-li accés"
+      redirect '/'
+    end
+
     name = params["name"]
     password = params["password"]
     password_confirm = params["password_confirm"]
@@ -149,8 +158,11 @@ class CMS < Sinatra::Base
     password = params['password']
     password_confirm = params['password_confirm']
     email = params['email']
-    admin = params['admin']
-    redirect '/user/create' unless password == password_confirm
+    admin = params['admin'] || false
+    if password != password_confirm
+      flash[:error] = "Les contrasenyes no coincideixen"
+      redirect '/user/create'
+    end
     success = Models::User.create(
       :name => name,
       :email => email,
@@ -159,16 +171,16 @@ class CMS < Sinatra::Base
       :updated_at => Time.now,
       :admin => admin
     )
-    unless success
+    if success
       if admin
         flash.success = "Usuari administrador creat amb èxit"
       else
         flash.success = "Usuari creat amb èxit"
       end
-      redirect '/user/create'
+      redirect '/users'
     else
       flash.error = "Hi ha hagut un problema. Comprova les dades"
-      redirect '/users'
+      redirect '/user/create'
     end
   end
 
