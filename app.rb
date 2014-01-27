@@ -324,4 +324,21 @@ class CMS < Sinatra::Base
     mustache :multimedia
   end
 
+  post '/multimedia/destroy' do
+    env['warden'].authenticate!
+
+    id = params['id']
+    multimedia = Models::Multimedia.get(id)
+    if multimedia.nil?
+      flash.error = "El multimedia especificat no existeix"
+      redirect '/multimedia'
+    elsif multimedia.destroy
+      flash.success = "El multimedia s'ha esborrat amb èxit"
+      redirect '/multimedia'
+    else
+      flash.error = "El multimedia especificat no s'ha pogut eliminar"
+      redirect '/multimedia'
+    end
+  end
+
 end
