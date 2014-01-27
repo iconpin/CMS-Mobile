@@ -2,6 +2,7 @@
   <tr>
     <th>Ordre</th>
     <th>Nom</th>
+    <th>Estat</th>
     <th>Descripció curta</th>
     <th>Data creació</th>
     <th>Data última actualizació</th>
@@ -11,6 +12,19 @@
   <tr>
     <td>{{weight}}</td>
     <td>{{name}}</td>
+    <td>
+      {{#ready}}
+        {{#published}}
+        <span class="label label-success">publicat</span>
+        {{/published}}
+        {{^published}}
+        <span class="label label-warning">privat</span>
+        {{/published}}
+      {{/ready}}
+      {{^ready}}
+        <span class="label label-danger">pendent</span>
+      {{/ready}}
+    </td>
     <td>{{description}}</td>
     <td>{{created_at}}</td>
     <td>{{updated_at}}</td>
@@ -32,6 +46,7 @@
         <button type="submit" class="btn btn-sm btn-success">Nou Vídeo</button>
       </form>
     </td>
+    <td></td>
     <td></td>
     <td></td>
     <td></td>
