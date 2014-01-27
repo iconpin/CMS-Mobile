@@ -1,0 +1,46 @@
+<table class="table table-stripped">
+  <tr>
+    <th>#</th>
+    <th>Nom</th>
+    <th>Estat</th>
+    <th>Descripció curta</th>
+    <th>Data creació</th>
+    <th>Data última actualizació</th>
+    <th>Accions</th>
+  </tr>
+  {{#list_point}}
+  <tr>
+    <td>{{weight}}</td>
+    <td><a href="{{link}}">{{name}}</a></td>
+    <td>
+      {{#published}}
+      <span class="label label-success">publicat</span>
+      {{/published}}
+      {{^published}}
+      <span class="label label-warning">privat</span>
+      {{/published}}
+    </td>
+    <td>{{description}}</td>
+    <td>{{created_at}}</td>
+    <td>{{updated_at}}</td>
+    <td>
+      <form action="/point/destroy" method="POST">
+        <button type="submit" name="id" value="{{id}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> Esborra</button>
+      </form>
+    </td>
+  </tr>
+  {{/list_point}}
+  <tr>
+    <td>
+      <form action="/point/create" method="GET">
+        <button type="submit" class="btn btn-sm btn-success">Nou Punt</button>
+      </form>
+    </td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>

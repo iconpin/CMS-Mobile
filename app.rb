@@ -74,6 +74,7 @@ class CMS < Sinatra::Base
   require_relative 'views/multimedia'
   require_relative 'views/user_create'
   require_relative 'views/image_create'
+  require_relative 'views/points'
 
   set :mustache, {
     :views => 'views',
@@ -339,6 +340,12 @@ class CMS < Sinatra::Base
       flash.error = "El multimedia especificat no s'ha pogut eliminar"
       redirect '/multimedia'
     end
+  end
+
+  get '/points' do
+    env['warden'].authenticate!
+
+    mustache :points
   end
 
 end
