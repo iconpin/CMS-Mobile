@@ -29,7 +29,11 @@
   </tr>
   {{/list_user}}
   <tr>
-    <td><a class="btn btn-sm btn-success" href="/user/create">Nou Usuari</a></td>
+    <td>
+      <form action="/user/create" method="GET">
+        <button type="submit" class="btn btn-sm btn-success">Nou Usuari</button>
+      </form>
+    </td>
     <td></td>
     <td></td>
     <td></td>

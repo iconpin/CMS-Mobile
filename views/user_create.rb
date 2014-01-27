@@ -1,6 +1,6 @@
 class CMS
   module Views
-    class Register < Layout
+    class UserCreate < Layout
     end
   end
 end

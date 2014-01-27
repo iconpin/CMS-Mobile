@@ -52,7 +52,6 @@ class CMS < Sinatra::Base
         user.update(:last_login => Time.now)
         success!(user)
       else
-        flash[:error] = "El correu electrònic o la contrasenya són incorrectes"
         fail!("No s'ha pogut fet login")
       end
     end
@@ -72,6 +71,7 @@ class CMS < Sinatra::Base
   require_relative 'views/register'
   require_relative 'views/login'
   require_relative 'views/users'
+  require_relative 'views/user_create'
   require_relative 'views/image_create'
 
   set :mustache, {
@@ -79,9 +79,8 @@ class CMS < Sinatra::Base
     :templates => 'templates'
   }
 
-  # Sidekiq configuration
+  # Require workers
   require_relative 'workers/image_converter'
-
 
   before do
     @current_user = env['warden'].user || Models::Guest.new
