@@ -18,16 +18,16 @@ class CMS < Sinatra::Base
   DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/database.db")
   DataMapper.finalize
 
-  CMS::Models::User.auto_upgrade!
-  CMS::Models::Point.auto_upgrade!
-  CMS::Models::Multimedia.auto_upgrade!
+  Models::User.auto_upgrade!
+  Models::Point.auto_upgrade!
+  Models::Multimedia.auto_upgrade!
 
   # Warden configuration
   use Rack::Session::Cookie, :secret => "i2cheese"
 
   use Warden::Manager do |config|
     config.serialize_into_session { |user| user.id }
-    config.serialize_from_session { |id| CMS::Models::User.get(id) }
+    config.serialize_from_session { |id| Models::User.get(id) }
     config.scope_defaults :default,
                           :strategies => [:password],
                           :action => 'unauthenticated'
@@ -44,7 +44,7 @@ class CMS < Sinatra::Base
     end
 
     def authenticate!
-      user = CMS::Models::User.first(:email => params['email'])
+      user = Models::User.first(:email => params['email'])
 
       if user.nil?
         fail!("No hi ha cap usuari amb el correu electrònic introduït")
@@ -105,14 +105,14 @@ class CMS < Sinatra::Base
     password = params["password"]
     password_confirm = params["password_confirm"]
     email = params["email"]
-    unless ::Models::User.has_admin?
+    unless Models::User.has_admin?
       admin = true
     end
     if password != password_confirm
       flash[:error] = "Les contrasenyes no coincideixen"
       redirect '/register'
     end
-    success = CMS::Models::User.create(
+    success = Models::User.create(
       :name => name,
       :email => email,
       :password => password,
@@ -143,7 +143,7 @@ class CMS < Sinatra::Base
     password_confirm = params["password_confirm"]
     email = params["email"]
     redirect '/user/create' unless password == password_confirm
-    success = CMS::Models::User.create(
+    success = Models::User.create(
       :name => name,
       :email => email,
       :password => password,
@@ -165,7 +165,7 @@ class CMS < Sinatra::Base
     email = params["email"]
     if @current_user.email == email
       flash.error = "No pots esborrar-te a tu mateix"
-    elsif CMS::Models::User.delete(:email => email)
+    elsif Models::User.delete(:email => email)
       flash.success = "Usuari #{email} esborrat amb èxit"
     else
       flash.error = "No s'ha pogut esborrar l'usuari"
@@ -224,7 +224,7 @@ class CMS < Sinatra::Base
     coord_x = params['coord_x']
     coord_y = params['coord_y']
 
-    success = CMS::Models::Point.create(
+    success = Models::Point.create(
       :name => name,
       :description => description,
       :coord_x => coord_x,
@@ -255,7 +255,7 @@ class CMS < Sinatra::Base
     name = params['name']
     description = params['description']
 
-    image = CMS::Models::Image.new(
+    image = Models::Image.new(
       :name => name,
       :description => description,
       :created_at => Time.now,
@@ -263,15 +263,15 @@ class CMS < Sinatra::Base
     )
     image.save  # Now we'll have and ID
 
-    image.path_tmp = File.join(CMS::TMP_DIR, "#{image.id}.#{extension}")
+    image.path_tmp = File.join(::TMP_DIR, "#{image.id}.#{extension}")
     File.open(image.path_tmp, 'wb') do |f|
       f.write file.read
     end
 
     # If we're here, the upload was successful
-    image.path = File.join(CMS::MULTIMEDIA_DIR, "/#{image.id}.jpg")
+    image.path = File.join(::MULTIMEDIA_DIR, "/#{image.id}.jpg")
     if image.save
-      CMS::Workers::ImageConverter.perform_async(image.id)  # First Sidekiq usage here!
+      Workers::ImageConverter.perform_async(image.id)  # First Sidekiq usage here!
       redirect '/images'
     else
       redirect '/image/create'
