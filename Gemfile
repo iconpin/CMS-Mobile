@@ -1,6 +1,5 @@
 source 'https://rubygems.org'
 gem 'sinatra'
-gem 'sinatra-flash'
 gem 'rack'
 gem 'rack-flash3'
 gem 'warden'
