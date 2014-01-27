@@ -358,9 +358,26 @@ class CMS < Sinatra::Base
     env['warden'].authenticate!
 
     name = params['name']
+    description = params['description']
     coord_x = params['coord_x']
     coord_y = params['coord_y']
-    # TODO: implement
+
+    success = Models::Point.create(
+      :name => name,
+      :description => description,
+      :coord_x => coord_x,
+      :coord_y => coord_y,
+      :created_at => Time.now,
+      :updated_at => Time.now
+    )
+
+    if success
+      flash.success = "Punt creat amb èxit"
+      redirect '/points'
+    else
+      flash.error = "No s'ha pogut crear el punt"
+      redirect '/point/create'
+    end
   end
 
 end
