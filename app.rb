@@ -348,4 +348,19 @@ class CMS < Sinatra::Base
     mustache :points
   end
 
+  get '/points/create' do
+    env['warden'].authenticate!
+
+    mustache :point_create
+  end
+
+  post '/points/create' do
+    env['warden'].authenticate!
+
+    name = params['name']
+    coord_x = params['coord_x']
+    coord_y = params['coord_y']
+    # TODO: implement
+  end
+
 end
