@@ -9,6 +9,10 @@ class CMS
         @current_user
       end
 
+      def admin
+        @current_user.admin?
+      end
+
       def flash
         @flash
       end
