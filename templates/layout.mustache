@@ -44,11 +44,11 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="/">Inici</a></li>
-          <li><a href="/multimedia">Multimedia</a></li>
-          <li><a href="/points">Punts</a></li>
+          <li class="active"><a href="/"><span class="glyphicon glyphicon-home"></span> Inici</a></li>
+          <li><a href="/multimedia"><span class="glyphicon glyphicon-film"></span> Multimedia</a></li>
+          <li><a href="/points"><span class="glyphicon glyphicon-map-marker"></span> Punts</a></li>
           {{#admin}}
-          <li><a href="/users">Usuaris</a></li>
+          <li><a href="/users"><span class="glyphicon glyphicon-user"></span> Usuaris</a></li>
           {{/admin}}
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -57,14 +57,14 @@
             {{#guest}}
             <li>
             <form class="navbar-form" action="/login" method="GET">
-              <button type="submit" class="btn btn-sm btn-success">Entra</button>
+              <button type="submit" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-log-in"></span> Entra</button>
             </form>
             </li>
             {{/guest}}
             {{^guest}}
             <li>
             <form class="navbar-form" action="/logout" method="GET">
-              <button type="submit" class="btn btn-sm btn-danger">Surt</button>
+              <button type="submit" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-log-out"></span> Surt</button>
             </form>
             </li>
             {{/guest}}
