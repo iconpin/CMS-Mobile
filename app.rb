@@ -44,7 +44,7 @@ class CMS < Sinatra::Base
     end
 
     def authenticate!
-      user = CMS::Models::User.first(:email => params['name'])
+      user = CMS::Models::User.first(:email => params['email'])
 
       if user.nil?
         fail!("No hi ha cap usuari amb el correu electrònic introduït")
@@ -52,6 +52,7 @@ class CMS < Sinatra::Base
         user.update(:last_login => Time.now)
         success!(user)
       else
+        flash[:error] = "El correu electrònic o la contrasenya són incorrectes"
         fail!("No s'ha pogut fet login")
       end
     end
