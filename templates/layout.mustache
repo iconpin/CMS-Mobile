@@ -54,10 +54,18 @@
           {{#user}}
             <li><a href="#">Hola, {{name}}</a></li>
             {{#guest}}
-              <li><a href="/login">Entra</a></li>
+            <li>
+            <form class="navbar-form" action="/login" method="GET">
+              <button type="submit" class="btn btn-sm btn-success">Entra</button>
+            </form>
+            </li>
             {{/guest}}
             {{^guest}}
-              <li><a href="/logout">Surt</a></li>
+            <li>
+            <form class="navbar-form" action="/logout" method="GET">
+              <button type="submit" class="btn btn-sm btn-danger">Surt</button>
+            </form>
+            </li>
             {{/guest}}
           {{/user}}
         </ul>
