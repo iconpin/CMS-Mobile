@@ -17,7 +17,7 @@ A CMS.
 - mini\_magick
 - sidekiq
 
-## Deployment dependencies
+## System dependencies
 
 - Application tested with Ruby 2.0 and 2.1.
 - SQL DB (defaults to SQLite3)
