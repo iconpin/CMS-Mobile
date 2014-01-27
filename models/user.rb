@@ -8,6 +8,7 @@ class CMS
       property :name, String, :required => true
       property :email, String, :required => true, :unique => true
       property :password, BCryptHash, :required => true
+      property :admin, Boolean, :required => true, :default => false
       property :created_at, DateTime, :required => true
       property :updated_at, DateTime, :required => true
       property :last_login, DateTime
@@ -21,6 +22,10 @@ class CMS
         else
           false
         end
+      end
+
+      def admin?
+        self.admin
       end
     end
   end
