@@ -1,0 +1,5 @@
+{
+  "admin": false,
+  "multimedia": "./multimedia",
+  "tmp": "./tmp"
+}

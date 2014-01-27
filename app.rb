@@ -3,12 +3,15 @@ require 'rack/flash'
 require 'data_mapper'
 require 'warden'
 require 'mustache/sinatra'
+require 'json'
 
 
 class CMS < Sinatra::Base
-  # Multimedia storage configuration
-  MULTIMEDIA_DIR = './multimedia'
-  TMP_DIR = './tmp'
+  # Initial config
+  CONFIG = JSON.parse(File.open("#{Dir.pwd}/configuration.json"))
+  HAS_ADMIN = CONFIG["admin"]
+  MULTIMEDIA_DIR = CONFIG["multimedia"]
+  TMP_DIR = CONFIG["tmp"]
 
   # DataMapper configuration
   require_relative 'models/user'
