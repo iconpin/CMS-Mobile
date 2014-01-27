@@ -176,13 +176,16 @@ class CMS < Sinatra::Base
   post '/user/destroy' do
     env['warden'].authenticate!
 
-    email = params["email"]
+    email = params['email']
     if @current_user.email == email
       flash.error = "No pots esborrar-te a tu mateix"
-    elsif Models::User.destroy(:email => email)
-      flash.success = "Usuari #{email} esborrat amb èxit"
     else
-      flash.error = "No s'ha pogut esborrar l'usuari"
+      user = Models::User.first(:email => email)
+      if user.destroy
+        flash.success = "Usuari #{email} esborrat amb èxit"
+      else
+        flash.error = "No s'ha pogut esborrar l'usuari"
+      end
     end
     redirect '/users'
   end
