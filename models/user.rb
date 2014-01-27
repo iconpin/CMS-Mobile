@@ -28,8 +28,26 @@ class CMS
         self.admin
       end
 
+      def guest?
+        false
+      end
+
       def self.has_admin?
         count(:admin => true) > 0
+      end
+    end
+
+    class Guest
+      def admin?
+        false
+      end
+
+      def name
+        "convidat/ada"
+      end
+
+      def guest?
+        true
       end
     end
   end

@@ -46,15 +46,19 @@
         <ul class="nav navbar-nav">
           <li class="active"><a href="/">Inici</a></li>
           <li><a href="/points">Punts</a></li>
+          {{#admin}}
           <li><a href="/users">Usuaris</a></li>
+          {{/admin}}
         </ul>
         <ul class="nav navbar-nav navbar-right">
           {{#user}}
-          <li><a href="#">Hola, {{name}}</a></li>
-          <li><a href="/logout">Surt</a></li>
-          {{/user}}
-          {{^user}}
-          <li><a href="/login">Entra</a></li>
+            <li><a href="#">Hola, {{name}}</a></li>
+            {{#guest}}
+              <li><a href="/login">Entra</a></li>
+            {{/guest}}
+            {{^guest}}
+              <li><a href="/logout">Surt</a></li>
+            {{/guest}}
           {{/user}}
         </ul>
       </div><!--/.nav-collapse -->

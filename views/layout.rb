@@ -13,6 +13,10 @@ class CMS
         @current_user.admin?
       end
 
+      def guest
+        @current_user.guest?
+      end
+
       def flash
         @flash
       end

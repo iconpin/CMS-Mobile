@@ -84,7 +84,7 @@ class CMS < Sinatra::Base
 
 
   before do
-    @current_user = env['warden'].user
+    @current_user = env['warden'].user || Models::Guest.new
     @flash = flash
   end
 
