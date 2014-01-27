@@ -15,7 +15,7 @@ class CMS < Sinatra::Base
   require_relative 'models/point'
   require_relative 'models/multimedia'
 
-  DataMapper::setup(:default, CONFIG['database']['uri'])
+  DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/database.db")
   DataMapper.finalize
 
   CMS::Models::User.auto_upgrade!
