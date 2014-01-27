@@ -131,12 +131,20 @@ class CMS < Sinatra::Base
 
   get '/user/create' do
     env['warden'].authenticate!
+    unless @current_user.admin?
+      flash.error = "Un usuari no administrador no pot crear nous usuaris"
+      redirect '/'
+    end
 
     mustache :user_create
   end
 
   post '/user/create' do
     env['warden'].authenticate!
+    unless @current_user.admin?
+      flash.error = "Un usuari no administrador no pot crear nous usuaris"
+      redirect '/'
+    end
 
     name = params['name']
     password = params['password']
@@ -165,13 +173,13 @@ class CMS < Sinatra::Base
     end
   end
 
-  post '/user/delete' do
+  post '/user/destroy' do
     env['warden'].authenticate!
 
     email = params["email"]
     if @current_user.email == email
       flash.error = "No pots esborrar-te a tu mateix"
-    elsif Models::User.delete(:email => email)
+    elsif Models::User.destroy(:email => email)
       flash.success = "Usuari #{email} esborrat amb èxit"
     else
       flash.error = "No s'ha pogut esborrar l'usuari"
