@@ -9,7 +9,9 @@
   </tr>
   {{#list_user}}
   <tr>
-    <td>{{name}}</td>
+    <td>
+      {{name}} {{#admin}}<span class="label label-info">admin</span>{{/admin}}
+    </td>
     <td>{{email}}</td>
     <td>{{created_at}}</td>
     <td>{{updated_at}}</td>
