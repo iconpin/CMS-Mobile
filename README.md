@@ -7,7 +7,7 @@ A CMS.
 - Transcoding of multimedia (audio, video, images)
 - Allows management of PoI data
 
-## Dependencies
+## Ruby dependencies
 
 - sinatra
 - data\_mapper
@@ -17,8 +17,12 @@ A CMS.
 - mini\_magick
 - sidekiq
 
-## Deployment Requirements
+## Deployment dependencies
 
 - Application tested with Ruby 2.0 and 2.1.
 - SQL DB (defaults to SQLite3)
 - Redis (needed by Sidekiq for background asynchronous processing)
+
+## Deployment
+
+TODO
