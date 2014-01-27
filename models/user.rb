@@ -38,6 +38,8 @@ class CMS
     end
 
     class Guest
+      # Duck types a User, but it does not inherit any DataMapper behaviour
+
       def admin?
         false
       end
