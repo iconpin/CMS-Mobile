@@ -154,14 +154,14 @@ class CMS < Sinatra::Base
     end
   end
 
-  post '/user/:name/delete' do
+  post '/user/delete' do
     env['warden'].authenticate!
 
-    name = params["name"]
-    if @current_user.name == name
+    email = params["email"]
+    if @current_user.email == email
       flash.error = "No pots esborrar-te a tu mateix"
-    elsif CMS::Models::User.delete(:name => name)
-      flash.success = "Usuari esborrat amb èxit"
+    elsif CMS::Models::User.delete(:email => email)
+      flash.success = "Usuari #{email} esborrat amb èxit"
     else
       flash.error = "No s'ha pogut esborrar l'usuari"
     end
