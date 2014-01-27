@@ -138,20 +138,26 @@ class CMS < Sinatra::Base
   post '/user/create' do
     env['warden'].authenticate!
 
-    name = params["name"]
-    password = params["password"]
-    password_confirm = params["password_confirm"]
-    email = params["email"]
+    name = params['name']
+    password = params['password']
+    password_confirm = params['password_confirm']
+    email = params['email']
+    admin = params['admin']
     redirect '/user/create' unless password == password_confirm
     success = Models::User.create(
       :name => name,
       :email => email,
       :password => password,
       :created_at => Time.now,
-      :updated_at => Time.now
+      :updated_at => Time.now,
+      :admin => admin
     )
     unless success
-      flash.success = "Usuari creat amb èxit"
+      if admin
+        flash.success = "Usuari administrador creat amb èxit"
+      else
+        flash.success = "Usuari creat amb èxit"
+      end
       redirect '/user/create'
     else
       flash.error = "Hi ha hagut un problema. Comprova les dades"
