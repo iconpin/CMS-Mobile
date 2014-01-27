@@ -3,22 +3,19 @@ require 'rack/flash'
 require 'data_mapper'
 require 'warden'
 require 'mustache/sinatra'
-require 'json'
 
 
 class CMS < Sinatra::Base
-  # Initial config
-  CONFIG = JSON.parse(File.open("#{Dir.pwd}/configuration.json"))
-  HAS_ADMIN = CONFIG["admin"]
-  MULTIMEDIA_DIR = CONFIG["multimedia"]
-  TMP_DIR = CONFIG["tmp"]
+  # Storage config
+  MULTIMEDIA_DIR = "#{Dir.pwd}/storage/multimedia"
+  TMP_DIR = "#{Dir.pwd}/storage/tmp"
 
   # DataMapper configuration
   require_relative 'models/user'
   require_relative 'models/point'
   require_relative 'models/multimedia'
 
-  DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/database.db")
+  DataMapper::setup(:default, CONFIG['database']['uri'])
   DataMapper.finalize
 
   CMS::Models::User.auto_upgrade!
@@ -63,7 +60,7 @@ class CMS < Sinatra::Base
 
   # Rack::Flash configuration
   #enable :sessions
-  use Rack::Flash, :accessorize => [:error, :success]
+  use Rack::Flash, :accessorize => [:error, :success, :info]
 
 
   # Mustache configuration
@@ -92,6 +89,10 @@ class CMS < Sinatra::Base
   end
 
   get '/' do
+    unless ::Models::User.has_admin?
+      flash.info = "Aquest nou usuari serà l'administrador"
+      redirect '/register'
+    end
     mustache :home
   end
 
@@ -104,24 +105,25 @@ class CMS < Sinatra::Base
     password = params["password"]
     password_confirm = params["password_confirm"]
     email = params["email"]
-    redirect '/register' unless password == password_confirm
+    unless ::Models::User.has_admin?
+      admin = true
+    end
+    if password != password_confirm
+      flash[:error] = "Les contrasenyes no coincideixen"
+      redirect '/register'
+    end
     success = CMS::Models::User.create(
       :name => name,
       :email => email,
       :password => password,
       :created_at => Time.now,
-      :updated_at => Time.now
+      :updated_at => Time.now,
+      :admin => admin
     )
     unless success
       flash.error = "Hi ha hagut un problema amb el registre. Prova un altre cop"
       redirect '/register'
     else
-      # Send email
-      # Pony.mail :to => email,
-      #           :from => 'cheesemousesystem@i2cat.net',
-      #           :subject => 'Welcome to Cheese Mouse System',
-      #           :body => mustache(:email),
-      #           :via => :sendmail
       flash.success = "T'has registrat amb èxit. Ara ja pots entrar"
       redirect '/login'
     end

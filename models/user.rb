@@ -27,6 +27,10 @@ class CMS
       def admin?
         self.admin
       end
+
+      def has_admin?
+        count(:admin => true) > 0
+      end
     end
   end
 end
