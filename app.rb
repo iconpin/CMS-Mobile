@@ -420,4 +420,20 @@ class CMS < Sinatra::Base
     end
     redirect '/points'
   end
+
+  get '/point/edit' do
+    env['warden'].authenticate!
+
+    id = params['id']
+    point = Models::Point.get(id)
+    if point.nil?
+      flash.error = "El punt no existeix"
+      redirect '/points'
+    end
+
+    @current_point = point
+
+    mustache :point_edit
+  end
+
 end
