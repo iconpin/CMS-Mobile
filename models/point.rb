@@ -13,7 +13,7 @@ class CMS
       property :created_at, DateTime, :required => true
       property :updated_at, DateTime, :required => true
 
-      has n, :multimedias
+      has n, :multimedias, :required => false
     end
   end
 end
