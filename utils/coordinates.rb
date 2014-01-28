@@ -15,8 +15,13 @@ class CMS
 
       def self.parse text
         match = text.match(/(-?\d+)º (\d+)' (\d+)'' (-?\d+)º (\d+)' (\d+)''/)
-        latitude = dms_to_degrees(*match[1..3].map {|x| x.to_f})
-        longitude = dms_to_degrees(*match[4..6].map {|x| x.to_f})
+        if match
+          latitude = dms_to_degrees(*match[1..3].map {|x| x.to_f})
+          longitude = dms_to_degrees(*match[4..6].map {|x| x.to_f})
+        else
+          latitude = text.split(",").first.to_f
+          longitude = text.split(",").last.to_f
+        end
         [latitude, longitude]
       end
     end
