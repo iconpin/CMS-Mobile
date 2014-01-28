@@ -126,7 +126,7 @@ class CMS < Sinatra::Base
       flash[:error] = "Les contrasenyes no coincideixen"
       redirect '/register'
     end
-    success = Models::User.create(
+    user = Models::User.create(
       :name => name,
       :email => email,
       :password => password,
@@ -134,7 +134,7 @@ class CMS < Sinatra::Base
       :updated_at => Time.now,
       :admin => admin
     )
-    unless success
+    unless user.saved?
       flash.error = "Hi ha hagut un problema amb el registre. Prova un altre cop"
       redirect '/register'
     else
@@ -169,7 +169,7 @@ class CMS < Sinatra::Base
       flash[:error] = "Les contrasenyes no coincideixen"
       redirect '/user/create'
     end
-    success = Models::User.create(
+    user = Models::User.create(
       :name => name,
       :email => email,
       :password => password,
@@ -177,7 +177,7 @@ class CMS < Sinatra::Base
       :updated_at => Time.now,
       :admin => admin
     )
-    if success
+    if user.saved?
       if admin
         flash.success = "Usuari administrador creat amb èxit"
       else
@@ -242,36 +242,6 @@ class CMS < Sinatra::Base
     env['warden'].authenticate! # I <3 Ruby
 
     mustache :users
-  end
-
-  get '/point/create' do
-    env['warden'].authenticate!
-
-    mustache :point_create
-  end
-
-  post '/point/create' do
-    env['warden'].authenticate!
-
-    name = params['name']
-    description = params['description']
-    coord_x = params['coord_x']
-    coord_y = params['coord_y']
-
-    success = Models::Point.create(
-      :name => name,
-      :description => description,
-      :coord_x => coord_x,
-      :coord_y => coord_y,
-      :created_at => Time.now,
-      :updated_at => Time.now
-    )
-
-    if success
-      redirect '/points'
-    else
-      redirect '/point/create'
-    end
   end
 
   get '/image/create' do
@@ -352,20 +322,20 @@ class CMS < Sinatra::Base
     mustache :points
   end
 
-  get '/points/create' do
+  get '/point/create' do
     env['warden'].authenticate!
 
     mustache :point_create
   end
 
-  post '/points/create' do
+  post '/point/create' do
     env['warden'].authenticate!
 
     name = params['name']
     description = params['description']
-    coord_x, coord_y = Utils::Coordinates.parse(params['coords'])
+    coord_x, coord_y = Utils::Coordinates.parse_dms_pair(params['coords'])
 
-    success = Models::Point.create(
+    point = Models::Point.create(
       :name => name,
       :description => description,
       :coord_x => coord_x,
@@ -374,7 +344,7 @@ class CMS < Sinatra::Base
       :updated_at => Time.now
     )
 
-    if success
+    if point.saved?
       flash.success = "Punt creat amb èxit"
       redirect '/points'
     else
@@ -382,5 +352,4 @@ class CMS < Sinatra::Base
       redirect '/point/create'
     end
   end
-
 end
