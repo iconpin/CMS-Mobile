@@ -348,7 +348,7 @@ class CMS < Sinatra::Base
       flash.success = "Punt creat amb èxit"
       redirect '/points'
     else
-      flash.error = "No s'ha pogut crear el punt"
+      flash.error = "No s'ha pogut crear el punt: #{point.errors.on(:coord_x)}"
       redirect '/point/create'
     end
   end

@@ -17,7 +17,6 @@ class CMS
             :created_at => (p.created_at + Rational(1, 24)).strftime("%Y/%m/%d %H:%M:%S"),
             :updated_at =>  (p.updated_at + Rational(1, 24)).strftime("%Y/%m/%d %H:%M:%S"),
             :published => p.published,
-            :ready => p.ready,
             :link => "/point/#{p.id}"
           }
         end
