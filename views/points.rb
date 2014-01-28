@@ -1,6 +1,10 @@
 class CMS
   module Views
     class Points < Layout
+      def count
+        CMS::Models::Point.count
+      end
+
       def list_point
         list = []
         CMS::Models::Point.all.each do |p|
