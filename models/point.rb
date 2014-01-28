@@ -13,8 +13,9 @@ class CMS
       property :created_at, DateTime, :required => true
       property :updated_at, DateTime, :required => true
       property :published, Boolean, :required => true, :default => false
+      property :deleted_at, ParanoidDateTime
 
-      has n, :multimedias, :required => false
+      has n, :multimedias
     end
   end
 end
