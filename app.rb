@@ -193,6 +193,11 @@ class CMS < Sinatra::Base
   post '/user/destroy' do
     env['warden'].authenticate!
 
+    unless @current_user.admin?
+      flash.error = "Un usuari no administrador no pot esborrar usuaris"
+      redirect '/'
+    end
+
     email = params['email']
     if @current_user.email == email
       flash.error = "No pots esborrar-te a tu mateix"
@@ -240,6 +245,11 @@ class CMS < Sinatra::Base
 
   get '/users' do
     env['warden'].authenticate! # I <3 Ruby
+
+    unless @current_user.admin?
+      flash.error = "Un usuari no administrador no pot gestionar usuaris"
+      redirect '/'
+    end
 
     mustache :users
   end
@@ -351,5 +361,63 @@ class CMS < Sinatra::Base
       flash.error = "No s'ha pogut crear el punt: #{point.errors.on(:coord_x)}"
       redirect '/point/create'
     end
+  end
+
+  post '/point/destroy' do
+    env['warden'].authenticate!
+
+    id = params['id']
+    point = Models::Point.get(id)
+    if point.nil?
+      flash.error = "El punt no existeix"
+      redirect '/points'
+    end
+
+    if point.destroy
+      flash.success = "Punt eliminat amb èxit"
+    else
+      flash.error = "El punt no s'ha pogut eliminar"
+    end
+    redirect '/points'
+  end
+
+  post '/point/publish' do
+    env['warden'].authenticate!
+
+    id = params['id']
+    point = Models::Point.get(id)
+    if point.nil?
+      flash.error = "El punt no existeix"
+      redirect '/points'
+    end
+
+    point.published = true
+
+    if point.save
+      flash.success = "Punt publicat amb èxit"
+    else
+      flash.error = "No s'ha pogut publicar el punt"
+    end
+    redirect '/points'
+  end
+
+  post '/point/unpublish' do
+    env['warden'].authenticate!
+
+    id = params['id']
+    point = Models::Point.get(id)
+    if point.nil?
+      flash.error = "El punt no existeix"
+      redirect '/points'
+    end
+
+    point.published = false
+
+    if point.save
+      flash.success = "Punt ocultat amb èxit"
+    else
+      flash.error = "No s'ha pogut ocultar el punt"
+    end
+    redirect '/points'
   end
 end
