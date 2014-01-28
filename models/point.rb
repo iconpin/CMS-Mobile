@@ -6,7 +6,7 @@ class CMS
       include DataMapper::Resource
       property :id, Serial
       property :name, String, :length => 255, :required => true, :unique => true
-      property :description, Text, :required => true
+      property :description, Text, :required => true, :lazy => false
       property :coord_x, Float, :required => true
       property :coord_y, Float, :required => true
       property :weight, Integer, :required => true, :default => 0

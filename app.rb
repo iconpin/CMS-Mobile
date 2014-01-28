@@ -76,6 +76,7 @@ class CMS < Sinatra::Base
   require_relative 'views/image_create'
   require_relative 'views/points'
   require_relative 'views/point_create'
+  require_relative 'views/point_edit'
 
   set :mustache, {
     :views => 'views',
@@ -434,6 +435,36 @@ class CMS < Sinatra::Base
     @current_point = point
 
     mustache :point_edit
+  end
+
+  post '/point/edit' do
+    env['warden'].authenticate!
+
+    id = params['id']
+    name = params['name']
+    description = params['description']
+    coord_x, coord_y = Utils::Coordinates.parse(params['coords'])
+
+    point = Models::Point.get(id)
+    if point.nil?
+      flash.error = "El punt no existeix"
+      redirect '/points'
+    end
+
+    success = point.update(
+      :name => name,
+      :description => description,
+      :coord_x => coord_x,
+      :coord_y => coord_y,
+      :updated_at => Time.now
+    )
+    if success
+      flash.success = "Punt actualitzat amb èxit"
+      redirect '/points'
+    else
+      flash.error = "No s'ha pogut actualitzar el punt"
+      redirect_back
+    end
   end
 
 end
