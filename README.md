@@ -17,6 +17,13 @@ A CMS.
 - mini\_magick
 - sidekiq
 
+## Front-end stuff
+
+Distributed with the application.
+
+- Twitter Bootstrap
+- nod.js (for validation)
+
 ## System dependencies
 
 - Application tested with Ruby 2.0 and 2.1.
@@ -26,3 +33,11 @@ A CMS.
 ## Deployment
 
 TODO
+
+## Project structure
+
+- `app.rb` contains the main Sinatra application
+- `views`
+- `templates`
+- `workers`
+- `utils`
