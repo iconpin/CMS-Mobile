@@ -333,7 +333,7 @@ class CMS < Sinatra::Base
 
     name = params['name']
     description = params['description']
-    coord_x, coord_y = Utils::Coordinates.parse_dms_pair(params['coords'])
+    coord_x, coord_y = Utils::Coordinates.parse(params['coords'])
 
     point = Models::Point.create(
       :name => name,
