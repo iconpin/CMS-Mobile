@@ -445,6 +445,10 @@ class CMS < Sinatra::Base
     description = params['description']
     coord_x, coord_y = Utils::Coordinates.parse(params['coords'])
     published = (params['published'] == 'on')
+    multimedia_main = params['multimedia-main']
+    multimedia_main.each do |m|
+      puts m
+    end
 
     point = Models::Point.get(id)
     if point.nil?
