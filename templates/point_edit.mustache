@@ -9,6 +9,12 @@
   <div class="form-group">
     <input type="text" name="coords" class="form-control" value="{{coord_x}}, {{coord_y}}" placeholder="Coordenades (latitud i longitud)" required>
   </div>
+  <div class="form-group">
+    <div class="checkbox">
+      <input type="checkbox" name="published" {{#published}}checked{{/published}}></input>
+      <label>Públic</label>
+    </div>
+  </div>
   <ul class="list-inline">
     <li>
       <div class="form-group form-inline">

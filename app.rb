@@ -444,6 +444,7 @@ class CMS < Sinatra::Base
     name = params['name']
     description = params['description']
     coord_x, coord_y = Utils::Coordinates.parse(params['coords'])
+    published = (params['published'] == 'on')
 
     point = Models::Point.get(id)
     if point.nil?
@@ -456,7 +457,8 @@ class CMS < Sinatra::Base
       :description => description,
       :coord_x => coord_x,
       :coord_y => coord_y,
-      :updated_at => Time.now
+      :updated_at => Time.now,
+      :published => published
     )
     if success
       flash.success = "Punt actualitzat amb èxit"
