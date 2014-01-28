@@ -1,5 +1,11 @@
-  <form class="form-signin" role="form" action="/login" method="POST">
-    <input type="text" name="email" class="form-control" placeholder="Correu electrònic" required autofocus>
-    <input type="password" name="password" class="form-control" placeholder="Contrasenya" required>
+<form id="login" class="form-signin" role="form" action="/login" method="POST">
+  <div class="control-group">
+    <input id="login-email" type="text" name="email" class="form-control" placeholder="Correu electrònic" required autofocus>
+  </div>
+  <div class="control-group">
+    <input id="login-password" type="password" name="password" class="form-control" placeholder="Contrasenya" required>
+  </div>
+  <div class="control-group">
     <button class="btn btn-lg btn-primary btn-block" type="submit">Entra</button>
-  </form>
+  </div>
+</form>
