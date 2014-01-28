@@ -1,14 +1,26 @@
-<form role="form" class="form-signin" enctype="multipart/form-data" action="/image/create" method="POST">
+<form id="image-create" role="form" class="form-signin" enctype="multipart/form-data" action="/image/create" method="POST">
   <div class="form-group">
-    <input type="text" name="name" class="form-control" placeholder="Nom" required autofocus>
+    <input id="image-create-name" type="text" name="name" class="form-control" placeholder="Nom" required autofocus>
   </div>
   <div class="form-group">
-    <textarea name="description" class="form-control" rows="3" placeholder="Descripció" required autofocus></textarea>
+    <textarea id="image-create-description" name="description" class="form-control" rows="3" placeholder="Descripció" required autofocus></textarea>
   </div>
   <div class="form-group">
-    <input name="file" type="file" class="form-control">
+    <input id="image-create-file" name="file" type="file" class="form-control">
   </div>
   <div class="form-group">
     <button class="btn btn-lg btn-primary btn-block" type="submit">Envia</button>
   </div>
 </form>
+
+<script>
+$(document).ready(function(){
+    var metrics = [
+      ['#image-create-name', 'presence', "Introdueix el nom"],
+      ['#image-create-description', 'presence', "Introdueix la descripció"],
+      ['#image-create-file', 'presence', "Selecciona un fitxer"]
+    ];
+
+    $("form#image-create").nod(metrics, nod_options);
+});
+</script>
