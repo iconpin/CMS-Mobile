@@ -34,6 +34,11 @@ class CMS < Sinatra::Base
     config.failure_app = self
   end
 
+  # Controllers
+  require_relative 'controllers/user'
+  require_relative 'controllers/point'
+  require_relative 'controllers/multimedia'
+
   Warden::Manager.before_failure do |env, opts|
     env['REQUEST_METHOD'] = 'POST'
   end
@@ -97,6 +102,7 @@ class CMS < Sinatra::Base
   helpers do
     def protect!
       env['warden'].authenticate!
+      @flash.success = "T'has identificat amb èxit"
     end
 
     def admin! msg
@@ -110,51 +116,34 @@ class CMS < Sinatra::Base
   end
 
   get '/' do
-    unless Models::User.has_admin?
+    unless Controllers::User.has_admin?
       flash.info = "Aquest nou usuari serà l'administrador"
       redirect '/register'
     end
+
     mustache :home
   end
 
   get '/register' do
-    if Models::User.has_admin?
+    if Controllers::User.has_admin?
       flash.error = "Ja existeix un usuari administrador. Demana-li accés"
       redirect '/'
     end
+
     mustache :register
   end
 
   post '/register' do
-    if Models::User.has_admin?
+    if Controllers::User.has_admin?
       flash.error = "Ja existeix un usuari administrador. Demana-li accés"
       redirect '/'
     end
 
-    name = params["name"]
-    password = params["password"]
-    password_confirm = params["password_confirm"]
-    email = params["email"]
-    unless Models::User.has_admin?
-      admin = true
-    end
-    if password != password_confirm
-      flash[:error] = "Les contrasenyes no coincideixen"
-      redirect '/register'
-    end
-    user = Models::User.create(
-      :name => name,
-      :email => email,
-      :password => password,
-      :created_at => Time.now,
-      :updated_at => Time.now,
-      :admin => admin
-    )
-    unless user.saved?
-      flash.error = "Hi ha hagut un problema amb el registre. Prova un altre cop"
+    user = Controllers::User.create_admin(params)
+
+    if user.nil?
       redirect '/register'
     else
-      flash.success = "T'has registrat amb èxit. Ara ja pots entrar"
       redirect '/login'
     end
   end
@@ -167,50 +156,19 @@ class CMS < Sinatra::Base
   post '/user/create' do
     admin! "Un usuari no administrador no pot crear nous usuaris"
 
-    name = params['name']
-    password = params['password']
-    password_confirm = params['password_confirm']
-    email = params['email']
-    admin = (params['admin'] == 'on')
-    if password != password_confirm
-      flash[:error] = "Les contrasenyes no coincideixen"
+    user = Controllers::User.create(params)
+
+    if user.nil?
       redirect '/user/create'
-    end
-    user = Models::User.create(
-      :name => name,
-      :email => email,
-      :password => password,
-      :created_at => Time.now,
-      :updated_at => Time.now,
-      :admin => admin
-    )
-    if user.saved?
-      if admin
-        flash.success = "Usuari administrador creat amb èxit"
-      else
-        flash.success = "Usuari creat amb èxit"
-      end
-      redirect '/users'
     else
-      flash.error = "Hi ha hagut un problema. Comprova les dades"
-      redirect '/user/create'
+      redirect '/users'
     end
   end
 
   post '/user/destroy' do
     admin! "Un usuari no administrador no pot esborrar usuaris"
 
-    email = params['email']
-    if @current_user.email == email
-      flash.error = "No pots esborrar-te a tu mateix"
-    else
-      user = Models::User.first(:email => email)
-      if user.destroy
-        flash.success = "Usuari #{email} esborrat amb èxit"
-      else
-        flash.error = "No s'ha pogut esborrar l'usuari"
-      end
-    end
+    Controllers::User.destroy(params['email'])
     redirect '/users'
   end
 
@@ -221,7 +179,6 @@ class CMS < Sinatra::Base
   post '/login' do
     protect!
 
-    flash.success = "T'has indentificat amb èxit"
     if session[:return_to].nil?
       redirect '/'
     else
