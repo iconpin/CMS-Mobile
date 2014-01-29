@@ -1,0 +1,21 @@
+%form#video-create.form-signin{:role => "form", :enctype => "multipart/form-data", :action => "/video/create", :method => "POST"}
+  .form-group
+    %input#video-create-name.form-control{:type => "text", :name => "name", :placeholder => "Nom", :required => true, :autofocus => true}
+  .form-group
+    %textarea#video-create-description.form-control{:name => "description", :rows => "3", :placeholder => "Descripció", :required => true, :autofocus => true}
+  .form-group
+    %input#video-create-file.form-control{:name => "file", :type => "file"}
+  .form-group
+    %button.btn.btn-lg.btn-primary.btn-block{:type => "submit"}
+      Envia
+
+%script
+  $(document).ready(function(){
+  var metrics = [
+  ['#video-create-name', 'presence', "Introdueix el nom"],
+  ['#video-create-description', 'presence', "Introdueix la descripció"],
+  ['#video-create-file', 'presence', "Selecciona un fitxer"]
+  ];
+
+  $("form#video-create").nod(metrics, nod_options);
+  });
