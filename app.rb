@@ -80,6 +80,7 @@ class CMS < Sinatra::Base
   require_relative 'views/multimedia'
   require_relative 'views/image_create'
   require_relative 'views/points'
+  require_relative 'views/point'
   require_relative 'views/point_create'
   require_relative 'views/point_edit'
 
@@ -251,6 +252,18 @@ class CMS < Sinatra::Base
       flash.error = "No s'ha pogut destruir el multimedia"
     end
     redirect '/multimedia'
+  end
+
+  get '/point' do
+    protect!
+
+    @current_point = Controllers::Point.get(params)
+    if @current_point.nil?
+      flash.error = "El punt no existeix"
+      redirect '/points'
+    else
+      mustache :point
+    end
   end
 
   get '/points' do
