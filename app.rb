@@ -258,7 +258,7 @@ class CMS < Sinatra::Base
   get '/points' do
     protect!
 
-    @point_list = Models::Point.all(:order => [:weight.desc])
+    @point_list = Models::Point.all(:order => [:weight.asc])
     haml :points
   end
 
