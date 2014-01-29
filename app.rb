@@ -253,24 +253,9 @@ class CMS < Sinatra::Base
   post '/point/create' do
     protect!
 
-    name = params['name']
-    description = params['description']
-    coord_x, coord_y = Utils::Coordinates.parse(params['coords'])
-
-    point = Models::Point.create(
-      :name => name,
-      :description => description,
-      :coord_x => coord_x,
-      :coord_y => coord_y,
-      :created_at => Time.now,
-      :updated_at => Time.now
-    )
-
-    if point.saved?
-      flash.success = "Punt creat amb èxit"
+    if Controllers::Point.create(params)
       redirect '/points'
     else
-      flash.error = "No s'ha pogut crear el punt: #{point.errors.on(:coord_x)}"
       redirect '/point/create'
     end
   end
@@ -278,72 +263,31 @@ class CMS < Sinatra::Base
   post '/point/destroy' do
     protect!
 
-    id = params['id']
-    point = Models::Point.get(id)
-    if point.nil?
-      flash.error = "El punt no existeix"
-      redirect '/points'
-    end
-
-    if point.destroy
-      flash.success = "Punt eliminat amb èxit"
-    else
-      flash.error = "El punt no s'ha pogut eliminar"
-    end
+    Controllers::Point.destroy(params)
     redirect '/points'
   end
 
   post '/point/publish' do
     protect!
 
-    id = params['id']
-    point = Models::Point.get(id)
-    if point.nil?
-      flash.error = "El punt no existeix"
-      redirect '/points'
-    end
-
-    point.published = true
-
-    if point.save
-      flash.success = "Punt publicat amb èxit"
-    else
-      flash.error = "No s'ha pogut publicar el punt"
-    end
+    Controllers::Point.publish(params)
     redirect '/points'
   end
 
   post '/point/unpublish' do
     protect!
 
-    id = params['id']
-    point = Models::Point.get(id)
-    if point.nil?
-      flash.error = "El punt no existeix"
-      redirect '/points'
-    end
-
-    point.published = false
-
-    if point.save
-      flash.success = "Punt ocultat amb èxit"
-    else
-      flash.error = "No s'ha pogut ocultar el punt"
-    end
+    Controllers::Point.unpublish(params)
     redirect '/points'
   end
 
   get '/point/edit' do
     protect!
 
-    id = params['id']
-    point = Models::Point.get(id)
-    if point.nil?
-      flash.error = "El punt no existeix"
+    @current_point = Controllers::Point.get(params)
+    if @current_point.nil?
       redirect '/points'
     end
-
-    @current_point = point
 
     mustache :point_edit
   end
@@ -351,35 +295,9 @@ class CMS < Sinatra::Base
   post '/point/edit' do
     protect!
 
-    id = params['id']
-    name = params['name']
-    description = params['description']
-    coord_x, coord_y = Utils::Coordinates.parse(params['coords'])
-    published = (params['published'] == 'on')
-    multimedia_main = params['multimedia-main']
-    multimedia_main.each do |m|
-      puts m
-    end
-
-    point = Models::Point.get(id)
-    if point.nil?
-      flash.error = "El punt no existeix"
-      redirect '/points'
-    end
-
-    success = point.update(
-      :name => name,
-      :description => description,
-      :coord_x => coord_x,
-      :coord_y => coord_y,
-      :updated_at => Time.now,
-      :published => published
-    )
-    if success
-      flash.success = "Punt actualitzat amb èxit"
+    if Controllers::Point.edit(params)
       redirect '/points'
     else
-      flash.error = "No s'ha pogut actualitzar el punt"
       redirect_back
     end
   end
