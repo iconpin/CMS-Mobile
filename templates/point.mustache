@@ -1,11 +1,83 @@
 {{#point}}
 <div class="panel panel-default">
   <div class="panel-heading">
-    {{name}}
+    <h3>{{name}}</h3>
   </div>
   <div class="panel-body">
-    <div class="well">
-      {{description}}
+    <div class="panel panel-success">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-info-sign"></span> Informació</span>
+      </div>
+      <div class="panel-body">
+        <div class="well well-sm">
+          <strong>Nom:</strong> {{name}}
+        </div>
+        <div class="well well-sm">
+          <strong>Descripció:</strong> {{description}}
+        </div>
+        <p>
+          {{#published}}
+          <span class="label label-success">
+            <span class="glyphicon glyphicon-eye-open"></span> Publicat
+          </span>
+          {{/published}}
+          {{^published}}
+          <span class="label label-warning">
+            <span class="glyphicon glyphicon-eye-close"></span> Privat
+          </span>
+          {{/published}}
+        </p>
+        <ul class="list-inline">
+          <li>
+          <form action="/point/edit" method="GET">
+            <button type="submit" name="id" value="{{id}}" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-edit"></span> Edita</button>
+          </form>
+          </li>
+          <li>
+          <form action="/point/destroy" method="POST">
+            <button type="submit" name="id" value="{{id}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> Esborra</button>
+          </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-film"></span> Multimedia principal</span>
+      </div>
+      <div class="panel-body">
+        <ul class="list-inline">
+          <li>
+          <form action="/point/multimedia/edit" method="GET">
+            <button type="submit" name="id" value="{{id}}" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-edit"></span> Edita</button>
+          </form>
+          </li>
+          <li>
+          <form action="/point/multimedia/destroy" method="POST">
+            <button type="submit" name="id" value="{{id}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> Esborra</button>
+          </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-film"></span> Multimedia extra</span>
+      </div>
+      <div class="panel-body">
+        <ul class="list-inline">
+          <li>
+          <form action="/point/extras/edit" method="GET">
+            <button type="submit" name="id" value="{{id}}" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-edit"></span> Edita</button>
+          </form>
+          </li>
+          <li>
+          <form action="/point/extras/destroy" method="POST">
+            <button type="submit" name="id" value="{{id}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> Esborra</button>
+          </form>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

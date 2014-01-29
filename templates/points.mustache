@@ -7,6 +7,7 @@
     <th>Data creació</th>
     <th>Data última actualizació</th>
     <th>Accions</th>
+    <th></th>
   </tr>
   {{#list_point}}
   <tr>
@@ -23,30 +24,21 @@
     <td>{{created_at}}</td>
     <td>{{updated_at}}</td>
     <td>
-      <ul class="list-inline">
-        <li>
-          {{^published}}
-          <form class="form-inline" role="form" action="/point/publish" method="POST">
-            <button type="submit" name="id" value="{{id}}" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-eye-open"></span> Publica</button>
-          </form>
-          {{/published}}
-          {{#published}}
-          <form class="form-inline" role="form" action="/point/unpublish" method="POST">
-            <button type="submit" name="id" value="{{id}}" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-eye-close"></span> Oculta</button>
-          </form>
-          {{/published}}
-        </li>
-        <li>
-          <form class="form-inline" role="form" action="/point/edit" method="GET">
-            <button type="submit" name="id" value="{{id}}" class="btn btn-sm btn-info"><span class="glyphicon glyphicon-edit"></span> Edita</button>
-          </form>
-        </li>
-        <li>
-          <form class="form-inline" role="form" action="/point/destroy" method="POST">
-            <button type="submit" name="id" value="{{id}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> Esborra</button>
-          </form>
-        </li>
-      </ul>
+      {{^published}}
+      <form class="form-inline" role="form" action="/point/publish" method="POST">
+        <button type="submit" name="id" value="{{id}}" class="btn btn-sm btn-success"><span class="glyphicon glyphicon-eye-open"></span> Publica</button>
+      </form>
+      {{/published}}
+      {{#published}}
+      <form class="form-inline" role="form" action="/point/unpublish" method="POST">
+        <button type="submit" name="id" value="{{id}}" class="btn btn-sm btn-warning"><span class="glyphicon glyphicon-eye-close"></span> Oculta</button>
+      </form>
+      {{/published}}
+    </td>
+    <td>
+      <form class="form-inline" role="form" action="/point/destroy" method="POST">
+        <button type="submit" name="id" value="{{id}}" class="btn btn-sm btn-danger"><span class="glyphicon glyphicon-remove"></span> Esborra</button>
+      </form>
     </td>
   </tr>
   {{/list_point}}
@@ -56,6 +48,7 @@
         <button type="submit" class="btn btn-sm btn-success">Nou Punt</button>
       </form>
     </td>
+    <td></td>
     <td></td>
     <td></td>
     <td></td>
