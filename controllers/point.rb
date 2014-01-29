@@ -22,7 +22,8 @@ class CMS
           :coord_x => coord_x,
           :coord_y => coord_y,
           :created_at => Time.now,
-          :updated_at => Time.now
+          :updated_at => Time.now,
+          :weight => Models::Point.count + 1
         )
 
         if point.saved?
