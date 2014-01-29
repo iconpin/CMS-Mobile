@@ -1,0 +1,16 @@
+%form#login.form-signin{:role => "form", :action => "/login", :method => "POST"}
+  .form-group
+    %input#login-email.form-control{:type => "text", :name => "email", :placeholder => "Correu electrònic", :required => true, :autofocus => true}
+  .form-group
+    %input#login-password.form-control{:type => "password", :name => "password", :placeholder => "Contrasenya", :required => true}
+  .form-group
+    %button.btn.btn-lg.btn-primary.btn-block{:type => "submit"}
+      Entra
+%script
+  $(document).ready(function(){
+  var metrics = [
+  ['#login-email', 'presence', "El correu electrònic no pot ser buit"],
+  ['#login-password', 'presence', "La contrasenya no pot ser buida"]
+  ];
+  $("form#login").nod(metrics, nod_options);
+  });

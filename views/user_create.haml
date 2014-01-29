@@ -1,0 +1,30 @@
+%form#user-create.form-signin{:role => "form", :action => "/user/create", :method => "POST"}
+  .form-group
+    %input#user-create-name.form-control{:type => "text", :name => "name", :placeholder => "Nom", :required => true, :autofocus => true}
+  .form-group
+    %input#user-create-email.form-control{:type => "text", :name => "email", :placeholder => "Correu electrònic", :required => true, :autofocus => true}
+  .form-group
+    %input#user-create-password.form-control{:type => "password", :name => "password", :placeholder => "Contrasenya", :required => true}
+  .form-group
+    %input#user-create-confirm.form-control{:type => "password", :name => "password_confirm", :placeholder => "Confirma la contrasenya", :required => true}
+  .form-group
+    .checkbox
+      %label
+        %input#user-create-admin{:type => "checkbox", :name => "admin"}
+        Aquest usuari serà administrador
+  .form-group
+    %button.btn.btn-lg.btn-primary.btn-block{:type => "submit"}
+      Crea
+
+%script
+  $(document).ready(function(){
+  var metrics = [
+  ['#user-create-name', 'presence', "Introdueix el nom"],
+  ['#user-create-email', 'presence', "Introdueix el correu electrònic"],
+  ['#user-create-password', 'presence', "Introdueix la contrasenya"],
+  ['#user-create-password', 'min-length:5', "La contrasenya ha de tenir com a mínim 5 caracters"],
+  ['#user-create-confirm', 'same-as:#user-create-password', "Les contrasenyes no coincideixen"]
+  ];
+
+  $("form#user-create").nod(metrics, nod_options);
+  });

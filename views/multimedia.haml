@@ -1,0 +1,54 @@
+%table.table.table-striped
+  %tr
+    %th #
+    %th Nom
+    %th Estat
+    %th Tipus
+    %th Descripció curta
+    %th Data creació
+    %th Data última actualització
+    %th accions
+  - @multimedia_list.each do |m|
+    %tr
+      %td= m.weight
+      %td
+        %a{:href => m.link}= m.name
+      %td
+        - if !m.ready
+          %span.label.label-danger
+            pendent
+        - else
+          - if m.published
+            %span.label.label-success
+              publicat
+          - else
+            %span.label.label-warning
+              privat
+      %td
+        - if m.image?
+          %span.glyphicon.glyphicon-picture
+        - elsif m.video?
+          %span.glyphicon.glyphicon-play
+      %td= m.description
+      %td= m.created_at
+      %td= m.updated_at
+      %td
+        %form{:action => "/multimedia/destroy", :method => "POST"}
+          %button.btn.btn-sm.btn-danger{:type => "submit", :name => "id", :value => m.id}
+            %span.glyphicon.glyphicon-remove
+            Esborra
+  %tr
+    %td
+      %form{:action => "/image/create", :method => "GET"}
+        %button.btn.btn-sm.btn-success{:type => "submit"}
+          Nova Imatge
+    %td
+      %form{:action => "/video/create", :method => "GET"}
+        %button.btn.btn-sm.btn-success{:type => "submit"}
+          Nou Vídeo
+    %td
+    %td
+    %td
+    %td
+    %td
+    %td

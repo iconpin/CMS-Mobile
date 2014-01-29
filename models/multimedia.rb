@@ -20,19 +20,35 @@ class CMS
 
       belongs_to :point, :required => false
 
-      def type_sym
-        nil
+      def image?
+        false
+      end
+
+      def video?
+        false
+      end
+
+      def link
+        "/multimedia?id=#{self.id}"
       end
     end
 
     class Image < Multimedia
-      def type_sym
-        :image
+      def image?
+        true
+      end
+
+      def link
+        "/image?id=#{self.id}"
       end
     end
     class Video < Multimedia
-      def type_sym
-        :video
+      def video?
+        true
+      end
+
+      def link
+        "/video?id=#{self.id}"
       end
     end
   end

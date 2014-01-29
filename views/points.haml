@@ -1,0 +1,50 @@
+%table.table.table-striped
+  %tr
+    %th #
+    %th Nom
+    %th Estat
+    %th Data creació
+    %th Data última actualització
+    %th Accions
+    %th
+  - @point_list.each do |p|
+    %tr
+      %td= p.weight
+      %td
+        %a{:href => p.link}= p.name
+      %td
+        - if p.published?
+          %span.label.label-success
+            Publicat
+        - else
+          %span.label.label-warning
+            Privat
+      %td= p.created_at
+      %td= p.updated_at
+      %td
+        - if p.published?
+          %form.form-inline{:role => "form", :action => "/point/unpublish", :method => "POST"}
+            %button.btn.btn-sm.btn-warning{:type => "submit", :name => "id", :value => p.id}
+              %span.glyphicon.glyphicon-eye-close
+              Oculta
+        - else
+          %form.form-inline{:role => "form", :action => "/point/publish", :method => "POST"}
+            %button.btn.btn-sm.btn-success{:type => "submit", :name => "id", :value => p.id}
+              %span.glyphicon.glyphicon-eye-open
+              Publica
+      %td
+        %form.form-inline{:role => "form", :action => "/point/destroy", :method => "POST"}
+          %button.btn.btn-sm.btn-danger{:type => "submit", :name => "id", :value => p.id}
+            %span.glyphicon.glyphicon-remove
+            Esborra
+  %tr
+    %td
+      %form{:action => "/point/create", :method => "GET"}
+        %button.btn.btn-sm.btn-success{:type => "submit"}
+          Nou Punt
+    %td
+    %td
+    %td
+    %td
+    %td
+    %td

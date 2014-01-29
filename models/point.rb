@@ -16,6 +16,14 @@ class CMS
       property :deleted_at, ParanoidDateTime
 
       has n, :multimedias
+
+      def published?
+        self.published
+      end
+
+      def link
+        "/point?id=#{self.id}"
+      end
     end
   end
 end

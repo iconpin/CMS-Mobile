@@ -1,0 +1,22 @@
+%form#register.form-signin{:role => "form", :action => "/register", :method => "POST"}
+  .form-group
+    %input#register-name.form-control{:type => "text", :name => "name", :placeholder => "Nom", :required => true, :autofocus => true}
+  .form-group
+    %input#register-email.form-control{:type => "text", :name => "email", :placeholder => "Correu electrònic", :required => true, :autofocus => true}
+  .form-group
+    %input#register-password.form-control{:type => "password", :name => "password", :placeholder => "Contrasenya", :required => true}
+  .form-group
+    %input#register-confirm.form-control{:type => "password", :name => "password_confirm", :placeholder => "Confirma la contrasenya", :required => true}
+
+%script
+  $(document).ready(function(){
+  var metrics = [
+  ['#register-name', 'presence', "Introdueix el teu nom"],
+  ['#register-email', 'presence', "Introdueix el teu correu electrònic"],
+  ['#register-password', 'presence', "Introdueix la contrasenya"],
+  ['#register-password', 'min-length:5', "La contrasenya ha de tenir com a mínim 5 caracters"],
+  ['#register-confirm', 'same-as:#register-password', "Les contrasenyes no coincideixen"]
+  ];
+
+  $("form#register").nod(metrics, nod_options);
+  });

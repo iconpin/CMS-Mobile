@@ -2,7 +2,7 @@ require 'sinatra/base'
 require 'rack/flash'
 require 'data_mapper'
 require 'warden'
-require 'mustache/sinatra'
+require 'haml'
 
 
 class CMS < Sinatra::Base
@@ -64,30 +64,10 @@ class CMS < Sinatra::Base
 
   # Rack::Flash configuration
   #enable :sessions
-  use Rack::Flash, :accessorize => [:error, :success, :info]
+  use Rack::Flash, :accessorize => [:error, :warning, :info, :success]
 
 
-  # Mustache configuration
-  register Mustache::Sinatra
-
-  require_relative 'views/layout'
-  require_relative 'views/home'
-  require_relative 'views/email'
-  require_relative 'views/register'
-  require_relative 'views/login'
-  require_relative 'views/users'
-  require_relative 'views/user_create'
-  require_relative 'views/multimedia'
-  require_relative 'views/image_create'
-  require_relative 'views/points'
-  require_relative 'views/point'
-  require_relative 'views/point_create'
-  require_relative 'views/point_edit'
-
-  set :mustache, {
-    :views => 'views',
-    :templates => 'templates'
-  }
+  set :views, 'views'
 
   # Require workers
   require_relative 'workers/image_converter'
@@ -121,11 +101,11 @@ class CMS < Sinatra::Base
       redirect '/register'
     end
 
-    mustache :home
+    haml :home
   end
 
   get '/register' do
-    mustache :register
+    haml :register
   end
 
   post '/register' do
@@ -142,7 +122,7 @@ class CMS < Sinatra::Base
 
   get '/user/create' do
     admin! "Un usuari no administrador no pot crear nous usuaris"
-    mustache :user_create
+    haml :user_create
   end
 
   post '/user/create' do
@@ -171,7 +151,7 @@ class CMS < Sinatra::Base
   end
 
   get '/login' do
-    mustache :login
+    haml :login
   end
 
   post '/login' do
@@ -205,13 +185,14 @@ class CMS < Sinatra::Base
   get '/users' do
     admin! "Un usuari no administrador no pot gestionar usuaris"
 
-    mustache :users
+    @user_list = Models::User.all
+    haml :users
   end
 
   get '/image/create' do
     protect!
 
-    mustache :image_create
+    haml :image_create
   end
 
   post '/image/create' do
@@ -229,7 +210,7 @@ class CMS < Sinatra::Base
   get '/video/create' do
     protect!
 
-    mustache :video_create
+    haml :video_create
   end
 
   post '/video/create' do
@@ -240,7 +221,8 @@ class CMS < Sinatra::Base
   get '/multimedia' do
     protect!
 
-    mustache :multimedia
+    @multimedia_list = Models::Multimedia.all
+    haml :multimedia
   end
 
   post '/multimedia/destroy' do
@@ -262,20 +244,21 @@ class CMS < Sinatra::Base
       flash.error = "El punt no existeix"
       redirect '/points'
     else
-      mustache :point
+      haml :point
     end
   end
 
   get '/points' do
     protect!
 
-    mustache :points
+    @point_list = Models::Point.all
+    haml :points
   end
 
   get '/point/create' do
     protect!
 
-    mustache :point_create
+    haml :point_create
   end
 
   post '/point/create' do
@@ -331,7 +314,7 @@ class CMS < Sinatra::Base
       redirect '/points'
     end
 
-    mustache :point_edit
+    haml :point_edit
   end
 
   post '/point/edit' do

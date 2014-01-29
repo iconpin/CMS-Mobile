@@ -1,0 +1,34 @@
+%table.table.table-striped
+  %tr
+    %th Nom
+    %th Correu electrònic
+    %th Data creació
+    %th Data última actualització
+    %th Data últim accés
+    %th Accions
+  - @user_list.each do |u|
+    %tr
+      %td
+        = u.name
+        - if u.admin?
+          %span.label.label-info
+            admin
+      %td= u.email
+      %td= u.created_at
+      %td= u.updated_at
+      %td= u.last_login || "Mai"
+      %td
+        %form{:action => "/user/destroy", :method => "POST"}
+          %button.btn.btn-sm.btn-danger{:name => "email", :value => u.email}
+            %span.glyphicon.glyphicon-remove
+            Esborra
+  %tr
+    %td
+      %form{:action => "/user/create", :method => "GET"}
+        %button.btn.btn-sm.btn-success
+          Nou Usuari
+    %td
+    %td
+    %td
+    %td
+    %td

@@ -1,0 +1,25 @@
+%form.form-big{:role => "form", :action => "/point/edit", :method => "POST"}
+  .form-group
+    %input.form-control{:type => "text", :name => "name", :value => @current_point.name, :placeholder => "Nom", :required => true, :autofocus => true}
+  .form-group
+    %textarea.form-control{:rows => "5", :name => "description", :placeholder => "Descripció", :required => true, :autofocus => true}
+      = @current_point.description
+  .form-group
+    %input.form-control{:type => "text", :name => "coords", :value => "#{@current_point.coord_x}, #{@current_point.coord_y}", :placeholder => "Coordenades (latitud i longitud)", :required => true}
+  .form-group
+    .checkbox
+      - if @current_point.published
+        %input{:type => "checkbox", :name => "published", :checked => true}
+      - else
+        %input{:type => "checkbox", :name => "published"}
+      %label Públic
+  %ul.list-inline
+    %li
+      .form-group.form-inline
+        %button.btn.btn-primary{:name => "id", :value => @current_point.id, :type => "submit"}
+          %span.glyphicon.glyphicon-ok
+          Actualitza
+    %li
+      %a.btn.btn-warning{:href => "/points"}
+        %span.glyphicon.glyphicon-chevron-left
+        Cancel·la
