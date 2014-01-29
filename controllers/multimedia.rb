@@ -33,6 +33,38 @@ class CMS
         end
       end
 
+      def self.upload_video params
+        file = params['file'][:tempfile]
+        filename = params['file'][:filename]
+        extension = File.extname(filename)
+        name = params['name']
+        description = params['description']
+
+        video = Models:Video.new(
+          :name => name,
+          :description => description,
+          :created_at => Time.now,
+          :updated_at => Time.now
+        )
+        unless video.save  # Now we'll have and ID
+          return false
+        end
+
+        video.path_tmp = File.join(TMP_DIR, "#{video.id}#{extension}")
+        File.open(video.path_tmp, 'wb') do |f|
+          f.write file.read
+        end
+
+        # If we're here, the upload was successful
+        video.path = File.join(MULTIMEDIA_DIR, "/#{video.id}.jpg")
+        if video.save
+          Workers::VideoConverter.perform_async(video.id)  # First Sidekiq usage here!
+          return true
+        else
+          return false
+        end
+      end
+
       def self.destroy params
         id = params['id']
         multimedia = Models::Multimedia.get(id)

@@ -215,7 +215,14 @@ class CMS < Sinatra::Base
 
   post '/video/create' do
     protect!
-    # TODO
+
+    if Controllers::Multimedia.upload_video(params)
+      flash.success = "Vídeo creat amb èxit"
+      redirect '/multimedia'
+    else
+      flash.error = "No s'ha pogut crear el vídeo"
+      redirect '/video/create'
+    end
   end
 
   get '/multimedia' do
