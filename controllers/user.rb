@@ -1,5 +1,3 @@
-require_relative '../models/user.rb'
-
 class CMS
   module Controllers
     class User

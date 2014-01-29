@@ -207,29 +207,7 @@ class CMS < Sinatra::Base
   post '/image/create' do
     protect!
 
-    file = params['file'][:tempfile]
-    filename = params['file'][:filename]
-    extension = File.extname(filename)
-    name = params['name']
-    description = params['description']
-
-    image = Models::Image.new(
-      :name => name,
-      :description => description,
-      :created_at => Time.now,
-      :updated_at => Time.now
-    )
-    image.save  # Now we'll have and ID
-
-    image.path_tmp = File.join(TMP_DIR, "#{image.id}#{extension}")
-    File.open(image.path_tmp, 'wb') do |f|
-      f.write file.read
-    end
-
-    # If we're here, the upload was successful
-    image.path = File.join(MULTIMEDIA_DIR, "/#{image.id}.jpg")
-    if image.save
-      Workers::ImageConverter.perform_async(image.id)  # First Sidekiq usage here!
+    if Controllers::Multimedia.upload_image params
       redirect '/multimedia'
     else
       redirect '/image/create'
@@ -256,18 +234,8 @@ class CMS < Sinatra::Base
   post '/multimedia/destroy' do
     protect!
 
-    id = params['id']
-    multimedia = Models::Multimedia.get(id)
-    if multimedia.nil?
-      flash.error = "El multimedia especificat no existeix"
-      redirect '/multimedia'
-    elsif multimedia.destroy
-      flash.success = "El multimedia s'ha esborrat amb èxit"
-      redirect '/multimedia'
-    else
-      flash.error = "El multimedia especificat no s'ha pogut eliminar"
-      redirect '/multimedia'
-    end
+    Controllers::Multimedia.destroy(params)
+    redirect '/multimedia'
   end
 
   get '/points' do
