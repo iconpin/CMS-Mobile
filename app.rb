@@ -94,6 +94,21 @@ class CMS < Sinatra::Base
     @flash = flash
   end
 
+  helpers do
+    def protect!
+      env['warden'].authenticate!
+    end
+
+    def admin! msg
+      env['warden'].authenticate!
+      unless @current_user.admin?
+        flash.error = msg || "No ets usuari administrador"
+        redirect '/'
+      end
+    end
+
+  end
+
   get '/' do
     unless Models::User.has_admin?
       flash.info = "Aquest nou usuari serà l'administrador"
@@ -145,21 +160,12 @@ class CMS < Sinatra::Base
   end
 
   get '/user/create' do
-    env['warden'].authenticate!
-    unless @current_user.admin?
-      flash.error = "Un usuari no administrador no pot crear nous usuaris"
-      redirect '/'
-    end
-
+    admin! "Un usuari no administrador no pot crear nous usuaris"
     mustache :user_create
   end
 
   post '/user/create' do
-    env['warden'].authenticate!
-    unless @current_user.admin?
-      flash.error = "Un usuari no administrador no pot crear nous usuaris"
-      redirect '/'
-    end
+    admin! "Un usuari no administrador no pot crear nous usuaris"
 
     name = params['name']
     password = params['password']
@@ -192,12 +198,7 @@ class CMS < Sinatra::Base
   end
 
   post '/user/destroy' do
-    env['warden'].authenticate!
-
-    unless @current_user.admin?
-      flash.error = "Un usuari no administrador no pot esborrar usuaris"
-      redirect '/'
-    end
+    admin! "Un usuari no administrador no pot esborrar usuaris"
 
     email = params['email']
     if @current_user.email == email
@@ -218,7 +219,7 @@ class CMS < Sinatra::Base
   end
 
   post '/login' do
-    env['warden'].authenticate!
+    protect!
 
     flash.success = "T'has indentificat amb èxit"
     if session[:return_to].nil?
@@ -245,24 +246,19 @@ class CMS < Sinatra::Base
   end
 
   get '/users' do
-    env['warden'].authenticate! # I <3 Ruby
-
-    unless @current_user.admin?
-      flash.error = "Un usuari no administrador no pot gestionar usuaris"
-      redirect '/'
-    end
+    admin! "Un usuari no administrador no pot gestionar usuaris"
 
     mustache :users
   end
 
   get '/image/create' do
-    env['warden'].authenticate!
+    protect!
 
     mustache :image_create
   end
 
   post '/image/create' do
-    env['warden'].authenticate!
+    protect!
 
     file = params['file'][:tempfile]
     filename = params['file'][:filename]
@@ -294,24 +290,24 @@ class CMS < Sinatra::Base
   end
 
   get '/video/create' do
-    env['warden'].authenticate!
+    protect!
 
     mustache :video_create
   end
 
   post '/video/create' do
-    env['warden'].authenticate!
+    protect!
     # TODO
   end
 
   get '/multimedia' do
-    env['warden'].authenticate!
+    protect!
 
     mustache :multimedia
   end
 
   post '/multimedia/destroy' do
-    env['warden'].authenticate!
+    protect!
 
     id = params['id']
     multimedia = Models::Multimedia.get(id)
@@ -328,19 +324,19 @@ class CMS < Sinatra::Base
   end
 
   get '/points' do
-    env['warden'].authenticate!
+    protect!
 
     mustache :points
   end
 
   get '/point/create' do
-    env['warden'].authenticate!
+    protect!
 
     mustache :point_create
   end
 
   post '/point/create' do
-    env['warden'].authenticate!
+    protect!
 
     name = params['name']
     description = params['description']
@@ -365,7 +361,7 @@ class CMS < Sinatra::Base
   end
 
   post '/point/destroy' do
-    env['warden'].authenticate!
+    protect!
 
     id = params['id']
     point = Models::Point.get(id)
@@ -383,7 +379,7 @@ class CMS < Sinatra::Base
   end
 
   post '/point/publish' do
-    env['warden'].authenticate!
+    protect!
 
     id = params['id']
     point = Models::Point.get(id)
@@ -403,7 +399,7 @@ class CMS < Sinatra::Base
   end
 
   post '/point/unpublish' do
-    env['warden'].authenticate!
+    protect!
 
     id = params['id']
     point = Models::Point.get(id)
@@ -423,7 +419,7 @@ class CMS < Sinatra::Base
   end
 
   get '/point/edit' do
-    env['warden'].authenticate!
+    protect!
 
     id = params['id']
     point = Models::Point.get(id)
@@ -438,7 +434,7 @@ class CMS < Sinatra::Base
   end
 
   post '/point/edit' do
-    env['warden'].authenticate!
+    protect!
 
     id = params['id']
     name = params['name']
@@ -472,5 +468,4 @@ class CMS < Sinatra::Base
       redirect_back
     end
   end
-
 end
