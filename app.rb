@@ -102,7 +102,6 @@ class CMS < Sinatra::Base
   helpers do
     def protect!
       env['warden'].authenticate!
-      @flash.success = "T'has identificat amb èxit"
     end
 
     def admin! msg
@@ -176,6 +175,8 @@ class CMS < Sinatra::Base
 
   post '/login' do
     protect!
+
+    flash.success = "T'has identificat amb èxit"
 
     if session[:return_to].nil?
       redirect '/'
