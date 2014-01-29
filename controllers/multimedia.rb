@@ -15,7 +15,7 @@ class CMS
           :updated_at => Time.now
         )
         unless image.save  # Now we'll have and ID
-          @flash.error = "No s'ha pogut desar la imatge"
+          return false
         end
 
         image.path_tmp = File.join(TMP_DIR, "#{image.id}#{extension}")
@@ -26,11 +26,10 @@ class CMS
         # If we're here, the upload was successful
         image.path = File.join(MULTIMEDIA_DIR, "/#{image.id}.jpg")
         if image.save
-          @flash.success = "La imatge s'ha guardat amb èxit"
           Workers::ImageConverter.perform_async(image.id)  # First Sidekiq usage here!
-          true
+          return true
         else
-          false
+          return false
         end
       end
 
@@ -38,13 +37,10 @@ class CMS
         id = params['id']
         multimedia = Models::Multimedia.get(id)
         if multimedia.nil?
-          @flash.error = "El multimedia especificat no existeix"
           false
         elsif multimedia.destroy
-          @flash.success = "El multimedia s'ha esborrat amb èxit"
           true
         else
-          @flash.error = "El multimedia especificat no s'ha pogut eliminar"
           false
         end
       end

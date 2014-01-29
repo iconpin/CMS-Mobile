@@ -5,7 +5,6 @@ class CMS
         id = params['id']
         point = Models::Point.get(id)
         if point.nil?
-          @flash.error = "El punt no existeix"
           nil
         else
           point
@@ -27,10 +26,8 @@ class CMS
         )
 
         if point.saved?
-          @flash.success = "Punt creat amb èxit"
           true
         else
-          @flash.error = "No s'ha pogut crear el punt: #{point.errors.on(:coord_x)}"
           false
         end
       end
@@ -39,13 +36,10 @@ class CMS
         id = params['id']
         point = Models::Point.get(id)
         if point.nil?
-          @flash.error = "El punt no existeix"
           false
         elsif point.destroy
-          @flash.success = "Punt eliminat amb èxit"
           true
         else
-          @flash.error = "El punt no s'ha pogut eliminar"
           false
         end
       end
@@ -54,17 +48,14 @@ class CMS
         id = params['id']
         point = Models::Point.get(id)
         if point.nil?
-          @flash.error = "El punt no existeix"
           return false
         end
 
         point.published = true
 
         if point.save
-          @flash.success = "Punt publicat amb èxit"
           true
         else
-          @flash.error = "No s'ha pogut publicar el punt"
           false
         end
       end
@@ -73,17 +64,14 @@ class CMS
         id = params['id']
         point = Models::Point.get(id)
         if point.nil?
-          @flash.error = "El punt no existeix"
           return false
         end
 
         point.published = false
 
         if point.save
-          @flash.success = "Punt ocultat amb èxit"
           true
         else
-          @flash.error = "No s'ha pogut ocultar el punt"
           false
         end
       end
@@ -98,7 +86,6 @@ class CMS
 
         point = Models::Point.get(id)
         if point.nil?
-          @flash.error = "El punt no existeix"
           return false
         end
 
@@ -111,10 +98,8 @@ class CMS
           :published => published
         )
         if success
-          @flash.success = "Punt actualitzat amb èxit"
           return true
         else
-          @flash.error = "No s'ha pogut actualitzar el punt"
           return false
         end
       end

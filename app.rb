@@ -132,8 +132,10 @@ class CMS < Sinatra::Base
     user = Controllers::User.create_admin(params)
 
     if user.nil?
+      flash.error = "No s'ha pogut efectuar el registre"
       redirect '/register'
     else
+      flash.success = "T'has registrat amb èxit. Ja pots entrar"
       redirect '/login'
     end
   end
@@ -149,8 +151,10 @@ class CMS < Sinatra::Base
     user = Controllers::User.create(params)
 
     if user.nil?
+      flash.error = "No s'ha pogut crear l'usuari"
       redirect '/user/create'
     else
+      flash.success = "Usuari #{user.email} creat amb èxit"
       redirect '/users'
     end
   end
@@ -158,7 +162,11 @@ class CMS < Sinatra::Base
   post '/user/destroy' do
     admin! "Un usuari no administrador no pot esborrar usuaris"
 
-    Controllers::User.destroy(params['email'])
+    if Controllers::User.destroy(params['email'])
+      flash.success = "Usuari #{params['email']} esborrat amb èxit"
+    else
+      flash.error = "No s'ha pogut esborrar l'usuari #{params['email']}"
+    end
     redirect '/users'
   end
 
@@ -207,9 +215,11 @@ class CMS < Sinatra::Base
   post '/image/create' do
     protect!
 
-    if Controllers::Multimedia.upload_image params
+    if Controllers::Multimedia.upload_image(params)
+      flash.success = "Imatge creada amb èxit"
       redirect '/multimedia'
     else
+      flash.error = "No s'ha pogut crear la imatge"
       redirect '/image/create'
     end
   end
@@ -234,7 +244,11 @@ class CMS < Sinatra::Base
   post '/multimedia/destroy' do
     protect!
 
-    Controllers::Multimedia.destroy(params)
+    if Controllers::Multimedia.destroy(params)
+      flash.success = "Multimedia destruït amb èxit"
+    else
+      flash.error = "No s'ha pogut destruir el multimedia"
+    end
     redirect '/multimedia'
   end
 
@@ -254,8 +268,10 @@ class CMS < Sinatra::Base
     protect!
 
     if Controllers::Point.create(params)
+      flash.success = "Punt creat amb èxit"
       redirect '/points'
     else
+      flash.error = "No s'ha pogut crear el punt"
       redirect '/point/create'
     end
   end
@@ -263,21 +279,33 @@ class CMS < Sinatra::Base
   post '/point/destroy' do
     protect!
 
-    Controllers::Point.destroy(params)
+    if Controllers::Point.destroy(params)
+      flash.success = "Punt esborrat amb èxit"
+    else
+      flash.error = "No s'ha pogut esborrar el punt"
+    end
     redirect '/points'
   end
 
   post '/point/publish' do
     protect!
 
-    Controllers::Point.publish(params)
+    if Controllers::Point.publish(params)
+      flash.success = "Punt publicat amb èxit"
+    else
+      flash.error = "No s'ha pogut publicar el punt"
+    end
     redirect '/points'
   end
 
   post '/point/unpublish' do
     protect!
 
-    Controllers::Point.unpublish(params)
+    if Controllers::Point.unpublish(params)
+      flash.success = "Punt ocultat amb èxit"
+    else
+      flash.error = "No s'ha pogut ocultar el punt"
+    end
     redirect '/points'
   end
 
@@ -296,8 +324,10 @@ class CMS < Sinatra::Base
     protect!
 
     if Controllers::Point.edit(params)
+      flash.success = "Punt actualitzat amb èxit"
       redirect '/points'
     else
+      flash.error = "No s'ha pogut actualitzar el punt"
       redirect_back
     end
   end

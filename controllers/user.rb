@@ -3,7 +3,6 @@ class CMS
     class User
       def self.create_admin params
         if Models::User.has_admin?
-          @flash.error = "Ja existeix un usuari administador"
           return nil
         end
         params['admin'] = 'on'
@@ -28,11 +27,6 @@ class CMS
           :admin => admin
         )
         if user.saved?
-          @flash.success = if admin
-                             "Usuari administrador #{email} creat amb èxit"
-                           else
-                             "Usuari #{email} creat amb èxit"
-                           end
           return user
         else
           return nil
@@ -42,20 +36,16 @@ class CMS
       def self.destroy email
         user = Models::User.first(:email => email)
         if user.nil?
-          @flash.error = "L'usuari no existeix"
           return false
         end
 
         if user == @current_user
-          @flash.error = "No pots esborrar-te a tu mateix"
           return false
         end
 
         if user.destroy
-          @flash.success = "Usuari esborrat amb èxit"
           return true
         else
-          @flash.error = "No s'ha pogut esborrar l'usuari"
           return false
         end
       end
