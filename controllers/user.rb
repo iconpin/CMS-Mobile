@@ -4,6 +4,10 @@ class CMS
   module Controllers
     class User
       def self.create_admin params
+        if Models::User.has_admin?
+          @flash.error = "Ja existeix un usuari administador"
+          return nil
+        end
         params['admin'] = 'on'
         create(params)
       end

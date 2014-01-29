@@ -125,20 +125,10 @@ class CMS < Sinatra::Base
   end
 
   get '/register' do
-    if Controllers::User.has_admin?
-      flash.error = "Ja existeix un usuari administrador. Demana-li accés"
-      redirect '/'
-    end
-
     mustache :register
   end
 
   post '/register' do
-    if Controllers::User.has_admin?
-      flash.error = "Ja existeix un usuari administrador. Demana-li accés"
-      redirect '/'
-    end
-
     user = Controllers::User.create_admin(params)
 
     if user.nil?
