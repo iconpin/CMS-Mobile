@@ -258,7 +258,7 @@ class CMS < Sinatra::Base
   get '/points' do
     protect!
 
-    @point_list = Models::Point.all
+    @point_list = Models::Point.all(:order => [:weight.desc])
     haml :points
   end
 
@@ -310,6 +310,20 @@ class CMS < Sinatra::Base
     else
       flash.error = "No s'ha pogut ocultar el punt"
     end
+    redirect '/points'
+  end
+
+  post '/point/up' do
+    protect!
+
+    Controllers::Point.up(params)
+    redirect '/points'
+  end
+
+  post '/point/down' do
+    protect!
+
+    Controllers::Point.down(params)
     redirect '/points'
   end
 

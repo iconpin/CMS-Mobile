@@ -40,7 +40,7 @@ class CMS
         name = params['name']
         description = params['description']
 
-        video = Models:Video.new(
+        video = Models::Video.new(
           :name => name,
           :description => description,
           :created_at => Time.now,

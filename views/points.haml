@@ -1,5 +1,6 @@
 %table.table.table-striped
   %tr
+    %th
     %th #
     %th Nom
     %th Estat
@@ -9,7 +10,15 @@
     %th
   - @point_list.each do |p|
     %tr
-      %td= p.weight
+      %td
+        %form.form-inline{:role => "form", :action => "/point/up", :method => "POST"}
+          %button.btn.btn-sm{:type => "submit", :name => "id", :value => p.id}
+            %span.glyphicon.glyphicon-chevron-up
+        %form.form-inline{:role => "form", :action => "/point/down", :method => "POST"}
+          %button.btn.btn-sm{:type => "submit", :name => "id", :value => p.id}
+            %span.glyphicon.glyphicon-chevron-down
+      %td
+        = p.weight
       %td
         %a{:href => p.link}= p.name
       %td
@@ -39,10 +48,11 @@
             Esborra
   %tr
     %td
+    %td
+    %td
       %form{:action => "/point/create", :method => "GET"}
         %button.btn.btn-sm.btn-success{:type => "submit"}
           Nou Punt
-    %td
     %td
     %td
     %td

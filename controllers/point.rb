@@ -103,6 +103,40 @@ class CMS
           return false
         end
       end
+
+      def self.up params
+        id = params['id']
+
+        point = Models::Point.get(id)
+        if point.nil?
+          return false
+        end
+
+        if point.weight < Models::Point.count
+          point.weight += 1
+        else
+          return false
+        end
+
+        return point.save
+      end
+
+      def self.down params
+        id = params['id']
+
+        point = Models::Point.get(id)
+        if point.nil?
+          return false
+        end
+
+        if point.weight > 0
+          point.weight -= 1
+        else
+          return false
+        end
+
+        return point.save
+      end
     end
   end
 end
