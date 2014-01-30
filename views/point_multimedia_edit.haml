@@ -1,0 +1,58 @@
+.panel.panel-success
+  .panel-heading
+    %span.glyphicon.glyphicon-film
+    Multimedia enllaçat
+  .panel-body
+    %table.table.table-striped
+      %tr
+        %th
+          %span.glyphicon.glyphicon-link
+        %th Nom
+        %th Tipus
+      - @current_point.multimedias.each do |m|
+        %tr
+          %td
+            %form.form-inline{:role => "form", :action => "/point/multimedia/edit?point=#{@current_point.id}&multimedia=#{m.id}", :method => "POST"}
+              .form-group
+                %button.btn.btn-sm.btn-warning{:type => "submit", :name => "action", :value => "unlink"}
+                  %span.glyphicon.glyphicon-minus
+          %td
+            %a{:href => m.link, :target => "_blank"}= m.name
+          %td
+            - if m.image?
+              %span.glyphicon.glyphicon-picture
+            - else
+              %span.glyphicon.glyphicon-film
+.panel.panel-info
+  .panel-heading
+    %span.glyphicon.glyphicon-film
+    Multimedia disponible
+  .panel-body
+    %table.table.table-striped
+      %tr
+        %th
+          %span.glyphicon.glyphicon-link
+        %th Nom
+        %th Tipus
+      - Models::Multimedia.all.each do |m|
+        - if @current_point.multimedias.include?(m)
+        - else
+          %tr
+            %td
+              %form.form-inline{:role => "form", :action => "/point/multimedia/edit?point=#{@current_point.id}&multimedia=#{m.id}", :method => "POST"}
+                .form-group
+                  %button.btn.btn-sm.btn-primary{:type => "submit", :name => "action", :value => "link"}
+                    %span.glyphicon.glyphicon-plus
+            %td
+              %a{:href => m.link, :target => "_blank"}= m.name
+            %td
+              - if m.image?
+                %span.glyphicon.glyphicon-picture
+              - else
+                %span.glyphicon.glyphicon-film
+
+%ul.list-inline
+  %li
+    %a.btn.btn-warning{:href => @current_point.link}
+      %span.glyphicon.glyphicon-chevron-left
+      Enrere

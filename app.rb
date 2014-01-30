@@ -349,4 +349,26 @@ class CMS < Sinatra::Base
       redirect_back
     end
   end
+
+  get '/point/multimedia/edit' do
+    protect!
+
+    @current_point = Controllers::Point.get(params)
+    if @current_point.nil?
+      redirect '/points'
+    end
+
+    haml :point_multimedia_edit
+  end
+
+  post '/point/multimedia/edit' do
+    protect!
+
+    point_id = params['point']
+
+    unless Controllers::Point.edit_multimedia(params)
+      flash.error = "No s'ha pogut modificar la relació"
+    end
+    redirect "/point/multimedia/edit?id=#{point_id}"
+  end
 end

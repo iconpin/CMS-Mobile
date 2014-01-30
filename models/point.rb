@@ -16,6 +16,7 @@ class CMS
       property :deleted_at, ParanoidDateTime
 
       has n, :multimedias
+      has n, :extras, 'Multimedia'
 
       def published?
         self.published
@@ -23,6 +24,10 @@ class CMS
 
       def link
         "/point?id=#{self.id}"
+      end
+
+      def link_edit
+        "/point/edit?id=#{self.id}"
       end
     end
   end

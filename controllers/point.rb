@@ -135,6 +135,31 @@ class CMS
 
         return point.save && prev_point.save
       end
+
+      def self.edit_multimedia params
+        point = Models::Point.get(params['point'])
+
+        return false if point.nil?
+
+        case params['action']
+        when 'link'
+          multimedia = Models::Multimedia.get(params['multimedia'])
+          return false if multimedia.nil?
+          point.multimedias << multimedia
+        when 'unlink'
+          multimedia = point.multimedias.get(params['multimedia'])
+          return false if multimedia.nil?
+          return false unless point.multimedias.delete(multimedia)
+        else
+          return false
+        end
+
+        unless point.save #multimedias.save
+          raise ArgumentError, "hola"
+          return false
+        end
+        return point.multimedias.save
+      end
     end
   end
 end
