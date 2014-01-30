@@ -109,34 +109,31 @@ class CMS
         id = params['id']
 
         point = Models::Point.get(id)
-        if point.nil?
-          return false
-        end
 
-        if point.weight < Models::Point.count
-          point.weight += 1
-        else
-          return false
-        end
+        return false if point.nil?
+        return false if point.weight == 1
 
-        return point.save
+        next_point = Models::Point.first(:weight => (point.weight - 1))
+
+        next_point.weight = point.weight
+        point.weight -= 1
+
+        return point.save && next_point.save
       end
 
       def self.down params
         id = params['id']
 
         point = Models::Point.get(id)
-        if point.nil?
-          return false
-        end
+        return false if point.nil?
+        return false if point.weight == Models::Point.count
 
-        if point.weight > 0
-          point.weight -= 1
-        else
-          return false
-        end
+        prev_point = Models::Point.first(:weight => (point.weight + 1))
 
-        return point.save
+        prev_point.weight = point.weight
+        point.weight += 1
+
+        return point.save && prev_point.save
       end
     end
   end
