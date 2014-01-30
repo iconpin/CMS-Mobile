@@ -7,6 +7,14 @@
         .panel-heading
           %span.glyphicon.glyphicon-info-sign
           Informació
+          - if @current_point.published?
+            %span.label.label-success
+              %span.glyphicon.glyphicon-eye-open
+              Publicat
+          - else
+            %span.label.label-warning
+              %span.glyphicon.glyphicon-eye-close
+              Privat
         .panel-body
           .well.well-sm
             %strong Nom:
@@ -14,15 +22,6 @@
           .well.well-sm
             %strong Descripció:
             =@current_point.description
-          %p
-            - if @current_point.published?
-              %span.label.label-success
-                %span.glyphicon.glyphicon-eye-open
-                  Publicat
-            - else
-              %span.label.label-warning
-                %span.glyphicon.glyphicon-eye-close
-                Privat
           %ul.list-inline
             %li
               %form{:action => "/point/edit", :method => "GET"}
