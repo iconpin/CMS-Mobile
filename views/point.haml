@@ -1,9 +1,9 @@
 - if @current_point
-  .panel.panel-default
+  .panel.panel-success
     .panel-heading
       %h3= @current_point.name
     .panel-body
-      .panel.panel-success
+      .panel.panel-primary
         .panel-heading
           %span.glyphicon.glyphicon-info-sign
           Informació
@@ -25,7 +25,7 @@
           %ul.list-inline
             %li
               %form{:action => "/point/edit", :method => "GET"}
-                %button.btn.btn-sm.btn-info{:type => "submit", :name => "id", :value => @current_point.id}
+                %button.btn.btn-sm.btn-primary{:type => "submit", :name => "id", :value => @current_point.id}
                   %span.glyphicon.glyphicon-edit
                   Edita
             %li
@@ -33,24 +33,33 @@
                 %button.btn.btn-sm.btn-danger{:type => "submit", :name => "id", :value => @current_point.id}
                   %span.glyphicon.glyphicon-remove
                   Esborra
-      .panel.panel-info
+      .panel.panel-primary
         .panel-heading
           %span.glyphicon.glyphicon-film
           Multimedia principal
         .panel-body
+          %table.table.table-striped
+            - if @current_point.multimedias.size > 0
+              - @current_point.multimedias.each do |m|
+                %tr
+                  %td
+                    - if m.image?
+                      %span.glyphicon.glyphicon-picture
+                    - else
+                      %span.glyphicon.glyphicon-film
+                  %td
+                    %a{:href => m.link, :target => "_blank"}= m.name
+            - else
+              .well.well-sm
+                No hi ha cap multimèdia enllaçat
           %ul.list-inline
             %li
               %form{:action => "/point/multimedia/edit", :method => "GET"}
-                %button.btn.btn-sm.btn-info{:type => "submit", :name => "id", :value => @current_point.id}
+                %button.btn.btn-sm.btn-primary{:type => "submit", :name => "id", :value => @current_point.id}
                   %span.glyphicon.glyphicon-edit
                   Edita
-            %li
-              %form{:action => "/point/multimedia/destroy", :method => "POST"}
-                %button.btn.btn-sm.btn-danger{:type => "submit", :name => "id", :value => @current_point.id}
-                  %span.glyphicon.glyphicon-remove
-                  Esborra
 
-      .panel.panel-default
+      .panel.panel-info
         .panel-heading
           %span.glyphicon.glyphicon-film
           Multimedia extra
@@ -58,11 +67,6 @@
           %ul.list-inline
             %li
               %form{:action => "/point/extra/edit", :method => "GET"}
-                %button.btn.btn-sm.btn-info{:type => "submit", :name => "id", :value => @current_point.id}
+                %button.btn.btn-sm.btn-primary{:type => "submit", :name => "id", :value => @current_point.id}
                   %span.glyphicon.glyphicon-edit
                   Edita
-            %li
-              %form{:action => "/point/extra/destroy", :method => "POST"}
-                %button.btn.btn-sm.btn-danger{:type => "submit", :name => "id", :value => @current_point.id}
-                  %span.glyphicon.glyphicon-remove
-                  Esborra
