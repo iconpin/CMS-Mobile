@@ -1,5 +1,5 @@
 - if @current_point
-  .panel.panel-success
+  .panel.panel-default
     .panel-heading
       %h3= @current_point.name
     .panel-body
@@ -18,10 +18,14 @@
         .panel-body
           .well.well-sm
             %strong Nom:
-            =@current_point.name
+            = @current_point.name
           .well.well-sm
             %strong Descripció:
-            =@current_point.description
+            = @current_point.description
+          .well.well-sm
+            %strong Coordenades:
+            = "#{@current_point.coord_x}, #{@current_point.coord_y}"
+
           %ul.list-inline
             %li
               %form{:action => "/point/edit", :method => "GET"}
@@ -64,6 +68,20 @@
           %span.glyphicon.glyphicon-film
           Multimedia extra
         .panel-body
+          %table.table.table-striped
+            - if @current_point.extras.size > 0
+              - @current_point.extras.each do |m|
+                %tr
+                  %td
+                    - if m.image?
+                      %span.glyphicon.glyphicon-picture
+                    - else
+                      %span.glyphicon.glyphicon-film
+                  %td
+                    %a{:href => m.link, :target => "_blank"}= m.name
+            - else
+              .well.well-sm
+                No hi ha cap extra enllaçat
           %ul.list-inline
             %li
               %form{:action => "/point/extra/edit", :method => "GET"}

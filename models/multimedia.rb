@@ -31,6 +31,10 @@ class CMS
       def link
         "/multimedia?id=#{self.id}"
       end
+
+      def static_link
+        "/static/#{File.basename(self.path)}"
+      end
     end
 
     class Image < Multimedia

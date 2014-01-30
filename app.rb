@@ -34,6 +34,8 @@ class CMS < Sinatra::Base
     config.failure_app = self
   end
 
+  enable :static
+
   # Controllers
   require_relative 'controllers/user'
   require_relative 'controllers/point'
@@ -370,5 +372,9 @@ class CMS < Sinatra::Base
       flash.error = "No s'ha pogut modificar la relació"
     end
     redirect "/point/multimedia/edit?id=#{point_id}"
+  end
+
+  get '/static/:filename' do |filename|
+    send_file File.expand_path("./static/#{filename}"), :disposition => "attachment"
   end
 end
