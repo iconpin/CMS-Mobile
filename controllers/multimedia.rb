@@ -5,6 +5,9 @@ class CMS
         file = params['file'][:tempfile]
         filename = params['file'][:filename]
         extension = File.extname(filename)
+        unless ['.jpg', '.jpeg', '.png'].include?(extension.downcase)
+          return false
+        end
         name = params['name']
         description = params['description']
 
@@ -24,7 +27,7 @@ class CMS
         end
 
         # If we're here, the upload was successful
-        image.path = File.join(MULTIMEDIA_DIR, "/#{image.id}.png")
+        image.path = File.join(MULTIMEDIA_DIR, "/#{image.id}#{extension}")
         if image.save
           Workers::ImageConverter.perform_async(image.id)  # First Sidekiq usage here!
           return true
@@ -56,7 +59,7 @@ class CMS
         end
 
         # If we're here, the upload was successful
-        video.path = File.join(MULTIMEDIA_DIR, "/#{video.id}.jpg")
+        video.path = File.join(MULTIMEDIA_DIR, "/#{video.id}.ts")
         if video.save
           Workers::VideoConverter.perform_async(video.id)  # First Sidekiq usage here!
           return true
@@ -73,13 +76,13 @@ class CMS
         end
 
         begin
-          File.delete(multimedia.path_tmp)
+          File.delete(multimedia.path_tmp) if File.exist?(multimedia.path_tmp)
         rescue Errno::ENOENT
           return false
         end
 
         begin
-          File.delete(multimedia.path)
+          File.delete(multimedia.path) if !File.exist?(multimedia.path)
         rescue Errno::ENOENT
           return false
         end
