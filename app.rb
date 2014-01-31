@@ -73,6 +73,7 @@ class CMS < Sinatra::Base
 
   # Require workers
   require_relative 'workers/image_converter'
+  require_relative 'workers/video_converter'
 
   # Utils
   require_relative 'utils/coordinates'
@@ -372,9 +373,5 @@ class CMS < Sinatra::Base
       flash.error = "No s'ha pogut modificar la relació"
     end
     redirect "/point/multimedia/edit?id=#{point_id}"
-  end
-
-  get '/static/:filename' do |filename|
-    send_file File.expand_path("./static/#{filename}"), :disposition => "attachment"
   end
 end
