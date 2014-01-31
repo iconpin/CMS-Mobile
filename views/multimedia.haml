@@ -12,7 +12,10 @@
     %tr
       %td= m.weight
       %td
-        %a{:href => m.static_link}= m.name
+        - if m.ready
+          %a{:href => m.static_link}= m.name
+        - else
+          = m.name
       %td
         - if !m.ready
           %span.label.label-danger
