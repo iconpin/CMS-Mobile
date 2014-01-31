@@ -24,7 +24,7 @@ class CMS
         end
 
         # If we're here, the upload was successful
-        image.path = File.join(MULTIMEDIA_DIR, "/#{image.id}.jpg")
+        image.path = File.join(MULTIMEDIA_DIR, "/#{image.id}.png")
         if image.save
           Workers::ImageConverter.perform_async(image.id)  # First Sidekiq usage here!
           return true
@@ -70,11 +70,21 @@ class CMS
         multimedia = Models::Multimedia.get(id)
         if multimedia.nil?
           false
-        elsif multimedia.destroy
-          true
-        else
-          false
         end
+
+        begin
+          File.delete(multimedia.path_tmp)
+        rescue Errno::ENOENT
+          return false
+        end
+
+        begin
+          File.delete(multimedia.path)
+        rescue Errno::ENOENT
+          return false
+        end
+
+        return multimedia.destroy
       end
     end
   end
