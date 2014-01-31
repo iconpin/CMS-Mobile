@@ -15,16 +15,13 @@ class CMS
 
       def perform(image_id)
         @image_id = image_id
-        image_db = CMS::Models::Image.get(image_id)
-        puts image_db.path_tmp
-        puts image_db.path
-        image = MiniMagick::Image.open(image_db.path_tmp)
-        image.resize("200x200")
-        image.format("jpg")
-        image.write(image_db.path)
+        image = CMS::Models::Image.get(image_id)
+        i = MiniMagick::Image.open(image.path_tmp.to_s)
+        i.resize('400x400')
+        i.write(image.path.to_s)
 
-        image_db.ready = true
-        image_db.save
+        image.ready = true
+        image.save
       end
     end
   end
