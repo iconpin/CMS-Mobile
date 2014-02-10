@@ -9,6 +9,7 @@ class CMS < Sinatra::Base
   # Storage config
   MULTIMEDIA_DIR = "#{Dir.pwd}/storage/multimedia"
   TMP_DIR = "#{Dir.pwd}/storage/tmp"
+  THUMBNAIL_DIR = "#{Dir.pwd}/storage/thumbnail"
 
   # DataMapper configuration
   require_relative 'models/user'
