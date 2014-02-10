@@ -16,8 +16,14 @@ class CMS
       def perform(video_id)
         @video_id = video_id
         video = CMS::Models::Video.get(video_id)
-        movie = FFMPEG::Movie.new(video.path_tmp)
+        movie = FFMPEG::Movie.new(video.path_tmp.to_s)
         movie.transcode(video.path)
+        movie.screenshot(
+          video.path_thumbnail.to_s,
+          { :resolution => '200x200' },
+          :preserve_aspect_ratio => :width
+        )
+
         video.ready = true
         video.save
       end
