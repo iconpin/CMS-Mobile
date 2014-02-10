@@ -42,6 +42,30 @@
           %span.glyphicon.glyphicon-film
           Multimedia principal
         .panel-body
+          - if @current_point.multimedias.size > 0
+            .carousel.slide#carousel-point{:"data-ride" => "carousel"}
+              %ol.carousel-indicators
+                - @current_point.multimedias.each_with_index do |m, index|
+                  - if index == 0
+                    %li.active{"data-target" => "#carousel-point", :"data-slide-to" => "0"}
+                  - else
+                    %li{"data-target" => "#carousel-point", :"data-slide-to" => "#{index}"}
+              .carousel-inner
+                - @current_point.multimedias.each_with_index do |m, index|
+                  - if index == 0
+                    .item.active
+                      %img{:src => "#{m.thumbnail_link}", :alt => "Image"}
+                      .carousel-caption
+                  - else
+                    .item
+                      %img{:src => "#{m.thumbnail_link}", :alt => "Image"}
+                      .carousel-caption
+                    <!-- Caption -->
+              %a.left.carousel-control{:href => "#carousel-point", :"data-slide" => "prev"}
+                %span.glyphicon.glyphicon-chevron-left
+              %a.right.carousel-control{:href => "#carousel-point", :"data-slide" => "next"}
+                %span.glyphicon.glyphicon-chevron-right
+
           %table.table.table-striped
             - if @current_point.multimedias.size > 0
               - @current_point.multimedias.each do |m|
