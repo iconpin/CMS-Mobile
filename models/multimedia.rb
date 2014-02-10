@@ -8,6 +8,7 @@ class CMS
       property :name, String, :required => true
       property :path_tmp, FilePath
       property :path, FilePath
+      property :path_thumbnail, FilePath
       property :ready, Boolean, :required => true, :default => false
       property :error, Text
       property :description, Text, :required => false
@@ -33,7 +34,11 @@ class CMS
       end
 
       def static_link
-        "/static/#{File.basename(self.path)}"
+        "/static/multimedia/#{File.basename(self.path)}"
+      end
+
+      def thumbnail_link
+        "/static/thumbnail/#{File.basename(self.path_thumbnail)}"
       end
     end
 

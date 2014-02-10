@@ -28,6 +28,7 @@ class CMS
 
         # If we're here, the upload was successful
         image.path = File.join(MULTIMEDIA_DIR, "/#{image.id}#{extension}")
+        image.path_thumbnail = File.join(THUMBNAIL_DIR, "/#{image.id}#{extension}")
         if image.save
           Workers::ImageConverter.perform_async(image.id)  # First Sidekiq usage here!
           return true
@@ -60,6 +61,7 @@ class CMS
 
         # If we're here, the upload was successful
         video.path = File.join(MULTIMEDIA_DIR, "/#{video.id}.ts")
+        video.path_thumbnail = File.join(THUMBNAIL_DIR, "/#{video.id}.jpg")
         if video.save
           Workers::VideoConverter.perform_async(video.id)  # First Sidekiq usage here!
           return true
