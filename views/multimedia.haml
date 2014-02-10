@@ -36,10 +36,24 @@
       %td= m.created_at
       %td= m.updated_at
       %td
-        %form{:action => "/multimedia/destroy", :method => "POST"}
-          %button.btn.btn-sm.btn-danger{:type => "submit", :name => "id", :value => m.id}
-            %span.glyphicon.glyphicon-remove
-            Esborra
+        %ul.list-inline
+          - if m.published?
+            %li
+              %form{:action => "/multimedia/unpublish", :method => "POST"}
+                %button.btn.btn-sm.btn-warning{:type => "submit", :name => "id", :value => m.id}
+                  %span.glyphicon.glyphicon-eye-close
+                  Oculta
+          - else
+            %li
+              %form{:action => "/multimedia/publish", :method => "POST"}
+                %button.btn.btn-sm.btn-success{:type => "submit", :name => "id", :value => m.id}
+                  %span.glyphicon.glyphicon-eye-open
+                  Publica
+          %li
+            %form{:action => "/multimedia/destroy", :method => "POST"}
+              %button.btn.btn-sm.btn-danger{:type => "submit", :name => "id", :value => m.id}
+                %span.glyphicon.glyphicon-remove
+                Esborra
   %tr
     %td
       %form{:action => "/image/create", :method => "GET"}

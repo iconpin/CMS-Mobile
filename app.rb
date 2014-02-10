@@ -235,6 +235,28 @@ class CMS < Sinatra::Base
     haml :multimedia
   end
 
+  post '/multimedia/publish' do
+    protect!
+
+    if Controllers::Multimedia.publish(params)
+      flash.success = "Multimèdia publicat amb èxit"
+    else
+      flash.error = "No s'ha pogut publicar el multimèdia"
+    end
+    redirect '/multimedia'
+  end
+
+  post '/multimedia/unpublish' do
+    protect!
+
+    if Controllers::Multimedia.unpublish(params)
+      flash.success = "Multimèdia ocultat amb èxit"
+    else
+      flash.error = "No s'ha pogut ocultar el multimèdia"
+    end
+    redirect '/multimedia'
+  end
+
   post '/multimedia/destroy' do
     protect!
 

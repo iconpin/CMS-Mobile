@@ -68,6 +68,20 @@ class CMS
         end
       end
 
+      def self.publish params
+        m = Models::Multimedia.get(params['id'])
+        return false if m.nil?
+        m.published = true
+        return m.save
+      end
+
+      def self.unpublish params
+        m = Models::Multimedia.get(params['id'])
+        return false if m.nil?
+        m.published = false
+        return m.save
+      end
+
       def self.destroy params
         id = params['id']
         multimedia = Models::Multimedia.get(id)
