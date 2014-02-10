@@ -12,7 +12,7 @@ A CMS.
 - sinatra
 - data\_mapper
 - warden
-- mustache
+- haml
 - streamio-ffmpeg
 - mini\_magick
 - sidekiq
