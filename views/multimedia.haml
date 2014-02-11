@@ -1,0 +1,37 @@
+- if @current_multimedia
+  .panel.panel-default
+    .panel-heading
+      %h3
+        = @current_multimedia.name
+        - if @current_multimedia.published?
+          %span.label.label-success
+            Publicat
+        - else
+          %span.label.label-warning
+            Privat
+    .panel-body
+      .well.well-sm
+        %strong Nom:
+        = @current_multimedia.name
+      .well.well-sm
+        %strong Descripció:
+        = @current_multimedia.description
+      .well.well-sm
+        %img.img-thumbnail{:src => @current_multimedia.thumbnail_link, :alt => "Miniatura"}
+
+      %ul.list-inline
+        %li
+          %form{:action => "/multimedia/edit", :method => "GET"}
+            %button.btn.btn-sm.btn-primary{:type => "submit", :name => "id", :value => @current_multimedia.id}
+              %span.glyphicon.glyphicon-edit
+              Edita
+        %li
+          %form{:action => "/point/destroy", :method => "POST"}
+            %button.btn.btn-sm.btn-danger{:type => "submit", :name => "id", :value => @current_multimedia.id}
+              %span.glyphicon.glyphicon-remove
+              Esborra
+        %li
+          %form{:action => @current_multimedia.static_link, :method => "GET"}
+            %button.btn.btn-sm.btn-success{:type => "submit"}
+              %span.glyphicon.glyphicon-download-alt
+              Descarrega
