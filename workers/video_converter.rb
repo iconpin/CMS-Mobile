@@ -20,7 +20,7 @@ class CMS
         movie.transcode(video.path)
         movie.screenshot(
           video.path_thumbnail.to_s,
-          { :resolution => '200x200' },
+          { :resolution => '400x400' },
           :preserve_aspect_ratio => :width
         )
 

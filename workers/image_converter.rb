@@ -22,7 +22,7 @@ class CMS
         i.write(image.path.to_s)
 
         j = MiniMagick::Image.open(image.path_tmp.to_s)
-        j.resize('200x200')
+        j.resize('400x400')
         j.write(image.path_thumbnail.to_s)
 
         image.ready = true
