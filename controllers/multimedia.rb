@@ -103,7 +103,30 @@ class CMS
           return false
         end
 
+        begin
+          File.delete(multimedia.path_thumbnail) if !File.exist?(multimedia.path_thumbnail)
+        rescue Errno::ENOENT
+          return false
+        end
+
         return multimedia.destroy
+      end
+
+      def self.edit params
+        multimedia = Models::Multimedia.get(params['id'])
+        if multimedia.nil?
+          return false
+        end
+
+        name = params['name']
+        description = params['description']
+        published = (params['published'] == 'on')
+
+        multimedia.name = name
+        multimedia.description = description
+        multimedia.published = published
+
+        return multimedia.save
       end
     end
   end
