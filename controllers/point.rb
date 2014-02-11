@@ -138,27 +138,63 @@ class CMS
 
       def self.edit_multimedia params
         point = Models::Point.get(params['point'])
-
         return false if point.nil?
+
+        multimedia = Models::Multimedia.get(params['multimedia'])
+        return false if multimedia.nil?
 
         case params['action']
         when 'link'
-          multimedia = Models::Multimedia.get(params['multimedia'])
-          return false if multimedia.nil?
-          point.multimedias << multimedia
+          pm = Models::PointMultimedia.create(
+            :point => point,
+            :multimedia => multimedia,
+            :weight => Models::PointMultimedia.first(:order => [:weight.desc]).weight + 1
+          )
+          return pm.saved?
         when 'unlink'
-          multimedia = point.multimedias.get(params['multimedia'])
-          return false if multimedia.nil?
-          return false unless point.multimedias.delete(multimedia)
+          pm = Models::PointMultimedia.first(:point => point, :multimedia => multimedia)
+          return pm.destroy
         else
           return false
         end
+      end
 
-        unless point.save #multimedias.save
-          raise ArgumentError, "hola"
-          return false
+      def self.multimedia_up params
+        point = Models::Point.get(params['point'])
+        return false if point.nil?
+        multimedia = Models::Multimedia.get(params['multimedia'])
+        return false if multimedia.nil?
+        pm = Models::PointMultimedia.first(:point => point, :multimedia => multimedia)
+        return false if pm.nil?
+        other = Models::PointMultimedia.first(:weight.lt => pm.weight, :order => [:weight.desc])
+        return false if other.nil?
+        aux = other.weight
+        other.weight = pm.weight
+        if pm.weight == aux
+          pm.weight = aux - 1
+        else
+          pm.weight = aux
         end
-        return point.multimedias.save
+        return pm.save && other.save
+      end
+
+      def self.multimedia_down params
+        point = Models::Point.get(params['point'])
+        return false if point.nil?
+        multimedia = Models::Multimedia.get(params['multimedia'])
+        return false if multimedia.nil?
+        pm = Models::PointMultimedia.first(:point => point, :multimedia => multimedia)
+        return false if pm.nil?
+        other = Models::PointMultimedia.first(:weight.gt => pm.weight, :order => [:weight.asc])
+        return false if other.nil?
+        aux = other.weight
+        other.weight = pm.weight
+        if pm.weight == aux
+          pm.weight = aux + 1
+        else
+          pm.weight = aux
+        end
+        return pm.save && other.save
       end
     end
   end

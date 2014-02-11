@@ -15,6 +15,7 @@ class CMS < Sinatra::Base
   require_relative 'models/user'
   require_relative 'models/point'
   require_relative 'models/multimedia'
+  require_relative 'models/point_multimedia'
 
   DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/database.db")
   DataMapper.finalize
@@ -22,6 +23,7 @@ class CMS < Sinatra::Base
   Models::User.auto_upgrade!
   Models::Point.auto_upgrade!
   Models::Multimedia.auto_upgrade!
+  Models::PointMultimedia.auto_upgrade!
 
   # Warden configuration
   use Rack::Session::Cookie, :secret => "i2cheese"
@@ -394,6 +396,26 @@ class CMS < Sinatra::Base
 
     unless Controllers::Point.edit_multimedia(params)
       flash.error = "No s'ha pogut modificar la relació"
+    end
+    redirect "/point/multimedia/edit?id=#{point_id}"
+  end
+
+  post '/point/multimedia/up' do
+    protect!
+
+    point_id = params['point']
+    unless Controllers::Point.multimedia_up(params)
+      flash.error = "No s'ha pogut moure el multimèdia"
+    end
+    redirect "/point/multimedia/edit?id=#{point_id}"
+  end
+
+  post '/point/multimedia/down' do
+    protect!
+
+    point_id = params['point']
+    unless Controllers::Point.multimedia_down(params)
+      flash.error = "No s'ha pogut moure el multimèdia"
     end
     redirect "/point/multimedia/edit?id=#{point_id}"
   end

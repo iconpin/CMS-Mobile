@@ -7,19 +7,35 @@
       %tr
         %th
           %span.glyphicon.glyphicon-link
+        %th Ordre
+        %th
         %th Nom
         %th Tipus
-      - @current_point.multimedias.each do |m|
+      - @current_point.point_multimedias.all(:order => [:weight.asc]).each do |pm|
         %tr
           %td
-            %form.form-inline{:role => "form", :action => "/point/multimedia/edit?point=#{@current_point.id}&multimedia=#{m.id}", :method => "POST"}
+            %form.form-inline{:role => "form", :action => "/point/multimedia/edit?point=#{@current_point.id}&multimedia=#{pm.multimedia.id}", :method => "POST"}
               .form-group
                 %button.btn.btn-sm.btn-warning{:type => "submit", :name => "action", :value => "unlink"}
                   %span.glyphicon.glyphicon-minus
+          %td= pm.weight
           %td
-            %a{:href => m.link, :target => "_blank"}= m.name
+            %ul.list-inline
+              %li
+                %form.form-inline{:role => "form", :action => "/point/multimedia/up?point=#{@current_point.id}&multimedia=#{pm.multimedia.id}", :method => "POST"}
+                  .form-group
+                    %button.btn.btn-sm.btn-default{:type => "submit"}
+                      %span.glyphicon.glyphicon-chevron-up
+              %li
+                %form.form-inline{:role => "form", :action => "/point/multimedia/down?point=#{@current_point.id}&multimedia=#{pm.multimedia.id}", :method => "POST"}
+                  .form-group
+                    %button.btn.btn-sm.btn-default{:type => "submit"}
+                      %span.glyphicon.glyphicon-chevron-down
+
           %td
-            - if m.image?
+            %a{:href => pm.multimedia.link, :target => "_blank"}= pm.multimedia.name
+          %td
+            - if pm.multimedia.image?
               %span.glyphicon.glyphicon-picture
             - else
               %span.glyphicon.glyphicon-film

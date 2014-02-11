@@ -15,7 +15,8 @@ class CMS
       property :published, Boolean, :required => true, :default => false
       property :deleted_at, ParanoidDateTime
 
-      has n, :multimedias
+      has n, :point_multimedias
+      has n, :multimedias, :through => :point_multimedias
       has n, :extras, 'Multimedia'
 
       def published?
