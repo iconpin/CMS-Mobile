@@ -1,6 +1,5 @@
 %table.table.table-striped
   %tr
-    %th #
     %th Nom
     %th Estat
     %th Tipus
@@ -10,10 +9,9 @@
     %th accions
   - @multimedia_list.each do |m|
     %tr
-      %td= m.weight
       %td
         - if m.ready
-          %a{:href => m.static_link}= m.name
+          %a{:href => m.link}= m.name
         - else
           = m.name
       %td
@@ -63,7 +61,6 @@
       %form{:action => "/video/create", :method => "GET"}
         %button.btn.btn-sm.btn-success{:type => "submit"}
           Nou Vídeo
-    %td
     %td
     %td
     %td
