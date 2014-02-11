@@ -231,14 +231,14 @@ class CMS < Sinatra::Base
     end
   end
 
-  get '/multimedia' do
+  get '/multimedias' do
     protect!
 
     @multimedia_list = Models::Multimedia.all
-    haml :multimedia
+    haml :multimedias
   end
 
-  post '/multimedia/publish' do
+  post '/multimedias/publish' do
     protect!
 
     if Controllers::Multimedia.publish(params)
@@ -246,10 +246,10 @@ class CMS < Sinatra::Base
     else
       flash.error = "No s'ha pogut publicar el multimèdia"
     end
-    redirect '/multimedia'
+    redirect '/multimedias'
   end
 
-  post '/multimedia/unpublish' do
+  post '/multimedias/unpublish' do
     protect!
 
     if Controllers::Multimedia.unpublish(params)
@@ -257,10 +257,10 @@ class CMS < Sinatra::Base
     else
       flash.error = "No s'ha pogut ocultar el multimèdia"
     end
-    redirect '/multimedia'
+    redirect '/multimedias'
   end
 
-  post '/multimedia/destroy' do
+  post '/multimedias/destroy' do
     protect!
 
     if Controllers::Multimedia.destroy(params)
@@ -268,7 +268,7 @@ class CMS < Sinatra::Base
     else
       flash.error = "No s'ha pogut destruir el multimedia"
     end
-    redirect '/multimedia'
+    redirect '/multimedias'
   end
 
   get '/point' do
@@ -418,5 +418,42 @@ class CMS < Sinatra::Base
       flash.error = "No s'ha pogut moure el multimèdia"
     end
     redirect "/point/multimedia/edit?id=#{point_id}"
+  end
+
+  get '/multimedia' do
+    protect!
+
+    @current_multimedia = Models::Multimedia.get(params['id'])
+    if @current_multimedia.nil?
+      flash.error = "El multimèdia especificat no existeix"
+      redirect '/multimedias'
+    end
+
+    haml :multimedia
+  end
+
+  get '/multimedia/edit' do
+    protect!
+
+    @current_multimedia = Models::Multimedia.get(params['id'])
+    if @current_multimedia.nil?
+      flash.error = "El multimèdia especificat no existeix"
+      redirect '/multimedias'
+    end
+
+    haml :multimedia_edit
+  end
+
+  post '/multimedia/edit' do
+    protect!
+
+    multimedia_id = params['id']
+
+    unless Controllers::Multimedia.edit(params)
+      flash.error = "No s'ha pogut editar el multimèdia"
+      redirect "/multimedia/edit?id=#{multimedia_id}"
+    else
+      redirect "/multimedia?id=#{multimedia_id}"
+    end
   end
 end
