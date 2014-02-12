@@ -1,5 +1,3 @@
-require 'data_mapper'
-
 class CMS
   module Models
     class User

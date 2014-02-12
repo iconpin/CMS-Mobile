@@ -1,5 +1,3 @@
-require 'data_mapper'
-
 class CMS
   module Models
     class Point
@@ -17,7 +15,9 @@ class CMS
 
       has n, :point_multimedias
       has n, :multimedias, :through => :point_multimedias
-      has n, :extras, 'Multimedia'
+
+      has n, :point_extras
+      has n, :extras, 'Multimedia', :through => :point_extras
 
       def published?
         self.published
