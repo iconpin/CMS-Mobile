@@ -16,6 +16,7 @@ class CMS < Sinatra::Base
   require_relative 'models/point'
   require_relative 'models/multimedia'
   require_relative 'models/point_multimedia'
+  require_relative 'models/point_extra'
 
   DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/database.db")
   DataMapper.finalize
@@ -24,6 +25,7 @@ class CMS < Sinatra::Base
   Models::Point.auto_upgrade!
   Models::Multimedia.auto_upgrade!
   Models::PointMultimedia.auto_upgrade!
+  Models::PointExtra.auto_upgrade!
 
   # Warden configuration
   use Rack::Session::Cookie, :secret => "i2cheese"
@@ -206,7 +208,7 @@ class CMS < Sinatra::Base
 
     if Controllers::Multimedia.upload_image(params)
       flash.success = "Imatge creada amb èxit"
-      redirect '/multimedia'
+      redirect '/multimedias'
     else
       flash.error = "No s'ha pogut crear la imatge"
       redirect '/image/create'
@@ -224,7 +226,7 @@ class CMS < Sinatra::Base
 
     if Controllers::Multimedia.upload_video(params)
       flash.success = "Vídeo creat amb èxit"
-      redirect '/multimedia'
+      redirect '/multimedias'
     else
       flash.error = "No s'ha pogut crear el vídeo"
       redirect '/video/create'
@@ -418,6 +420,40 @@ class CMS < Sinatra::Base
       flash.error = "No s'ha pogut moure el multimèdia"
     end
     redirect "/point/multimedia/edit?id=#{point_id}"
+  end
+
+  get '/point/extra/edit' do
+    protect!
+
+    @current_point = Controllers::Point.get(params)
+    haml :point_extra_edit
+  end
+
+  post '/point/extra/edit' do
+    protect!
+
+    unless Controllers::Point.edit_extra(params)
+      flash.error = "No s'ha pogut modificar la relació"
+    end
+    redirect "/point/extra/edit?id=#{params['point']}"
+  end
+
+  post '/point/extra/up' do
+    protect!
+
+    unless Controllers::Point.extra_up(params)
+      flash.error = "No s'ha pogut moure el multimèdia"
+    end
+    redirect "/point/extra/edit?id=#{params['point']}"
+  end
+
+  post '/point/extra/down' do
+    protect!
+
+    unless Controllers::Point.extra_down(params)
+      flash.error = "No s'ha pogut moure el multimèdia"
+    end
+    redirect "/point/extra/edit?id=#{params['point']}"
   end
 
   get '/multimedia' do

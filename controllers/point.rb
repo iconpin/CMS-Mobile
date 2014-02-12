@@ -145,10 +145,16 @@ class CMS
 
         case params['action']
         when 'link'
+          max_weight_multimedia = Models::PointMultimedia.first(:order => [:weight.desc])
+          max_weight = if max_weight_multimedia.nil?
+                         0
+                       else
+                         max_weight_multimedia.weight
+                       end
           pm = Models::PointMultimedia.create(
             :point => point,
             :multimedia => multimedia,
-            :weight => Models::PointMultimedia.first(:order => [:weight.desc]).weight + 1
+            :weight => max_weight + 1
           )
           return pm.saved?
         when 'unlink'
@@ -195,6 +201,35 @@ class CMS
           pm.weight = aux
         end
         return pm.save && other.save
+      end
+
+      def self.edit_extra params
+        point = Models::Point.get(params['point'])
+        return false if point.nil?
+
+        extra = Models::Multimedia.get(params['extra'])
+        return false if extra.nil?
+
+        case params['action']
+        when 'link'
+          max_weight_extra = Models::PointExtra.first(:order => [:weight.desc])
+          max_weight = if max_weight_extra.nil?
+                         0
+                       else
+                         max_weight_extra.weight
+                       end
+          pe = Models::PointExtra.create(
+            :point => point,
+            :extra => extra,
+            :weight => max_weight + 1
+          )
+          return pe.saved?
+        when 'unlink'
+          pe = Models::PointExtra.first(:point => point, :extra => extra)
+          return pe.destroy
+        else
+          return false
+        end
       end
     end
   end

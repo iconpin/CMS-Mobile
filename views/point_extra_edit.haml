@@ -1,0 +1,74 @@
+.panel.panel-success
+  .panel-heading
+    %span.glyphicon.glyphicon-film
+    Extres enllaçats
+  .panel-body
+    %table.table.table-striped
+      %tr
+        %th
+          %span.glyphicon.glyphicon-link
+        %th Ordre
+        %th
+        %th Nom
+        %th Tipus
+      - @current_point.point_extras.all(:order => [:weight.asc]).each do |pe|
+        %tr
+          %td
+            %form.form-inline{:role => "form", :action => "/point/extra/edit?point=#{@current_point.id}&extra=#{pe.extra.id}", :method => "POST"}
+              .form-group
+                %button.btn.btn-sm.btn-warning{:type => "submit", :name => "action", :value => "unlink"}
+                  %span.glyphicon.glyphicon-minus
+          %td= pe.weight
+          %td
+            %ul.list-inline
+              %li
+                %form.form-inline{:role => "form", :action => "/point/extra/up?point=#{@current_point.id}&extra=#{pe.extra.id}", :method => "POST"}
+                  .form-group
+                    %button.btn.btn-sm.btn-default{:type => "submit"}
+                      %span.glyphicon.glyphicon-chevron-up
+              %li
+                %form.form-inline{:role => "form", :action => "/point/extra/down?point=#{@current_point.id}&extra=#{pe.extra.id}", :method => "POST"}
+                  .form-group
+                    %button.btn.btn-sm.btn-default{:type => "submit"}
+                      %span.glyphicon.glyphicon-chevron-down
+
+          %td
+            %a{:href => pe.extra.link, :target => "_blank"}= pe.extra.name
+          %td
+            - if pe.extra.image?
+              %span.glyphicon.glyphicon-picture
+            - else
+              %span.glyphicon.glyphicon-film
+.panel.panel-info
+  .panel-heading
+    %span.glyphicon.glyphicon-film
+    Extres disponibles
+  .panel-body
+    %table.table.table-striped
+      %tr
+        %th
+          %span.glyphicon.glyphicon-link
+        %th Nom
+        %th Tipus
+      - Models::Multimedia.all.each do |m|
+        - if @current_point.extras.include?(m) || @current_point.multimedias.include?(m)
+        - else
+          %tr
+            %td
+              %form.form-inline{:role => "form", :action => "/point/extra/edit?point=#{@current_point.id}&extra=#{m.id}", :method => "POST"}
+                .form-group
+                  %button.btn.btn-sm.btn-primary{:type => "submit", :name => "action", :value => "link"}
+                    %span.glyphicon.glyphicon-plus
+            %td
+              %a{:href => m.link, :target => "_blank"}= m.name
+            %td
+              - if m.image?
+                %span.glyphicon.glyphicon-picture
+              - else
+                %span.glyphicon.glyphicon-film
+
+%ul.list-inline
+  %li
+    %a.btn.btn-warning{:href => @current_point.link}
+      %span.glyphicon.glyphicon-chevron-left
+      Enrere
