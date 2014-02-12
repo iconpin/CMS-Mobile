@@ -33,13 +33,14 @@ class CMS
         end
       end
 
-      def self.destroy email
+      def self.destroy email, current_user
         user = Models::User.first(:email => email)
         if user.nil?
           return false
         end
 
-        if user == @current_user
+        puts "USER: #{current_user}"
+        if user == current_user
           return false
         end
 

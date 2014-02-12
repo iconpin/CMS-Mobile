@@ -18,10 +18,11 @@
       %td= u.updated_at
       %td= u.last_login || "Mai"
       %td
-        %form{:action => "/user/destroy", :method => "POST"}
-          %button.btn.btn-sm.btn-danger{:name => "email", :value => u.email}
-            %span.glyphicon.glyphicon-remove
-            Esborra
+        - unless @current_user.email == u.email
+          %form{:action => "/user/destroy", :method => "POST"}
+            %button.btn.btn-sm.btn-danger{:name => "email", :value => u.email}
+              %span.glyphicon.glyphicon-remove
+              Esborra
   %tr
     %td
       %form{:action => "/user/create", :method => "GET"}

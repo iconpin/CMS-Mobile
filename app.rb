@@ -150,7 +150,7 @@ class CMS < Sinatra::Base
   post '/user/destroy' do
     admin! "Un usuari no administrador no pot esborrar usuaris"
 
-    if Controllers::User.destroy(params['email'])
+    if Controllers::User.destroy(params['email'], @current_user)
       flash.success = "Usuari #{params['email']} esborrat amb èxit"
     else
       flash.error = "No s'ha pogut esborrar l'usuari #{params['email']}"
