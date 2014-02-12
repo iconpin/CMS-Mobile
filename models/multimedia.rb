@@ -20,6 +20,10 @@ class CMS
 
       belongs_to :point, :required => false
 
+      def published?
+        self.published
+      end
+
       def image?
         false
       end
