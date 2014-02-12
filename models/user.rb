@@ -2,6 +2,8 @@ class CMS
   module Models
     class User
       include DataMapper::Resource
+      include Utils::DateTime
+
       property :id, Serial
       property :name, String, :required => true
       property :email, String, :required => true, :unique => true
@@ -28,6 +30,14 @@ class CMS
 
       def guest?
         false
+      end
+
+      def last_login_pretty
+        if self.last_login.nil?
+          return nil
+        else
+          date_time_pretty(self.last_login)
+        end
       end
 
       def self.has_admin?

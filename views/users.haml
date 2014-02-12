@@ -14,9 +14,9 @@
           %span.label.label-primary
             admin
       %td= u.email
-      %td= u.created_at
-      %td= u.updated_at
-      %td= u.last_login || "Mai"
+      %td= u.created_at_pretty
+      %td= u.updated_at_pretty
+      %td= u.last_login_pretty || "Mai"
       %td
         - unless @current_user.email == u.email
           %form{:action => "/user/destroy", :method => "POST"}

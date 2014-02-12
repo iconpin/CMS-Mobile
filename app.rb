@@ -11,6 +11,11 @@ class CMS < Sinatra::Base
   TMP_DIR = "#{Dir.pwd}/storage/tmp"
   THUMBNAIL_DIR = "#{Dir.pwd}/storage/thumbnail"
 
+  # Utils
+  require_relative 'utils/date_time'
+  require_relative 'utils/coordinates'
+
+
   # DataMapper configuration
   require_relative 'models/user'
   require_relative 'models/point'
@@ -79,9 +84,6 @@ class CMS < Sinatra::Base
   # Require workers
   require_relative 'workers/image_converter'
   require_relative 'workers/video_converter'
-
-  # Utils
-  require_relative 'utils/coordinates'
 
   before do
     @current_user = env['warden'].user || Models::Guest.new

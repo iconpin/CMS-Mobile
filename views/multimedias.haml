@@ -31,8 +31,8 @@
         - elsif m.video?
           %span.glyphicon.glyphicon-play
       %td= m.description
-      %td= m.created_at
-      %td= m.updated_at
+      %td= m.created_at_pretty
+      %td= m.updated_at_pretty
       %td
         %ul.list-inline
           - if m.published?

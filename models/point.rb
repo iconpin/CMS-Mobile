@@ -2,6 +2,8 @@ class CMS
   module Models
     class Point
       include DataMapper::Resource
+      include Utils::DateTime
+
       property :id, Serial
       property :name, String, :length => 255, :required => true, :unique => true
       property :description, Text, :required => true, :lazy => false

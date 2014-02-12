@@ -2,6 +2,8 @@ class CMS
   module Models
     class Multimedia
       include DataMapper::Resource
+      include Utils::DateTime
+
       property :id, Serial
       property :name, String, :required => true
       property :path_tmp, FilePath
