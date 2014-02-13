@@ -1,0 +1,188 @@
+module CMS
+  module Routes
+    class Point < Base
+      get '/point' do
+        protect!
+
+        @current_point = Controllers::Point.get(params)
+        if @current_point.nil?
+          flash.error = "El punt no existeix"
+          redirect '/points'
+        else
+          haml :point
+        end
+      end
+
+      get '/points' do
+        protect!
+
+        @point_list = Models::Point.all(:order => [:weight.asc])
+        haml :points
+      end
+
+      get '/point/create' do
+        protect!
+
+        haml :point_create
+      end
+
+      post '/point/create' do
+        protect!
+
+        if Controllers::Point.create(params)
+          flash.success = "Punt creat amb èxit"
+          redirect '/points'
+        else
+          flash.error = "No s'ha pogut crear el punt"
+          redirect '/point/create'
+        end
+      end
+
+      post '/point/destroy' do
+        protect!
+
+        if Controllers::Point.destroy(params)
+          flash.success = "Punt esborrat amb èxit"
+        else
+          flash.error = "No s'ha pogut esborrar el punt"
+        end
+        redirect '/points'
+      end
+
+      post '/point/publish' do
+        protect!
+
+        if Controllers::Point.publish(params)
+          flash.success = "Punt publicat amb èxit"
+        else
+          flash.error = "No s'ha pogut publicar el punt"
+        end
+        redirect '/points'
+      end
+
+      post '/point/unpublish' do
+        protect!
+
+        if Controllers::Point.unpublish(params)
+          flash.success = "Punt ocultat amb èxit"
+        else
+          flash.error = "No s'ha pogut ocultar el punt"
+        end
+        redirect '/points'
+      end
+
+      post '/point/up' do
+        protect!
+
+        Controllers::Point.up(params)
+        redirect '/points'
+      end
+
+      post '/point/down' do
+        protect!
+
+        Controllers::Point.down(params)
+        redirect '/points'
+      end
+
+      get '/point/edit' do
+        protect!
+
+        @current_point = Controllers::Point.get(params)
+        if @current_point.nil?
+          redirect '/points'
+        end
+
+        haml :point_edit
+      end
+
+      post '/point/edit' do
+        protect!
+
+        if Controllers::Point.edit(params)
+          flash.success = "Punt actualitzat amb èxit"
+          redirect '/points'
+        else
+          flash.error = "No s'ha pogut actualitzar el punt"
+          redirect_back
+        end
+      end
+
+      get '/point/multimedia/edit' do
+        protect!
+
+        @current_point = Controllers::Point.get(params)
+        if @current_point.nil?
+          redirect '/points'
+        end
+
+        haml :point_multimedia_edit
+      end
+
+      post '/point/multimedia/edit' do
+        protect!
+
+        point_id = params['point']
+
+        unless Controllers::Point.edit_multimedia(params)
+          flash.error = "No s'ha pogut modificar la relació"
+        end
+        redirect "/point/multimedia/edit?id=#{point_id}"
+      end
+
+      post '/point/multimedia/up' do
+        protect!
+
+        point_id = params['point']
+        unless Controllers::Point.multimedia_up(params)
+          flash.error = "No s'ha pogut moure el multimèdia"
+        end
+        redirect "/point/multimedia/edit?id=#{point_id}"
+      end
+
+      post '/point/multimedia/down' do
+        protect!
+
+        point_id = params['point']
+        unless Controllers::Point.multimedia_down(params)
+          flash.error = "No s'ha pogut moure el multimèdia"
+        end
+        redirect "/point/multimedia/edit?id=#{point_id}"
+      end
+
+      get '/point/extra/edit' do
+        protect!
+
+        @current_point = Controllers::Point.get(params)
+        haml :point_extra_edit
+      end
+
+      post '/point/extra/edit' do
+        protect!
+
+        unless Controllers::Point.edit_extra(params)
+          flash.error = "No s'ha pogut modificar la relació"
+        end
+        redirect "/point/extra/edit?id=#{params['point']}"
+      end
+
+      post '/point/extra/up' do
+        protect!
+
+        unless Controllers::Point.extra_up(params)
+          flash.error = "No s'ha pogut moure el multimèdia"
+        end
+        redirect "/point/extra/edit?id=#{params['point']}"
+      end
+
+      post '/point/extra/down' do
+        protect!
+
+        unless Controllers::Point.extra_down(params)
+          flash.error = "No s'ha pogut moure el multimèdia"
+        end
+        redirect "/point/extra/edit?id=#{params['point']}"
+      end
+    end
+  end
+end
