@@ -38,6 +38,10 @@ module CMS
         "/multimedia?id=#{self.id}"
       end
 
+      def edit_link
+        "/multimedia/edit?id=#{self.id}"
+      end
+
       def static_link
         "/static/multimedia/#{File.basename(self.path)}"
       end
@@ -52,6 +56,7 @@ module CMS
         true
       end
     end
+
     class Video < Multimedia
       def video?
         true

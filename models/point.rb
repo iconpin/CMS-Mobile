@@ -31,9 +31,18 @@ module CMS
         "/point?id=#{self.id}"
       end
 
-      def link_edit
+      def edit_link
         "/point/edit?id=#{self.id}"
       end
+
+      def multimedia_link
+        "/point/multimedia?id=#{self.id}"
+      end
+
+      def extra_link
+        "/point/extra?id=#{self.id}"
+      end
+
     end
   end
 end
