@@ -1,7 +1,7 @@
 require 'sidekiq'
 require 'streamio-ffmpeg'
 
-class CMS
+module CMS
   module Workers
     class VideoConverter
       include Sidekiq::Worker

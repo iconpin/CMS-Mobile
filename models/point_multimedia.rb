@@ -1,4 +1,4 @@
-class CMS
+module CMS
   module Models
     class PointMultimedia
       include DataMapper::Resource

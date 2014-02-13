@@ -1,4 +1,4 @@
-class CMS
+module CMS
   module Controllers
     class Point
       def self.get params

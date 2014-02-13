@@ -1,4 +1,4 @@
-class CMS
+module CMS
   module Models
     class User
       include DataMapper::Resource

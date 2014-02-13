@@ -1,4 +1,4 @@
-class CMS
+module CMS
   module Utils
     class Coordinates
       # <3 StackOverflow http://stackoverflow.com/a/1317231

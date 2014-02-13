@@ -1,7 +1,7 @@
 require 'sidekiq'
 require 'mini_magick'
 
-class CMS
+module CMS
   module Workers
     class ImageConverter
       include Sidekiq::Worker

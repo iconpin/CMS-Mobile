@@ -1,4 +1,4 @@
-class CMS
+module CMS
   module Utils
     module DateTime
       def date_time_pretty dt

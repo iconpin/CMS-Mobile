@@ -1,4 +1,4 @@
-class CMS
+module CMS
   module Controllers
     class User
       def self.create_admin params
