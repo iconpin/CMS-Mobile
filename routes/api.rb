@@ -1,9 +1,8 @@
-require 'sinatra/base'
 require 'builder'
 
 module CMS
-  module API
-    class App < Sinatra::Base
+  module Routes
+    class API < Base
       get '/api/info.xml' do
         builder do |xml|
           xml.instruct!

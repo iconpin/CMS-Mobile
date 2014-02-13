@@ -45,19 +45,17 @@ module CMS
     require_relative 'workers/image_converter'
     require_relative 'workers/video_converter'
 
-    # XML API
-    require_relative 'api'
-    use CMS::API::App
-
     # Routes
     require_relative 'routes/base'
     require_relative 'routes/user'
     require_relative 'routes/multimedia'
     require_relative 'routes/point'
+    require_relative 'routes/api'
 
     use Routes::Base
     use Routes::User
     use Routes::Multimedia
     use Routes::Point
+    use Routes::API
   end
 end
