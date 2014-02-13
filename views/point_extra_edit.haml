@@ -50,7 +50,7 @@
           %span.glyphicon.glyphicon-link
         %th Nom
         %th Tipus
-      - Models::Multimedia.all.each do |m|
+      - CMS::Models::Multimedia.all.each do |m|
         - if @current_point.extras.include?(m) || @current_point.multimedias.include?(m)
         - else
           %tr
