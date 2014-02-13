@@ -20,6 +20,8 @@ module CMS
 
       belongs_to :point, :required => false
 
+      has n, :tips
+
       def published?
         self.published
       end

@@ -21,6 +21,8 @@ module CMS
       has n, :point_extras
       has n, :extras, 'Multimedia', :through => :point_extras
 
+      has n, :tips
+
       def published?
         self.published
       end
