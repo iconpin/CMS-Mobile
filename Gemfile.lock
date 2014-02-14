@@ -18,7 +18,7 @@ GEM
       dm-transactions (~> 1.2.0)
       dm-types (~> 1.2.0)
       dm-validations (~> 1.2.0)
-    data_objects (0.10.13)
+    data_objects (0.10.14)
       addressable (~> 2.1)
     dm-aggregates (1.2.0)
       dm-core (~> 1.2.0)
@@ -54,8 +54,8 @@ GEM
       uuidtools (~> 2.1)
     dm-validations (1.2.0)
       dm-core (~> 1.2.0)
-    do_sqlite3 (0.10.13)
-      data_objects (= 0.10.13)
+    do_sqlite3 (0.10.14)
+      data_objects (= 0.10.14)
     eventmachine (1.0.3)
     fastercsv (1.5.5)
     ffi (1.9.3)
@@ -67,17 +67,9 @@ GEM
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
       rb-kqueue (>= 0.2)
-    mail (2.5.4)
-      mime-types (~> 1.16)
-      treetop (~> 1.4.8)
-    mime-types (1.25.1)
     mini_magick (3.7.0)
       subexec (~> 0.2.1)
     multi_json (1.8.4)
-    mustache (0.99.5)
-    polyglot (0.3.3)
-    pony (1.6.2)
-      mail (>= 2.0)
     rack (1.5.2)
     rack-flash3 (1.0.5)
       rack
@@ -93,7 +85,7 @@ GEM
       redis (~> 3.0.4)
     rerun (0.8.2)
       listen (~> 1.0.3)
-    sidekiq (2.17.3)
+    sidekiq (2.17.4)
       celluloid (>= 0.15.2)
       connection_pool (>= 1.0.0)
       json
@@ -112,9 +104,6 @@ GEM
       rack (>= 1.0.0)
     tilt (1.4.1)
     timers (1.1.0)
-    treetop (1.4.15)
-      polyglot
-      polyglot (>= 0.3.1)
     uuidtools (2.1.4)
     warden (1.2.3)
       rack (>= 1.0)
@@ -128,8 +117,6 @@ DEPENDENCIES
   dm-sqlite-adapter
   haml
   mini_magick
-  mustache
-  pony
   rack
   rack-flash3
   rerun
