@@ -10,10 +10,12 @@ module CMS
         end
         name = params['name']
         description = params['description']
+        tip = params['tip']
 
         image = Models::Image.new(
           :name => name,
           :description => description,
+          :tip => tip,
           :created_at => Time.now,
           :updated_at => Time.now
         )
@@ -43,10 +45,12 @@ module CMS
         extension = File.extname(filename)
         name = params['name']
         description = params['description']
+        tip = params['tip']
 
         video = Models::Video.new(
           :name => name,
           :description => description,
+          :tip => tip,
           :created_at => Time.now,
           :updated_at => Time.now
         )

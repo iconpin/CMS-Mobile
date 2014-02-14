@@ -14,11 +14,13 @@ module CMS
       def self.create params
         name = params['name']
         description = params['description']
+        tip = params['tip']
         coord_x, coord_y = Utils::Coordinates.parse(params['coords'])
 
         point = Models::Point.create(
           :name => name,
           :description => description,
+          :tip => tip,
           :coord_x => coord_x,
           :coord_y => coord_y,
           :created_at => Time.now,
