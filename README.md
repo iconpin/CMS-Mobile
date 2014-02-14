@@ -50,8 +50,9 @@ TODO
 
 ## Project structure
 
-- `app.rb` contains the main Sinatra application
-- `views`
-- `templates`
-- `workers`
-- `utils`
+- `app.rb`: main Sinatra application
+- `routes`: Sinatra apps that are mounted in `app.rb`
+- `views`: HAML views
+- `workers`: sidekiq workers
+- `utils`: helper modules
+
