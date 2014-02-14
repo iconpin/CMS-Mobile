@@ -30,6 +30,20 @@ Distributed with the application.
 - SQL DB (defaults to SQLite3)
 - Redis (needed by Sidekiq for background asynchronous processing)
 
+## Development
+
+To run the app:
+
+```
+$ rerun 'rackup -p PORT -o HOST'
+```
+
+To start sidekiq:
+
+```
+$ bundle exec sidekiq -r ./app.rb
+```
+
 ## Deployment
 
 TODO

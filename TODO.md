@@ -9,3 +9,5 @@
 - Erase displaying of weight fields
 
 - Flash on erroring login?
+
+- Stuff written and piled up on my desktop
