@@ -7,6 +7,7 @@ GEM
     celluloid (0.15.2)
       timers (~> 1.1.0)
     connection_pool (1.2.0)
+    daemons (1.1.9)
     data_mapper (1.2.0)
       dm-aggregates (~> 1.2.0)
       dm-constraints (~> 1.2.0)
@@ -55,6 +56,7 @@ GEM
       dm-core (~> 1.2.0)
     do_sqlite3 (0.10.13)
       data_objects (= 0.10.13)
+    eventmachine (1.0.3)
     fastercsv (1.5.5)
     ffi (1.9.3)
     haml (4.0.5)
@@ -104,6 +106,10 @@ GEM
     streamio-ffmpeg (1.0.0)
     stringex (1.5.1)
     subexec (0.2.3)
+    thin (1.6.1)
+      daemons (>= 1.0.9)
+      eventmachine (>= 1.0.0)
+      rack (>= 1.0.0)
     tilt (1.4.1)
     timers (1.1.0)
     treetop (1.4.15)
@@ -130,4 +136,5 @@ DEPENDENCIES
   sidekiq
   sinatra
   streamio-ffmpeg
+  thin
   warden
