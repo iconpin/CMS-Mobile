@@ -16,7 +16,7 @@
           %td
             %form.form-inline{:role => "form", :action => "/point/extra/edit?point=#{@current_point.id}&extra=#{pe.extra.id}", :method => "POST"}
               .form-group
-                %button.btn.btn-sm.btn-warning{:type => "submit", :name => "action", :value => "unlink"}
+                %button.btn.btn-xs.btn-warning{:type => "submit", :name => "action", :value => "unlink"}
                   %span.glyphicon.glyphicon-minus
           %td= pe.weight
           %td
@@ -24,12 +24,12 @@
               %li
                 %form.form-inline{:role => "form", :action => "/point/extra/up?point=#{@current_point.id}&extra=#{pe.extra.id}", :method => "POST"}
                   .form-group
-                    %button.btn.btn-sm.btn-default{:type => "submit"}
+                    %button.btn.btn-xs.btn-default{:type => "submit"}
                       %span.glyphicon.glyphicon-chevron-up
               %li
                 %form.form-inline{:role => "form", :action => "/point/extra/down?point=#{@current_point.id}&extra=#{pe.extra.id}", :method => "POST"}
                   .form-group
-                    %button.btn.btn-sm.btn-default{:type => "submit"}
+                    %button.btn.btn-xs.btn-default{:type => "submit"}
                       %span.glyphicon.glyphicon-chevron-down
 
           %td
@@ -57,7 +57,7 @@
             %td
               %form.form-inline{:role => "form", :action => "/point/extra/edit?point=#{@current_point.id}&extra=#{m.id}", :method => "POST"}
                 .form-group
-                  %button.btn.btn-sm.btn-primary{:type => "submit", :name => "action", :value => "link"}
+                  %button.btn.btn-xs.btn-primary{:type => "submit", :name => "action", :value => "link"}
                     %span.glyphicon.glyphicon-plus
             %td
               %a{:href => m.link, :target => "_blank"}= m.name

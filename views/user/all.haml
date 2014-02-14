@@ -20,7 +20,7 @@
       %td
         - unless @current_user.email == u.email
           %form{:action => "/user/destroy", :method => "POST"}
-            %button.btn.btn-sm.btn-danger{:name => "email", :value => u.email}
+            %button.btn.btn-xs.btn-danger{:name => "email", :value => u.email}
               %span.glyphicon.glyphicon-remove
               Esborra
   %tr

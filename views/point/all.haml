@@ -14,11 +14,11 @@
         %ul.list-inline
           %li
             %form.form-inline{:role => "form", :action => "/point/up", :method => "POST"}
-              %button.btn.btn-sm{:type => "submit", :name => "id", :value => p.id}
+              %button.btn.btn-xs{:type => "submit", :name => "id", :value => p.id}
                 %span.glyphicon.glyphicon-chevron-up
           %li
             %form.form-inline{:role => "form", :action => "/point/down", :method => "POST"}
-              %button.btn.btn-sm{:type => "submit", :name => "id", :value => p.id}
+              %button.btn.btn-xs{:type => "submit", :name => "id", :value => p.id}
                 %span.glyphicon.glyphicon-chevron-down
       %td
         = p.weight
@@ -36,17 +36,17 @@
       %td
         - if p.published?
           %form.form-inline{:role => "form", :action => "/point/unpublish", :method => "POST"}
-            %button.btn.btn-sm.btn-warning{:type => "submit", :name => "id", :value => p.id}
+            %button.btn.btn-xs.btn-warning{:type => "submit", :name => "id", :value => p.id}
               %span.glyphicon.glyphicon-eye-close
               Oculta
         - else
           %form.form-inline{:role => "form", :action => "/point/publish", :method => "POST"}
-            %button.btn.btn-sm.btn-success{:type => "submit", :name => "id", :value => p.id}
+            %button.btn.btn-xs.btn-success{:type => "submit", :name => "id", :value => p.id}
               %span.glyphicon.glyphicon-eye-open
               Publica
       %td
         %form.form-inline{:role => "form", :action => "/point/destroy", :method => "POST"}
-          %button.btn.btn-sm.btn-danger{:type => "submit", :name => "id", :value => p.id}
+          %button.btn.btn-xs.btn-danger{:type => "submit", :name => "id", :value => p.id}
             %span.glyphicon.glyphicon-remove
             Esborra
   %tr

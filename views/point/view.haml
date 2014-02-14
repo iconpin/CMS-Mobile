@@ -1,24 +1,20 @@
 - if @current_point
   .panel.panel-default
     .panel-heading
-      %h3= @current_point.name
+      %h3
+        = @current_point.name
+        - if @current_point.published?
+          %span.label.label-success
+            Publicat
+        - else
+          %span.label.label-warning
+            Privat
     .panel-body
       .panel.panel-primary
         .panel-heading
           %span.glyphicon.glyphicon-info-sign
           Informació
-          - if @current_point.published?
-            %span.label.label-success
-              %span.glyphicon.glyphicon-eye-open
-              Publicat
-          - else
-            %span.label.label-warning
-              %span.glyphicon.glyphicon-eye-close
-              Privat
         .panel-body
-          .well.well-sm
-            %strong Nom:
-            = @current_point.name
           .well.well-sm
             %strong Descripció:
             = @current_point.description
@@ -92,6 +88,8 @@
                             Privat
                       %td
                         %a{:href => m.link, :target => "_blank"}= m.name
+                      %td
+                        = m.description
                 - else
                   .well.well-sm
                     No hi ha cap multimèdia enllaçat

@@ -38,18 +38,18 @@
           - if m.published?
             %li
               %form{:action => "/multimedias/unpublish", :method => "POST"}
-                %button.btn.btn-sm.btn-warning{:type => "submit", :name => "id", :value => m.id}
+                %button.btn.btn-xs.btn-warning{:type => "submit", :name => "id", :value => m.id}
                   %span.glyphicon.glyphicon-eye-close
                   Oculta
           - else
             %li
               %form{:action => "/multimedias/publish", :method => "POST"}
-                %button.btn.btn-sm.btn-success{:type => "submit", :name => "id", :value => m.id}
+                %button.btn.btn-xs.btn-success{:type => "submit", :name => "id", :value => m.id}
                   %span.glyphicon.glyphicon-eye-open
                   Publica
           %li
             %form{:action => "/multimedias/destroy", :method => "POST"}
-              %button.btn.btn-sm.btn-danger{:type => "submit", :name => "id", :value => m.id}
+              %button.btn.btn-xs.btn-danger{:type => "submit", :name => "id", :value => m.id}
                 %span.glyphicon.glyphicon-remove
                 Esborra
   %tr
