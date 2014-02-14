@@ -39,7 +39,7 @@
                   Esborra
       .panel.panel-primary
         .panel-heading
-          %span.glyphicon.glyphicon-film
+          %span.glyphicon.glyphicon-play
           Multimedia principal
         .panel-body
           .panel.panel-default
@@ -82,7 +82,7 @@
                         - if m.image?
                           %span.glyphicon.glyphicon-picture
                         - else
-                          %span.glyphicon.glyphicon-film
+                          %span.glyphicon.glyphicon-play
                       %td
                         - if m.published?
                           %span.label.label-success
@@ -104,7 +104,7 @@
 
       .panel.panel-info
         .panel-heading
-          %span.glyphicon.glyphicon-film
+          %span.glyphicon.glyphicon-play
           Multimedia extra
         .panel-body
           %table.table.table-striped
@@ -115,7 +115,7 @@
                     - if m.image?
                       %span.glyphicon.glyphicon-picture
                     - else
-                      %span.glyphicon.glyphicon-film
+                      %span.glyphicon.glyphicon-play
                   %td
                     %a{:href => m.link, :target => "_blank"}= m.name
             - else
