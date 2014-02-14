@@ -74,11 +74,6 @@ module CMS
         redirect '/logout'
       end
 
-      post '/unauthenticated' do
-        session[:return_to] = env['warden.options'][:attempted_path]
-        redirect '/login'
-      end
-
       get '/users' do
         admin! "Un usuari no administrador no pot gestionar usuaris"
 

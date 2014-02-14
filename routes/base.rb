@@ -72,6 +72,12 @@ module CMS
 
         haml :home
       end
+
+      post '/unauthenticated' do
+        session[:return_to] = env['warden.options'][:attempted_path]
+        redirect '/login'
+      end
+
     end
   end
 end
