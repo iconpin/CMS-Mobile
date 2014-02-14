@@ -15,6 +15,13 @@
         = @current_multimedia.description
       .well.well-sm
         %img.img-thumbnail{:src => @current_multimedia.thumbnail_link, :alt => "Miniatura"}
+      .well.well-sm
+        %strong Utilitzat a:
+        - if CMS::Models::PointMultimedia.count(:multimedia => @current_multimedia) == 0
+          cap punt d'interès
+        - else
+          - CMS::Models::PointMultimedia.all(:multimedia => @current_multimedia).each do |p|
+            %a{:href => p.point.link}= p.point.name
 
       %ul.list-inline
         %li
