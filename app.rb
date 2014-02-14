@@ -23,7 +23,6 @@ module CMS
     require_relative 'models/multimedia'
     require_relative 'models/point_multimedia'
     require_relative 'models/point_extra'
-    require_relative 'models/tip'
 
     DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/database.db")
     DataMapper.finalize

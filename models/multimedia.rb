@@ -11,7 +11,8 @@ module CMS
       property :path_thumbnail, FilePath
       property :ready, Boolean, :required => true, :default => false
       property :error, Text
-      property :description, Text, :required => false
+      property :description, Text
+      property :tip, Text, :lazy => false
       property :published, Boolean, :required => true, :default => false
       property :created_at, DateTime, :required => true
       property :updated_at, DateTime, :required => true
@@ -19,8 +20,6 @@ module CMS
       property :type, Discriminator  # Allows Single Table Inheritance
 
       belongs_to :point, :required => false
-
-      has n, :tips
 
       def published?
         self.published

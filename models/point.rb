@@ -6,10 +6,11 @@ module CMS
 
       property :id, Serial
       property :name, String, :length => 255, :required => true, :unique => true
-      property :description, Text, :required => false, :lazy => false
+      property :description, Text, :lazy => false
       property :coord_x, Float, :required => true
       property :coord_y, Float, :required => true
       property :weight, Integer, :required => true, :default => 0
+      property :tip, Text, :lazy => false
       property :created_at, DateTime, :required => true
       property :updated_at, DateTime, :required => true
       property :published, Boolean, :required => true, :default => false
@@ -20,8 +21,6 @@ module CMS
 
       has n, :point_extras
       has n, :extras, 'Multimedia', :through => :point_extras
-
-      has n, :tips
 
       def published?
         self.published
