@@ -35,7 +35,9 @@
       %td= m.created_at_pretty
       %td= m.updated_at_pretty
       %td
-        - m.points.each do |p|
+        - m.points.each_with_index do |p, i|
+          - if i > 0
+            ,
           %a{:href => p.link}= p.name
       %td
         %ul.list-inline

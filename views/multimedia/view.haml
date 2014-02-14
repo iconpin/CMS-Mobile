@@ -20,7 +20,9 @@
         - if @current_multimedia.points.size == 0
           cap punt d'interès
         - else
-          - @current_multimedia.points.each do |p|
+          - @current_multimedia.points.each_with_index do |p, i|
+            - if i > 0
+              ,
             %a{:href => p.link}= p.name
 
       %ul.list-inline
