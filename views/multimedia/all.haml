@@ -3,11 +3,12 @@
     %th Nom
     %th Estat
     %th Tipus
-    %th Descripció curta
+    %th Descripció
     %th Data creació
     %th Data última actualització
     %th Utilitzat a
-    %th accions
+    %th Accions
+    %th
   - @multimedia_list.each do |m|
     %tr
       %td
@@ -40,24 +41,21 @@
             ,
           %a{:href => p.link}= p.name
       %td
-        %ul.list-inline
-          - if m.published?
-            %li
-              %form{:action => "/multimedias/unpublish", :method => "POST"}
-                %button.btn.btn-xs.btn-warning{:type => "submit", :name => "id", :value => m.id}
-                  %span.glyphicon.glyphicon-eye-close
-                  Oculta
-          - else
-            %li
-              %form{:action => "/multimedias/publish", :method => "POST"}
-                %button.btn.btn-xs.btn-success{:type => "submit", :name => "id", :value => m.id}
-                  %span.glyphicon.glyphicon-eye-open
-                  Publica
-          %li
-            %form{:action => "/multimedias/destroy", :method => "POST"}
-              %button.btn.btn-xs.btn-danger{:type => "submit", :name => "id", :value => m.id}
-                %span.glyphicon.glyphicon-remove
-                Esborra
+        - if m.published?
+          %form{:action => "/multimedias/unpublish", :method => "POST"}
+            %button.btn.btn-xs.btn-warning{:type => "submit", :name => "id", :value => m.id}
+              %span.glyphicon.glyphicon-eye-close
+              Oculta
+        -else
+          %form{:action => "/multimedias/publish", :method => "POST"}
+            %button.btn.btn-xs.btn-success{:type => "submit", :name => "id", :value => m.id}
+              %span.glyphicon.glyphicon-eye-open
+              Publica
+      %td
+        %form{:action => "/multimedias/destroy", :method => "POST"}
+          %button.btn.btn-xs.btn-danger{:type => "submit", :name => "id", :value => m.id}
+            %span.glyphicon.glyphicon-remove
+            Esborra
   %tr
     %td
       %form{:action => "/image/create", :method => "GET"}
@@ -67,6 +65,7 @@
       %form{:action => "/video/create", :method => "GET"}
         %button.btn.btn-sm.btn-success{:type => "submit"}
           Nou Vídeo
+    %td
     %td
     %td
     %td
