@@ -6,6 +6,7 @@
     %th Descripció curta
     %th Data creació
     %th Data última actualització
+    %th Utilitzat a
     %th accions
   - @multimedia_list.each do |m|
     %tr
@@ -34,6 +35,9 @@
       %td= m.created_at_pretty
       %td= m.updated_at_pretty
       %td
+        - m.points.each do |p|
+          %a{:href => p.link}= p.name
+      %td
         %ul.list-inline
           - if m.published?
             %li
@@ -61,6 +65,7 @@
       %form{:action => "/video/create", :method => "GET"}
         %button.btn.btn-sm.btn-success{:type => "submit"}
           Nou Vídeo
+    %td
     %td
     %td
     %td
