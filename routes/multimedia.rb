@@ -4,7 +4,7 @@ module CMS
       get '/image/create' do
         protect!
 
-        haml :image_create
+        haml :'multimedia/image/create'
       end
 
       post '/image/create' do
@@ -22,7 +22,7 @@ module CMS
       get '/video/create' do
         protect!
 
-        haml :video_create
+        haml :'multimedia/video/create'
       end
 
       post '/video/create' do
@@ -41,7 +41,7 @@ module CMS
         protect!
 
         @multimedia_list = Models::Multimedia.all
-        haml :multimedias
+        haml :'multimedia/all'
       end
 
       post '/multimedias/publish' do
@@ -86,7 +86,7 @@ module CMS
           redirect '/multimedias'
         end
 
-        haml :multimedia
+        haml :'multimedia/view'
       end
 
       get '/multimedia/edit' do
@@ -98,7 +98,7 @@ module CMS
           redirect '/multimedias'
         end
 
-        haml :multimedia_edit
+        haml :'multimedia/edit'
       end
 
       post '/multimedia/edit' do

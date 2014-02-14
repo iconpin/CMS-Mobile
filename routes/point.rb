@@ -9,7 +9,7 @@ module CMS
           flash.error = "El punt no existeix"
           redirect '/points'
         else
-          haml :point
+          haml :'point/view'
         end
       end
 
@@ -17,13 +17,13 @@ module CMS
         protect!
 
         @point_list = Models::Point.all(:order => [:weight.asc])
-        haml :points
+        haml :'point/all'
       end
 
       get '/point/create' do
         protect!
 
-        haml :point_create
+        haml :'point/create'
       end
 
       post '/point/create' do
@@ -93,7 +93,7 @@ module CMS
           redirect '/points'
         end
 
-        haml :point_edit
+        haml :'point/edit'
       end
 
       post '/point/edit' do
@@ -116,7 +116,7 @@ module CMS
           redirect '/points'
         end
 
-        haml :point_multimedia_edit
+        haml :'point/multimedia/edit'
       end
 
       post '/point/multimedia/edit' do
@@ -154,7 +154,7 @@ module CMS
         protect!
 
         @current_point = Controllers::Point.get(params)
-        haml :point_extra_edit
+        haml :'point/extra/edit'
       end
 
       post '/point/extra/edit' do

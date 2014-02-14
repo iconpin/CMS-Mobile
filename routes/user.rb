@@ -2,7 +2,7 @@ module CMS
   module Routes
     class User < Base
       get '/register' do
-        haml :register
+        haml :'user/register'
       end
 
       post '/register' do
@@ -19,7 +19,7 @@ module CMS
 
       get '/user/create' do
         admin! "Un usuari no administrador no pot crear nous usuaris"
-        haml :user_create
+        haml :'user/create'
       end
 
       post '/user/create' do
@@ -48,7 +48,7 @@ module CMS
       end
 
       get '/login' do
-        haml :login
+        haml :'user/login'
       end
 
       post '/login' do
@@ -78,7 +78,7 @@ module CMS
         admin! "Un usuari no administrador no pot gestionar usuaris"
 
         @user_list = Models::User.all
-        haml :users
+        haml :'user/all'
       end
     end
   end
