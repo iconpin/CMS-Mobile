@@ -31,8 +31,8 @@
         - else
           %span.label.label-warning
             Privat
-      %td= p.created_at
-      %td= p.updated_at
+      %td= p.created_at_pretty
+      %td= p.updated_at_pretty
       %td
         - if p.published?
           %form.form-inline{:role => "form", :action => "/point/unpublish", :method => "POST"}
