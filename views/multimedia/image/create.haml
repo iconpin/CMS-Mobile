@@ -2,7 +2,9 @@
   .form-group
     %input#image-create-name.form-control{:type => "text", :name => "name", :placeholder => "Nom", :required => true, :autofocus => true}
   .form-group
-    %textarea#image-create-description.form-control{:name => "description", :rows => "3", :placeholder => "Descripció", :autofocus => true}
+    %textarea#image-create-description.form-control{:name => "description", :rows => "3", :placeholder => "Descripció"}
+  .form-group
+    %textarea#image-create-tip.form-control{:rows => "1", :name => "tip", :placeholder => "Missatge"}
   .form-group
     %input#image-create-file.form-control{:name => "file", :type => "file"}
   .form-group

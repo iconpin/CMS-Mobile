@@ -2,9 +2,11 @@
   .form-group
     %input.form-control{:type => "text", :name => "name", :placeholder => "Nom", :required => true, :autofocus => true}
   .form-group
-    %textarea.form-control{:rows => "3", :name => "description", :placeholder => "Descripció", :autofocus => true}
+    %textarea.form-control{:rows => "3", :name => "description", :placeholder => "Descripció"}
   .form-group
-    %input.form-control{:type => "text", :name => "coords", :placeholder => "Coordenades (latitud i longitud)", :required => true, :autofocus => true}
+    %textarea.form-control{:rows => "1", :name => "tip", :placeholder => "Missatge", :autofocus => true}
+  .form-group
+    %input.form-control{:type => "text", :name => "coords", :placeholder => "Coordenades (latitud i longitud)", :required => true}
   .form-group
     %button.btn.btn-lg.btn-primary.btn-block{:type => "submit"}
       Crea
