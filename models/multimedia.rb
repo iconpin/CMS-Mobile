@@ -49,6 +49,10 @@ module CMS
       def thumbnail_link
         "/static/thumbnail/#{File.basename(self.path_thumbnail)}"
       end
+
+      def points
+        PointMultimedia.all(:multimedia => self).point
+      end
     end
 
     class Image < Multimedia

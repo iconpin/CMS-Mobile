@@ -17,11 +17,11 @@
         %img.img-thumbnail{:src => @current_multimedia.thumbnail_link, :alt => "Miniatura"}
       .well.well-sm
         %strong Utilitzat a:
-        - if CMS::Models::PointMultimedia.count(:multimedia => @current_multimedia) == 0
+        - if @current_multimedia.points.size == 0
           cap punt d'interès
         - else
-          - CMS::Models::PointMultimedia.all(:multimedia => @current_multimedia).each do |p|
-            %a{:href => p.point.link}= p.point.name
+          - @current_multimedia.points.each do |p|
+            %a{:href => p.link}= p.name
 
       %ul.list-inline
         %li
