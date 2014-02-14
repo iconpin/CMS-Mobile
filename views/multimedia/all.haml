@@ -4,6 +4,7 @@
     %th Estat
     %th Tipus
     %th Descripció
+    %th Missatge
     %th Data creació
     %th Data última actualització
     %th Utilitzat a
@@ -33,6 +34,7 @@
         - elsif m.video?
           %span.glyphicon.glyphicon-play
       %td= m.description
+      %td= m.tip
       %td= m.created_at_pretty
       %td= m.updated_at_pretty
       %td
@@ -65,6 +67,7 @@
       %form{:action => "/video/create", :method => "GET"}
         %button.btn.btn-sm.btn-success{:type => "submit"}
           Nou Vídeo
+    %td
     %td
     %td
     %td

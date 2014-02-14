@@ -19,6 +19,9 @@
             %strong Descripció:
             = @current_point.description
           .well.well-sm
+            %strong Missatge:
+            = @current_point.tip
+          .well.well-sm
             %strong Coordenades:
             = "#{@current_point.coord_x}, #{@current_point.coord_y}"
 
