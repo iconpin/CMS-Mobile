@@ -41,23 +41,47 @@
               Cheese Mouse System
           .navbar-collapse.collapse
             %ul.nav.navbar-nav
-              %li
-                %a{:href => "/"}
-                  %span.glyphicon.glyphicon-home
-                  Inici
-              %li
-                %a{:href => "/multimedias"}
-                  %span.glyphicon.glyphicon-play
-                  Multimedia
-              %li
-                %a{:href => "/points"}
-                  %span.glyphicon.glyphicon-map-marker
-                  Punts
-              - if @current_user.admin?
+              - if @path == :home
+                %li.active
+                  %a{:href => "/"}
+                    %span.glyphicon.glyphicon-home
+                    Inici
+              - else
                 %li
-                  %a{:href => "/users"}
-                    %span.glyphicon.glyphicon-user
-                    Usuaris
+                  %a{:href => "/"}
+                    %span.glyphicon.glyphicon-home
+                    Inici
+              - if @path == :multimedia
+                %li.active
+                  %a{:href => "/multimedias"}
+                    %span.glyphicon.glyphicon-play
+                    Multimedia
+              - else
+                %li
+                  %a{:href => "/multimedias"}
+                    %span.glyphicon.glyphicon-play
+                    Multimedia
+              - if @path == :point
+                %li.active
+                  %a{:href => "/points"}
+                    %span.glyphicon.glyphicon-map-marker
+                    Punts
+              - else
+                %li
+                  %a{:href => "/points"}
+                    %span.glyphicon.glyphicon-map-marker
+                    Punts
+              - if @current_user.admin?
+                - if @path == :user
+                  %li.active
+                    %a{:href => "/users"}
+                      %span.glyphicon.glyphicon-user
+                      Usuaris
+                - else
+                  %li
+                    %a{:href => "/users"}
+                      %span.glyphicon.glyphicon-user
+                      Usuaris
             %ul.nav.navbar-nav.navbar-right
               - if @current_user
                 %li

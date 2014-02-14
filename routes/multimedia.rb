@@ -1,6 +1,10 @@
 module CMS
   module Routes
     class Multimedia < Base
+      before do
+        @path = :multimedia
+      end
+
       get '/image/create' do
         protect!
 

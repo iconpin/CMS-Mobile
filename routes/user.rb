@@ -1,6 +1,10 @@
 module CMS
   module Routes
     class User < Base
+      before do
+        @path = :user
+      end
+
       get '/register' do
         haml :'user/register'
       end

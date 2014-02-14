@@ -1,6 +1,10 @@
 module CMS
   module Routes
     class Point < Base
+      before do
+        @path = :point
+      end
+
       get '/point' do
         protect!
 

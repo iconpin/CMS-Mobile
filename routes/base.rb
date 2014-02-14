@@ -48,6 +48,7 @@ module CMS
       before do
         @current_user = env['warden'].user || Models::Guest.new
         @flash = flash
+        @path = :home
       end
 
       helpers do
