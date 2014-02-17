@@ -4,6 +4,9 @@ require 'data_mapper'
 require 'warden'
 require 'haml'
 
+require 'sidekiq'
+require 'streamio-ffmpeg'
+require 'mini_magick'
 
 module CMS
   # Storage config

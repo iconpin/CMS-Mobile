@@ -15,7 +15,7 @@ module CMS
       property :tip, Text, :lazy => false
       property :published, Boolean, :required => true, :default => false
       property :created_at, DateTime, :required => true
-      property :updated_at, DateTime, :required => true
+      property :updated_at, DateTime
 
       property :type, Discriminator  # Allows Single Table Inheritance
 
@@ -30,6 +30,10 @@ module CMS
       end
 
       def video?
+        false
+      end
+
+      def audio?
         false
       end
 
@@ -62,6 +66,12 @@ module CMS
 
     class Video < Multimedia
       def video?
+        true
+      end
+    end
+
+    class Audio < Multimedia
+      def audio?
         true
       end
     end

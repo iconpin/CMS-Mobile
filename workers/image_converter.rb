@@ -1,6 +1,3 @@
-require 'sidekiq'
-require 'mini_magick'
-
 module CMS
   module Workers
     class ImageConverter
@@ -8,9 +5,10 @@ module CMS
       sidekiq_options :retry => 3
 
       sidekiq_retries_exhausted do |msg|
-        image_db = CMS::Models::Image.get(@image_id)
-        image_db.ready = false
-        image_db.error = msg['error_message']
+        image = CMS::Models::Image.get(@image_id)
+        image.error = msg['error_message']
+        image.ready = false
+        image.save
       end
 
       def perform(image_id)

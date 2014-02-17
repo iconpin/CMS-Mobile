@@ -1,6 +1,3 @@
-require 'sidekiq'
-require 'streamio-ffmpeg'
-
 module CMS
   module Workers
     class VideoConverter
@@ -8,9 +5,10 @@ module CMS
       sidekiq_options :retry => 3
 
       sidekiq_retries_exhausted do |msg|
-        video_db = CMS::Models::Video.get(@video_id)
-        video_db.ready = false
-        video_db.error = mgs['error_message']
+        video = CMS::Models::Video.get(@video_id)
+        video.error = msg['error_message']
+        video.ready = false
+        video.save
       end
 
       def perform(video_id)

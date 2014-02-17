@@ -1,76 +1,44 @@
 module CMS
   module Controllers
     class Multimedia
-      def self.upload_image params
+      @extensions = []
+      @type = Models::Multimedia
+
+      def self.upload params
         file = params['file'][:tempfile]
         filename = params['file'][:filename]
-        extension = File.extname(filename)
-        unless ['.jpg', '.jpeg', '.png'].include?(extension.downcase)
-          return false
+        extension = File.extname(filename).downcase
+
+        unless @extensions.include?(extension)
+          puts @extensions
+          puts extension
+          return nil
         end
+
         name = params['name']
         description = params['description']
         tip = params['tip']
 
-        image = Models::Image.new(
+        multimedia = Models::Multimedia.create(
           :name => name,
           :description => description,
           :tip => tip,
-          :created_at => Time.now,
-          :updated_at => Time.now
+          :type => @type,
+          :created_at => Time.now
         )
-        unless image.save  # Now we'll have and ID
-          return false
+
+        return nil unless multimedia.saved?
+
+        multimedia.path_tmp = File.join(TMP_DIR, "#{multimedia.id}#{extension}")
+
+        File.open(multimedia.path_tmp, 'wb') do |f|
+          f.write(file.read)
         end
 
-        image.path_tmp = File.join(TMP_DIR, "#{image.id}#{extension}")
-        File.open(image.path_tmp, 'wb') do |f|
-          f.write file.read
-        end
-
-        # If we're here, the upload was successful
-        image.path = File.join(MULTIMEDIA_DIR, "/#{image.id}#{extension}")
-        image.path_thumbnail = File.join(THUMBNAIL_DIR, "/#{image.id}#{extension}")
-        if image.save
-          Workers::ImageConverter.perform_async(image.id)  # First Sidekiq usage here!
-          return true
+        if multimedia.save
+          multimedia
         else
-          return false
-        end
-      end
-
-      def self.upload_video params
-        file = params['file'][:tempfile]
-        filename = params['file'][:filename]
-        extension = File.extname(filename)
-        name = params['name']
-        description = params['description']
-        tip = params['tip']
-
-        video = Models::Video.new(
-          :name => name,
-          :description => description,
-          :tip => tip,
-          :created_at => Time.now,
-          :updated_at => Time.now
-        )
-        unless video.save  # Now we'll have and ID
-          return false
-        end
-
-        video.path_tmp = File.join(TMP_DIR, "#{video.id}#{extension}")
-        File.open(video.path_tmp, 'wb') do |f|
-          f.write file.read
-        end
-
-        # If we're here, the upload was successful
-        video.path = File.join(MULTIMEDIA_DIR, "/#{video.id}.ts")
-        video.path_thumbnail = File.join(THUMBNAIL_DIR, "/#{video.id}.jpg")
-        if video.save
-          Workers::VideoConverter.perform_async(video.id)  # First Sidekiq usage here!
-          return true
-        else
-          return false
+          nil
         end
       end
 
@@ -92,25 +60,25 @@ module CMS
         id = params['id']
         multimedia = Models::Multimedia.get(id)
         if multimedia.nil?
-          false
-        end
-
-        begin
-          File.delete(multimedia.path_tmp) if File.exist?(multimedia.path_tmp)
-        rescue Errno::ENOENT
           return false
         end
 
         begin
-          File.delete(multimedia.path) if !File.exist?(multimedia.path)
+          File.delete(multimedia.path_tmp) if File.exist?(multimedia.path_tmp.to_s)
         rescue Errno::ENOENT
-          return false
+          # TODO: we ignore the error?
         end
 
         begin
-          File.delete(multimedia.path_thumbnail) if !File.exist?(multimedia.path_thumbnail)
+          File.delete(multimedia.path) if !File.exist?(multimedia.path.to_s)
         rescue Errno::ENOENT
-          return false
+          # TODO: we ignore the error?
+        end
+
+        begin
+          File.delete(multimedia.path_thumbnail) if !File.exist?(multimedia.path_thumbnail.to_s)
+        rescue Errno::ENOENT
+          # TODO: we ignore the error?
         end
 
         return multimedia.destroy
@@ -131,6 +99,64 @@ module CMS
         multimedia.published = published
 
         return multimedia.save
+      end
+    end
+
+    class Image < Multimedia
+      @extensions = ['.jpg', '.jpeg', '.png']
+      @type = Models::Image
+
+      def self.upload params
+        image = super(params)
+
+        return nil if image.nil?
+
+        image.path = File.join(CMS::MULTIMEDIA_DIR, File.basename(image.path_tmp))
+        image.path_thumbnail = File.join(CMS::THUMBNAIL_DIR, File.basename(image.path_tmp))
+
+        if image.save
+          Workers::ImageConverter.perform_async(image.id)
+          true
+        else
+          false
+        end
+      end
+    end
+
+    class Video < Multimedia
+      @extensions = ['.mp4', '.mov', '.avi']
+      @type = Models::Video
+
+      def self.upload params
+        video = super(params)
+
+        video.path = File.join(CMS::MULTIMEDIA_DIR, "#{video.id}.ts")
+        video.path_thumbnail = File.join(CMS::THUMBNAIL_DIR, File.basename(video.path))
+
+        if video.save
+          Workers::VideoConverter.perform_async(video.id)
+          true
+        else
+          false
+        end
+      end
+    end
+
+    class Audio < Multimedia
+      @@extensions = ['.wav', '.mp3', '.ogg']
+      @@type = Models::Audio
+
+      def self.upload params
+        audio = super(params)
+
+        audio.path = File.join(CMS::Multimedia, "#{audio.id}.mp3")
+
+        if audio.save
+          Workers::AudioConverter.perform_async(audio.id)
+          true
+        else
+          false
+        end
       end
     end
   end
