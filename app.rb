@@ -12,6 +12,9 @@ module CMS
   THUMBNAIL_DIR = "#{Dir.pwd}/storage/thumbnail"
 
   class App < Sinatra::Base
+    # Sinatra options
+    set :views, 'views'
+    set :root, File.dirname(__FILE__)
 
     # Utils
     require_relative 'utils/date_time'
@@ -38,9 +41,7 @@ module CMS
     require_relative 'controllers/point'
     require_relative 'controllers/multimedia'
 
-    set :views, 'views'
-
-    # Require workers
+    # Workers
     require_relative 'workers/image_converter'
     require_relative 'workers/video_converter'
 
