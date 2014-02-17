@@ -14,7 +14,7 @@ module CMS
       post '/image/create' do
         protect!
 
-        if Controllers::Multimedia.upload_image(params)
+        if Controllers::Image.upload(params)
           flash.success = "Imatge creada amb èxit"
           redirect '/multimedias'
         else
@@ -32,12 +32,30 @@ module CMS
       post '/video/create' do
         protect!
 
-        if Controllers::Multimedia.upload_video(params)
+        if Controllers::Video.upload(params)
           flash.success = "Vídeo creat amb èxit"
           redirect '/multimedias'
         else
           flash.error = "No s'ha pogut crear el vídeo"
           redirect '/video/create'
+        end
+      end
+
+      get '/audio/create' do
+        protect!
+
+        haml :'multimedia/audio/create'
+      end
+
+      post '/audio/create' do
+        protect!
+
+        if Controllers::Audio.upload(params)
+          flash.success = "Locució creada amb èxit"
+          redirect '/multimedias'
+        else
+          flash.error = "No s'ha pogut crear la locució"
+          redirect '/audio/create'
         end
       end
 

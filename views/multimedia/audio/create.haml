@@ -1,0 +1,23 @@
+%form#audio-create.form-signin{:role => "form", :enctype => "multipart/form-data", :action => "/audio/create", :method => "POST"}
+  .form-group
+    %input#audio-create-name.form-control{:type => "text", :name => "name", :placeholder => "Nom", :required => true, :autofocus => true}
+  .form-group
+    %textarea#audio-create-description.form-control{:name => "description", :rows => "3", :placeholder => "Descripció"}
+  .form-group
+    %textarea#audio-create-tip.form-control{:rows => "1", :name => "tip", :placeholder => "Missatge"}
+  .form-group
+    %input#audio-create-file.form-control{:name => "file", :type => "file"}
+  .form-group
+    %button.btn.btn-lg.btn-primary.btn-block{:type => "submit"}
+      %span.glyphicon.glyphicon-headphones
+      Envia
+
+%script
+  $(document).ready(function(){
+  var metrics = [
+  ['#audio-create-name', 'presence', "Introdueix el nom"],
+  ['#audio-create-file', 'presence', "Selecciona un fitxer"]
+  ];
+
+  $("form#audio-create").nod(metrics, nod_options);
+  });

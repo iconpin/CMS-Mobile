@@ -4,11 +4,12 @@
   .form-group
     %textarea#video-create-description.form-control{:name => "description", :rows => "3", :placeholder => "Descripció"}
   .form-group
-    %textarea#video-create-tip.form-control{:rows => "1", :name => "tip", :placeholder => "Missatge", :autofocus => true}
+    %textarea#video-create-tip.form-control{:rows => "1", :name => "tip", :placeholder => "Missatge"}
   .form-group
     %input#video-create-file.form-control{:name => "file", :type => "file"}
   .form-group
     %button.btn.btn-lg.btn-primary.btn-block{:type => "submit"}
+      %span.glyphicon.glyphicon-play
       Envia
 
 %script
