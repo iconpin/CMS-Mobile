@@ -59,26 +59,14 @@ module CMS
       def self.destroy params
         id = params['id']
         multimedia = Models::Multimedia.get(id)
-        if multimedia.nil?
-          return false
-        end
+        return false if multimedia.nil?
 
-        begin
-          File.delete(multimedia.path_tmp) if File.exist?(multimedia.path_tmp.to_s)
-        rescue Errno::ENOENT
-          # TODO: we ignore the error?
-        end
-
-        begin
-          File.delete(multimedia.path) if !File.exist?(multimedia.path.to_s)
-        rescue Errno::ENOENT
-          # TODO: we ignore the error?
-        end
-
-        begin
-          File.delete(multimedia.path_thumbnail) if !File.exist?(multimedia.path_thumbnail.to_s)
-        rescue Errno::ENOENT
-          # TODO: we ignore the error?
+        [multimedia.path, multimedia.path_tmp, multimedia.path_thumbnail].each do |path|
+          begin
+            File.delete(path) if File.exist?(path.to_s)
+          rescue Errno::ENOENT
+            return false
+          end
         end
 
         return multimedia.destroy
@@ -86,9 +74,7 @@ module CMS
 
       def self.edit params
         multimedia = Models::Multimedia.get(params['id'])
-        if multimedia.nil?
-          return false
-        end
+        return false if multimedia.nil?
 
         name = params['name']
         description = params['description']
@@ -108,7 +94,6 @@ module CMS
 
       def self.upload params
         image = super(params)
-
         return nil if image.nil?
 
         image.path = File.join(CMS::MULTIMEDIA_DIR, File.basename(image.path_tmp))
@@ -129,6 +114,7 @@ module CMS
 
       def self.upload params
         video = super(params)
+        return nil if video.nil?
 
         video.path = File.join(CMS::MULTIMEDIA_DIR, "#{video.id}.ts")
         video.path_thumbnail = File.join(CMS::THUMBNAIL_DIR, File.basename(video.path))
@@ -148,6 +134,7 @@ module CMS
 
       def self.upload params
         audio = super(params)
+        return nil if audio.nil?
 
         audio.path = File.join(CMS::Multimedia, "#{audio.id}.mp3")
 
