@@ -1,7 +1,10 @@
 module CMS
   module Models
     class Multimedia
+      include DataMapper::Resource
+      include Core::BaseFields
       include Core::ContentFields
+      include Utils::DateTime
 
       property :path_tmp, FilePath
       property :path, FilePath

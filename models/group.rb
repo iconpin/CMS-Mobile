@@ -1,7 +1,10 @@
 module CMS
   module Models
     class Group
+      include DataMapper::Resource
+      include Core::BaseFields
       include Core::ContentFields
+      include Utils::DateTime
 
       property :deleted_at, ParanoidDateTime
 

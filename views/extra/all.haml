@@ -8,7 +8,7 @@
     %th Data última actualització
     %th Accions
     %th
-  - CMS::Models::Point.all_sorted.each do |p|
+  - CMS::Models::Extra.all_sorted do |p|
     %tr
       %td
         %ul.list-inline

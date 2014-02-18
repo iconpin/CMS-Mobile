@@ -1,7 +1,9 @@
 module CMS
   module Models
     class User
+      include DataMapper::Resource
       include Core::BaseFields
+      include Utils::DateTime
 
       property :name, String, :required => true
       property :email, String, :required => true, :unique => true

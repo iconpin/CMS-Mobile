@@ -26,6 +26,8 @@ module CMS
     # DataMapper configuration
     require_relative 'models/core/base_fields'
     require_relative 'models/core/content_fields'
+    require_relative 'models/core/sort_fields'
+
     require_relative 'models/multimedia'
     require_relative 'models/group'
     require_relative 'models/group_multimedia'
@@ -60,12 +62,14 @@ module CMS
     require_relative 'routes/user'
     require_relative 'routes/multimedia'
     require_relative 'routes/point'
+    require_relative 'routes/extra'
     require_relative 'routes/api'
 
     use Routes::Base
     use Routes::User
     use Routes::Multimedia
     use Routes::Point
+    use Routes::Extra
     use Routes::API
   end
 end

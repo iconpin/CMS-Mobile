@@ -4,8 +4,6 @@ module CMS
       module ContentFields
         def self.included cls
           cls.class_eval do
-            include BaseFields
-
             property :name, DataMapper::Property::String, :length => 255, :required => true
             property :description, DataMapper::Property::Text
             property :tip, DataMapper::Property::Text

@@ -4,19 +4,16 @@ module CMS
       module BaseFields
         def self.included cls
           cls.class_eval do
-            include DataMapper::Resource
-            include Utils::DateTime
-
             property :id, DataMapper::Property::Serial
             property :created_at, DataMapper::Property::DateTime
             property :updated_at, DataMapper::Property::DateTime
 
-            before :create do |base|
-              base.created_at = Time.now
+            before :create do
+              self.created_at = Time.now
             end
 
-            before :save do |base|
-              base.updated_at = Time.now
+            before :save do
+              self.updated_at = Time.now
             end
           end
         end

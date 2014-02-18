@@ -71,6 +71,16 @@
                   %a{:href => "/points"}
                     %span.glyphicon.glyphicon-map-marker
                     Punts
+              - if @path == :extra
+                %li.active
+                  %a{:href => "/extras"}
+                    %span.glyphicon.glyphicon-star
+                    Extras
+              - else
+                %li
+                  %a{:href => "/extras"}
+                    %span.glyphicon.glyphicon-star
+                    Extras
               - if @current_user.admin?
                 - if @path == :user
                   %li.active
