@@ -1,6 +1,8 @@
 module CMS
   module Models
-    class Group < Core::Content
+    class Group
+      include Core::ContentFields
+
       property :deleted_at, ParanoidDateTime
 
       has n, :group_multimedias

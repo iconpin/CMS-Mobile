@@ -24,8 +24,8 @@ module CMS
     require_relative 'utils/coordinates'
 
     # DataMapper configuration
-    require_relative 'models/core/base'
-    require_relative 'models/core/content'
+    require_relative 'models/core/base_fields'
+    require_relative 'models/core/content_fields'
     require_relative 'models/multimedia'
     require_relative 'models/group'
     require_relative 'models/group_multimedia'
@@ -38,8 +38,6 @@ module CMS
     DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/database.db")
     DataMapper.finalize
 
-    Models::Core::Base.auto_upgrade!
-    Models::Core::Content.auto_upgrade!
     Models::Multimedia.auto_upgrade!
     Models::Group.auto_upgrade!
     Models::GroupMultimedia.auto_upgrade!

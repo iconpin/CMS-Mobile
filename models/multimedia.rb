@@ -1,6 +1,8 @@
 module CMS
   module Models
-    class Multimedia < Core::Content
+    class Multimedia
+      include Core::ContentFields
+
       property :path_tmp, FilePath
       property :path, FilePath
       property :path_thumbnail, FilePath
@@ -39,8 +41,8 @@ module CMS
         "/static/thumbnail/#{File.basename(self.path_thumbnail)}"
       end
 
-      def points
-        GroupMultimedia.all(:multimedia => self).point
+      def groups
+        GroupMultimedia.all(:multimedia => self).group
       end
     end
 

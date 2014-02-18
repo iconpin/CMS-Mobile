@@ -1,6 +1,7 @@
 module CMS
   module Models
-    class User < Core::Base
+    class User
+      include Core::BaseFields
 
       property :name, String, :required => true
       property :email, String, :required => true, :unique => true
