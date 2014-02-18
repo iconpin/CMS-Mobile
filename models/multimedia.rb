@@ -1,29 +1,15 @@
 module CMS
   module Models
-    class Multimedia
-      include DataMapper::Resource
-      include Utils::DateTime
-
-      property :id, Serial
-      property :name, String, :required => true
+    class Multimedia < Core::Content
       property :path_tmp, FilePath
       property :path, FilePath
       property :path_thumbnail, FilePath
       property :ready, Boolean, :required => true, :default => false
       property :error, Text
-      property :description, Text
-      property :tip, Text, :lazy => false
-      property :published, Boolean, :required => true, :default => false
-      property :created_at, DateTime, :required => true
-      property :updated_at, DateTime
 
       property :type, Discriminator  # Allows Single Table Inheritance
 
-      belongs_to :point, :required => false
-
-      def published?
-        self.published
-      end
+      belongs_to :group, :required => false
 
       def image?
         false
@@ -54,7 +40,7 @@ module CMS
       end
 
       def points
-        PointMultimedia.all(:multimedia => self).point
+        GroupMultimedia.all(:multimedia => self).point
       end
     end
 

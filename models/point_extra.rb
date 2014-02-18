@@ -6,7 +6,11 @@ module CMS
       property :weight, Integer, :required => true
 
       belongs_to :point, :key => true
-      belongs_to :extra, 'Multimedia', :key => true
+      belongs_to :extra, :key => true
+
+      before :create do |record|
+        record.weight = PointExtra.first(:owner => self.owner, :order => [:weight.asc]).weight + 1
+      end
     end
   end
 end

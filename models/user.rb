@@ -1,16 +1,11 @@
 module CMS
   module Models
-    class User
-      include DataMapper::Resource
-      include Utils::DateTime
+    class User < Core::Base
 
-      property :id, Serial
       property :name, String, :required => true
       property :email, String, :required => true, :unique => true
       property :password, BCryptHash, :required => true
       property :admin, Boolean, :required => true, :default => false
-      property :created_at, DateTime, :required => true
-      property :updated_at, DateTime, :required => true
       property :last_login, DateTime
 
       validates_format_of :email, :as => :email_address

@@ -24,20 +24,29 @@ module CMS
     require_relative 'utils/coordinates'
 
     # DataMapper configuration
-    require_relative 'models/user'
-    require_relative 'models/point'
+    require_relative 'models/core/base'
+    require_relative 'models/core/content'
     require_relative 'models/multimedia'
-    require_relative 'models/point_multimedia'
+    require_relative 'models/group'
+    require_relative 'models/group_multimedia'
+    require_relative 'models/extra'
+    require_relative 'models/point'
     require_relative 'models/point_extra'
+
+    require_relative 'models/user'
 
     DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/database.db")
     DataMapper.finalize
 
-    Models::User.auto_upgrade!
-    Models::Point.auto_upgrade!
+    Models::Core::Base.auto_upgrade!
+    Models::Core::Content.auto_upgrade!
     Models::Multimedia.auto_upgrade!
-    Models::PointMultimedia.auto_upgrade!
+    Models::Group.auto_upgrade!
+    Models::GroupMultimedia.auto_upgrade!
+    Models::Extra.auto_upgrade!
+    Models::Point.auto_upgrade!
     Models::PointExtra.auto_upgrade!
+    Models::User.auto_upgrade!
 
     # Controllers
     require_relative 'controllers/user'
