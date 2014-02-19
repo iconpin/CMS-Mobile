@@ -147,21 +147,17 @@ module CMS
 
         case params['action']
         when 'link'
-          max_weight_multimedia = Models::PointMultimedia.first(:order => [:weight.desc])
-          max_weight = if max_weight_multimedia.nil?
-                         0
-                       else
-                         max_weight_multimedia.weight
-                       end
-          pm = Models::PointMultimedia.create(
-            :point => point,
+          gm = Models::GroupMultimedia.create(
+            :group => point,
             :multimedia => multimedia,
-            :weight => max_weight + 1
           )
-          return pm.saved?
+          return gm.saved?
         when 'unlink'
-          pm = Models::PointMultimedia.first(:point => point, :multimedia => multimedia)
-          return pm.destroy
+          gm = Models::GroupMultimedia.first(
+            :group => point,
+            :multimedia => multimedia
+          )
+          return gm.destroy
         else
           return false
         end
