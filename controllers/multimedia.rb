@@ -117,7 +117,7 @@ module CMS
         return nil if video.nil?
 
         video.path = File.join(CMS::MULTIMEDIA_DIR, "#{video.id}.ts")
-        video.path_thumbnail = File.join(CMS::THUMBNAIL_DIR, File.basename(video.path))
+        video.path_thumbnail = File.join(CMS::THUMBNAIL_DIR, "#{File.basename(video.path)}.png")
 
         if video.save
           Workers::VideoConverter.perform_async(video.id)
