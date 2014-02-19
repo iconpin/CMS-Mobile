@@ -82,6 +82,16 @@
                     %span.glyphicon.glyphicon-star
                     Extras
               - if @current_user.admin?
+                - if @path == :status
+                  %li.active
+                    %a{:href => "/status"}
+                      %span.glyphicon.glyphicon-stats
+                      Status
+                - else
+                  %li
+                    %a{:href => "/status"}
+                      %span.glyphicon.glyphicon-stats
+                      Status
                 - if @path == :user
                   %li.active
                     %a{:href => "/users"}

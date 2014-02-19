@@ -63,6 +63,7 @@ module CMS
     require_relative 'routes/multimedia'
     require_relative 'routes/point'
     require_relative 'routes/extra'
+    require_relative 'routes/status'
     require_relative 'routes/api'
 
     use Routes::Base
@@ -70,6 +71,7 @@ module CMS
     use Routes::Multimedia
     use Routes::Point
     use Routes::Extra
+    use Routes::Status
     use Routes::API
   end
 end

@@ -1,0 +1,16 @@
+.panel.panel-info
+  .panel-heading
+    Sidekiq
+  .panel-body
+    %ul
+      %li
+        Tasques processades:
+        = @stats.processed
+      %li
+        Tasques fallides:
+        = @stats.failed
+      %li
+        Cues i tasques en cua
+        %ul
+          - @stats.queues.each do |k, v|
+            %li= "#{k} (#{v})"
