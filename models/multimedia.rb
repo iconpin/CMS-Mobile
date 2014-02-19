@@ -16,6 +16,22 @@ module CMS
 
       belongs_to :group, :required => false
 
+      def points
+        Models::Point.all.select do |p|
+          p.multimedias.include?(self)
+        end
+      end
+
+      def extras
+        Models::Extra.all.select do |e|
+          e.multimedias.include?(self)
+        end
+      end
+
+      def groups
+        self.points + self.extras
+      end
+
       def image?
         false
       end
@@ -42,10 +58,6 @@ module CMS
 
       def thumbnail_link
         "/static/thumbnail/#{File.basename(self.path_thumbnail)}"
-      end
-
-      def groups
-        GroupMultimedia.all(:multimedia => self).group
       end
     end
 

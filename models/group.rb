@@ -7,6 +7,7 @@ module CMS
       include Utils::DateTime
 
       property :deleted_at, ParanoidDateTime
+      property :type, Discriminator
 
       has n, :group_multimedias
       has n, :multimedias, :through => :group_multimedias
