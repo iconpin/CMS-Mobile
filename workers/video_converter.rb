@@ -2,7 +2,7 @@ module CMS
   module Workers
     class VideoConverter
       include Sidekiq::Worker
-      sidekiq_options :retry => 3
+      sidekiq_options :retry => 0
 
       sidekiq_retries_exhausted do |msg|
         video = CMS::Models::Video.get(@video_id)
@@ -15,7 +15,7 @@ module CMS
         @video_id = video_id
         video = CMS::Models::Video.get(video_id)
         movie = FFMPEG::Movie.new(video.path_tmp.to_s)
-        movie.transcode(video.path)
+        movie.transcode(video.path.to_s)
         movie.screenshot(
           video.path_thumbnail.to_s,
           { :resolution => '400x400' },

@@ -2,7 +2,7 @@ module CMS
   module Workers
     class AudioConverter
       include Sidekiq::Worker
-      sidekiq_options :retry => 3
+      sidekiq_options :retry => 0
 
       sidekiq_retries_exhausted do |msg|
         audio = Models::Audio.get(@audio_id)

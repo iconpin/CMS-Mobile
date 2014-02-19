@@ -2,7 +2,7 @@ module CMS
   module Workers
     class ImageConverter
       include Sidekiq::Worker
-      sidekiq_options :retry => 3
+      sidekiq_options :retry => 0
 
       sidekiq_retries_exhausted do |msg|
         image = CMS::Models::Image.get(@image_id)
