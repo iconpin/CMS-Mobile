@@ -6,8 +6,13 @@ module CMS
           cls.class_eval do
             property :weight, Integer, :required => true
 
-            before :create do
-              self.weight = self.class.first(:order => [:weight.desc]).weight + 1
+            before :create do |sortable|
+              heaviest_record = self.class.first(:order => [:weight.desc])
+              sortable.weight = if heaviest_record.nil?
+                                  1
+                                else
+                                  heaviest_record.weight + 1
+                                end
             end
 
             def self.all_sorted
