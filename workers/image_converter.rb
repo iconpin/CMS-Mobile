@@ -16,7 +16,7 @@ module CMS
         image = CMS::Models::Image.get(image_id)
 
         i = MiniMagick::Image.open(image.path_tmp.to_s)
-        i.resize('400x400')
+        i.resize('1024x1024')
         i.write(image.path.to_s)
 
         j = MiniMagick::Image.open(image.path_tmp.to_s)
