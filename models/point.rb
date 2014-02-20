@@ -9,6 +9,13 @@ module CMS
       has n, :point_extras
       has n, :extras, :through => :point_extras
 
+      def destroy_cascade
+        self.point_extras.each do |pe|
+          pe.destroy
+        end
+        super
+      end
+
       def point_multimedias
         self.group_multimedias
       end

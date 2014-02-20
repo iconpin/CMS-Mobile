@@ -40,10 +40,8 @@ module CMS
         point = Models::Point.get(id)
         if point.nil?
           false
-        elsif point.destroy
-          true
         else
-          false
+          point.destroy
         end
       end
 
@@ -112,30 +110,23 @@ module CMS
 
         point = Models::Point.get(id)
 
-        return false if point.nil?
-        return false if point.weight == 1
-
-        next_point = Models::Point.first(:weight => (point.weight - 1))
-
-        next_point.weight = point.weight
-        point.weight -= 1
-
-        return point.save && next_point.save
+        if point.nil?
+          false
+        else
+          point.up!
+        end
       end
 
       def self.down params
         id = params['id']
 
         point = Models::Point.get(id)
-        return false if point.nil?
-        return false if point.weight == Models::Point.count
 
-        prev_point = Models::Point.first(:weight => (point.weight + 1))
-
-        prev_point.weight = point.weight
-        point.weight += 1
-
-        return point.save && prev_point.save
+        if point.nil?
+          false
+        else
+          point.down!
+        end
       end
 
       def self.edit_multimedia params
@@ -166,39 +157,27 @@ module CMS
       def self.multimedia_up params
         point = Models::Point.get(params['point'])
         return false if point.nil?
+
         multimedia = Models::Multimedia.get(params['multimedia'])
         return false if multimedia.nil?
-        pm = Models::PointMultimedia.first(:point => point, :multimedia => multimedia)
-        return false if pm.nil?
-        other = Models::PointMultimedia.first(:weight.lt => pm.weight, :order => [:weight.desc])
-        return false if other.nil?
-        aux = other.weight
-        other.weight = pm.weight
-        if pm.weight == aux
-          pm.weight = aux - 1
-        else
-          pm.weight = aux
-        end
-        return pm.save && other.save
+
+        gm = Models::GroupMultimedia.first(:group => point, :multimedia => multimedia)
+        return false if gm.nil?
+
+        return gm.up!(:group => point)
       end
 
       def self.multimedia_down params
         point = Models::Point.get(params['point'])
         return false if point.nil?
+
         multimedia = Models::Multimedia.get(params['multimedia'])
         return false if multimedia.nil?
-        pm = Models::PointMultimedia.first(:point => point, :multimedia => multimedia)
-        return false if pm.nil?
-        other = Models::PointMultimedia.first(:weight.gt => pm.weight, :order => [:weight.asc])
-        return false if other.nil?
-        aux = other.weight
-        other.weight = pm.weight
-        if pm.weight == aux
-          pm.weight = aux + 1
-        else
-          pm.weight = aux
-        end
-        return pm.save && other.save
+
+        gm = Models::GroupMultimedia.first(:group => point, :multimedia => multimedia)
+        return false if gm.nil?
+
+        return gm.down!(:group => point)
       end
 
       def self.edit_extra params
