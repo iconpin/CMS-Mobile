@@ -14,7 +14,8 @@ module CMS
 
       property :type, Discriminator  # Allows Single Table Inheritance
 
-      belongs_to :group, :required => false
+      has n, :group_multimedias
+      has n, :groups, :through => :group_multimedias
 
       def destroy_cascade
         Models::GroupMultimedia.all(:multimedia => self).each do |gm|
@@ -24,15 +25,11 @@ module CMS
       end
 
       def points
-        Models::Point.all.select do |p|
-          p.multimedias.include?(self)
-        end
+        self.group_multimedias.group.all(:type => Point)
       end
 
       def extras
-        Models::Extra.all.select do |e|
-          e.multimedias.include?(self)
-        end
+        self.group_multimedias.group.all(:type => Extra)
       end
 
       def groups
