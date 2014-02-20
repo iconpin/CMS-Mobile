@@ -16,6 +16,13 @@ module CMS
 
       belongs_to :group, :required => false
 
+      def destroy_cascade
+        Models::GroupMultimedia.all(:multimedia => self).each do |gm|
+          gm.destroy
+        end
+        self.destroy
+      end
+
       def points
         Models::Point.all.select do |p|
           p.multimedias.include?(self)

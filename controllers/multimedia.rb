@@ -60,12 +60,17 @@ module CMS
         id = params['id']
         multimedia = Models::Multimedia.get(id)
         return false if multimedia.nil?
+        if multimedia.nil?
+          false
+        else
+          multimedia.destroy_cascade
+        end
 
         [multimedia.path, multimedia.path_tmp, multimedia.path_thumbnail].each do |path|
           begin
             File.delete(path) if File.exist?(path.to_s)
           rescue Errno::ENOENT
-            return false
+            # XXX: we ignore an error
           end
         end
 
