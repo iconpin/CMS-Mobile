@@ -81,6 +81,7 @@ module CMS
         id = params['id']
         name = params['name']
         description = params['description']
+        tip = params['tip']
         coord_x, coord_y = Utils::Coordinates.parse(params['coords'])
         published = (params['published'] == 'on')
         multimedia_main = params['multimedia-main']
@@ -93,6 +94,7 @@ module CMS
         success = point.update(
           :name => name,
           :description => description,
+          :tip => tip,
           :coord_x => coord_x,
           :coord_y => coord_y,
           :updated_at => Time.now,

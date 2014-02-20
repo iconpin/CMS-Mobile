@@ -2,8 +2,11 @@
   .form-group
     %input.form-control{:type => "text", :name => "name", :value => @current_multimedia.name, :placeholder => "Nom", :required => true, :autofocus => true}
   .form-group
-    %textarea.form-control{:rows => "5", :name => "description", :placeholder => "Descripció", :required => true, :autofocus => true}
+    %textarea.form-control{:rows => "5", :name => "description", :placeholder => "Descripció", :required => true}
       = @current_multimedia.description
+  .form-group
+    %textarea.form-control{:rows => "1", :name => "tip", :placeholder => "Bocata Muncunill", :required => true}
+      = @current_multimedia.tip
   .form-group
     .checkbox
       - if @current_multimedia.published

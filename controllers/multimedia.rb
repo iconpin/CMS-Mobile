@@ -74,6 +74,8 @@ module CMS
           end
         end
 
+        # TODO
+
         return multimedia.destroy
       end
 
@@ -83,10 +85,12 @@ module CMS
 
         name = params['name']
         description = params['description']
+        tip = params['tip']
         published = (params['published'] == 'on')
 
         multimedia.name = name
         multimedia.description = description
+        multimedia.tip = tip
         multimedia.published = published
 
         return multimedia.save

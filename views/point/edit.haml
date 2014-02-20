@@ -5,6 +5,9 @@
     %textarea.form-control{:rows => "5", :name => "description", :placeholder => "Descripció", :required => true, :autofocus => true}
       = @current_point.description
   .form-group
+    %textarea.form-control{:rows => "1", :name => "tip", :placeholder => "Bocata Muncunill", :required => true}
+      = @current_point.tip
+  .form-group
     %input.form-control{:type => "text", :name => "coords", :value => "#{@current_point.coord_x}, #{@current_point.coord_y}", :placeholder => "Coordenades (latitud i longitud)", :required => true}
   .form-group
     .checkbox

@@ -4,8 +4,7 @@
     %th #
     %th Nom
     %th Estat
-    %th Data creació
-    %th Data última actualització
+    %th Última actualització
     %th Accions
     %th
   - CMS::Models::Point.all_sorted.each do |p|
@@ -31,7 +30,6 @@
         - else
           %span.label.label-warning
             Privat
-      %td= p.created_at_pretty
       %td= p.updated_at_pretty
       %td
         - if p.published?
@@ -53,8 +51,7 @@
     %td
       %form{:action => "/point/create", :method => "GET"}
         %button.btn.btn-sm.btn-success{:type => "submit"}
-          Nou Punt
-    %td
+          Nou POI
     %td
     %td
     %td

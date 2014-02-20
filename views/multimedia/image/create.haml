@@ -1,10 +1,10 @@
 %form#image-create.form-signin{:role => "form", :enctype => "multipart/form-data", :action => "/image/create", :method => "POST"}
   .form-group
-    %input#image-create-name.form-control{:type => "text", :name => "name", :placeholder => "Nom", :required => true, :autofocus => true}
+    %input#image-create-name.form-control{:type => "text", :name => "name", :placeholder => "Nom fitxer", :required => true, :autofocus => true}
   .form-group
-    %textarea#image-create-description.form-control{:name => "description", :rows => "3", :placeholder => "Descripció"}
+    %textarea#image-create-description.form-control{:name => "description", :rows => "3", :placeholder => "Peu de foto"}
   .form-group
-    %textarea#image-create-tip.form-control{:rows => "1", :name => "tip", :placeholder => "Missatge"}
+    %textarea#image-create-tip.form-control{:rows => "1", :name => "tip", :placeholder => "Bocata Muncunill"}
   .form-group
     %input#image-create-file.form-control{:name => "file", :type => "file"}
   .form-group

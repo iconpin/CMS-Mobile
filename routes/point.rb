@@ -34,7 +34,7 @@ module CMS
         protect!
 
         if Controllers::Point.create(params)
-          flash.success = "Punt creat amb èxit"
+          flash.success = "POI creat amb èxit"
           redirect '/points'
         else
           flash.error = "No s'ha pogut crear el punt"
@@ -46,7 +46,7 @@ module CMS
         protect!
 
         if Controllers::Point.destroy(params)
-          flash.success = "Punt esborrat amb èxit"
+          flash.success = "POI esborrat amb èxit"
         else
           flash.error = "No s'ha pogut esborrar el punt"
         end
@@ -57,7 +57,7 @@ module CMS
         protect!
 
         if Controllers::Point.publish(params)
-          flash.success = "Punt publicat amb èxit"
+          flash.success = "POI publicat amb èxit"
         else
           flash.error = "No s'ha pogut publicar el punt"
         end
@@ -68,7 +68,7 @@ module CMS
         protect!
 
         if Controllers::Point.unpublish(params)
-          flash.success = "Punt ocultat amb èxit"
+          flash.success = "POI ocultat amb èxit"
         else
           flash.error = "No s'ha pogut ocultar el punt"
         end
@@ -104,7 +104,7 @@ module CMS
         protect!
 
         if Controllers::Point.edit(params)
-          flash.success = "Punt actualitzat amb èxit"
+          flash.success = "POI actualitzat amb èxit"
           redirect '/points'
         else
           flash.error = "No s'ha pogut actualitzar el punt"
