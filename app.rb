@@ -51,6 +51,7 @@ module CMS
     # Controllers
     require_relative 'controllers/user'
     require_relative 'controllers/point'
+    require_relative 'controllers/extra'
     require_relative 'controllers/multimedia'
 
     # Workers

@@ -17,11 +17,10 @@ module CMS
       has n, :group_multimedias
       has n, :groups, :through => :group_multimedias
 
-      def destroy_cascade
-        Models::GroupMultimedia.all(:multimedia => self).each do |gm|
+      before :destroy do |multimedia|
+        multimedia.group_multimedias.each do |gm|
           gm.destroy
         end
-        self.destroy
       end
 
       def points

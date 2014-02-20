@@ -60,11 +60,6 @@ module CMS
         id = params['id']
         multimedia = Models::Multimedia.get(id)
         return false if multimedia.nil?
-        if multimedia.nil?
-          false
-        else
-          multimedia.destroy_cascade
-        end
 
         [multimedia.path, multimedia.path_tmp, multimedia.path_thumbnail].each do |path|
           begin
@@ -73,8 +68,6 @@ module CMS
             # XXX: we ignore an error
           end
         end
-
-        # TODO
 
         return multimedia.destroy
       end

@@ -3,17 +3,16 @@ module CMS
     class Point < Group
       include Core::SortFields
 
-      property :coord_x, Float, :required => true
-      property :coord_y, Float, :required => true
+      property :coord_x, Float
+      property :coord_y, Float
 
       has n, :point_extras
       has n, :extras, :through => :point_extras
 
-      def destroy_cascade
-        self.point_extras.each do |pe|
+      before :destroy do |point|
+        point.point_extras.each do |pe|
           pe.destroy
         end
-        super
       end
 
       def point_multimedias

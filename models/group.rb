@@ -12,12 +12,31 @@ module CMS
       has n, :group_multimedias
       has n, :multimedias, :through => :group_multimedias
 
-      def destroy_cascade
-        self.group_multimedias.each do |gm|
+      before :destroy do |group|
+        group.group_multimedias.each do |gm|
           gm.destroy
         end
-        puts "Before destroying!!!!!!!"
-        self.destroy
+      end
+
+      def self.all(hsh = {})
+        super(hsh.merge(:deleted_at => nil))
+      end
+
+      def self.all_paranoia(hsh = {})
+        super(hsh.merge(:deleted_at.ne => nil))
+      end
+
+      def deteled?
+        if self.deleted_at.nil?
+          true
+        else
+          false
+        end
+      end
+
+      def restore
+        self.deleted_at = nil
+        self.save
       end
     end
   end

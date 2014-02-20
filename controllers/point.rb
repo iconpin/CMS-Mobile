@@ -3,12 +3,7 @@ module CMS
     class Point
       def self.get params
         id = params['id']
-        point = Models::Point.get(id)
-        if point.nil?
-          nil
-        else
-          point
-        end
+        Models::Point.get(id)
       end
 
       def self.create params
@@ -36,13 +31,9 @@ module CMS
       end
 
       def self.destroy params
-        id = params['id']
-        point = Models::Point.get(id)
-        if point.nil?
-          false
-        else
-          point.destroy
-        end
+        point = self.get(params)
+        return false if point.nil?
+        point.destroy
       end
 
       def self.publish params

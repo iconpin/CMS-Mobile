@@ -4,57 +4,54 @@
     %th #
     %th Nom
     %th Estat
-    %th Data creació
     %th Data última actualització
     %th Accions
     %th
-  - CMS::Models::Extra.all_sorted do |p|
+  - CMS::Models::Extra.all_sorted.each do |e|
     %tr
       %td
         %ul.list-inline
           %li
-            %form.form-inline{:role => "form", :action => "/point/up", :method => "POST"}
-              %button.btn.btn-xs{:type => "submit", :name => "id", :value => p.id}
+            %form.form-inline{:role => "form", :action => "/extra/up", :method => "POST"}
+              %button.btn.btn-xs{:type => "submit", :name => "id", :value => e.id}
                 %span.glyphicon.glyphicon-chevron-up
           %li
-            %form.form-inline{:role => "form", :action => "/point/down", :method => "POST"}
-              %button.btn.btn-xs{:type => "submit", :name => "id", :value => p.id}
+            %form.form-inline{:role => "form", :action => "/extra/down", :method => "POST"}
+              %button.btn.btn-xs{:type => "submit", :name => "id", :value => e.id}
                 %span.glyphicon.glyphicon-chevron-down
       %td
-        = p.weight
+        = e.weight
       %td
-        %a{:href => p.link}= p.name
+        %a{:href => e.link}= e.name
       %td
-        - if p.published?
+        - if e.published?
           %span.label.label-success
             Publicat
         - else
           %span.label.label-warning
             Privat
-      %td= p.created_at_pretty
-      %td= p.updated_at_pretty
+      %td= e.updated_at_pretty
       %td
-        - if p.published?
-          %form.form-inline{:role => "form", :action => "/point/unpublish", :method => "POST"}
-            %button.btn.btn-xs.btn-warning{:type => "submit", :name => "id", :value => p.id}
+        - if e.published?
+          %form.form-inline{:role => "form", :action => "/extra/unpublish", :method => "POST"}
+            %button.btn.btn-xs.btn-warning{:type => "submit", :name => "id", :value => e.id}
               %span.glyphicon.glyphicon-eye-close
               Oculta
         - else
-          %form.form-inline{:role => "form", :action => "/point/publish", :method => "POST"}
-            %button.btn.btn-xs.btn-success{:type => "submit", :name => "id", :value => p.id}
+          %form.form-inline{:role => "form", :action => "/extra/publish", :method => "POST"}
+            %button.btn.btn-xs.btn-success{:type => "submit", :name => "id", :value => e.id}
               %span.glyphicon.glyphicon-eye-open
               Publica
       %td
-        %form.form-inline{:role => "form", :action => "/point/destroy", :method => "POST"}
-          %button.btn.btn-xs.btn-danger{:type => "submit", :name => "id", :value => p.id}
+        %form.form-inline{:role => "form", :action => "/extra/destroy", :method => "POST"}
+          %button.btn.btn-xs.btn-danger{:type => "submit", :name => "id", :value => e.id}
             %span.glyphicon.glyphicon-remove
             Esborra
   %tr
     %td
-      %form{:action => "/point/create", :method => "GET"}
+      %form{:action => "/extra/create", :method => "GET"}
         %button.btn.btn-sm.btn-success{:type => "submit"}
-          Nou POI
-    %td
+          Nou Extra
     %td
     %td
     %td
