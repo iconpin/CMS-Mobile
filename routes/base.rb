@@ -56,7 +56,7 @@ module CMS
           env['warden'].authenticate!
         end
 
-        def admin! msg
+        def admin! msg = nil
           env['warden'].authenticate!
           unless @current_user.admin?
             flash.error = msg || "No ets usuari administrador"
