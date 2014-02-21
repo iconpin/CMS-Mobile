@@ -50,8 +50,8 @@
           %span.glyphicon.glyphicon-link
         %th Nom
         %th Tipus
-      - CMS::Models::Multimedia.all.each do |m|
-        - if @current_point.extras.include?(m) || @current_point.multimedias.include?(m)
+      - CMS::Models::Extra.all.each do |m|
+        - if @current_point.extras.include?(m)
         - else
           %tr
             %td
@@ -62,11 +62,6 @@
             %td
               %a{:href => m.link, :target => "_blank"}= m.name
             %td
-              - if m.image?
-                %span.glyphicon.glyphicon-picture
-              - else
-                %span.glyphicon.glyphicon-play
-
 %ul.list-inline
   %li
     %a.btn.btn-warning{:href => @current_point.link}
