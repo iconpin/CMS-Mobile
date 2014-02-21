@@ -18,15 +18,15 @@ module CMS
         end
       end
 
-      def self.all(hsh = {})
-        super(hsh.merge(:deleted_at => nil))
+      def self.not_deleted
+        self.all(:deleted_at => nil)
       end
 
       def self.all_paranoia(hsh = {})
-        super(hsh.merge(:deleted_at.ne => nil))
+        self.all(:deleted_at.ne => nil)
       end
 
-      def deteled?
+      def deleted?
         if self.deleted_at.nil?
           true
         else
@@ -40,7 +40,19 @@ module CMS
       end
 
       def multimedias_sorted
-        group_multimedias.all(:order => [:weight.asc]).multimedia
+        self.group_multimedias.all(:order => [:weight.asc]).multimedia
+      end
+
+      def has_image?
+        self.multimedias.count(:type => Image) != 0
+      end
+
+      def has_audio?
+        self.multimedias.count(:type => Audio) != 0
+      end
+
+      def has_video?
+        self.multimedias.count(:type => Video) != 0
       end
     end
   end
