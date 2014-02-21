@@ -2,18 +2,15 @@ module CMS
   module Routes
     class Multimedia < Base
       before do
+        protect!
         @path = :multimedia
       end
 
       get '/image/create' do
-        protect!
-
         haml :'multimedia/image/create'
       end
 
       post '/image/create' do
-        protect!
-
         if Controllers::Image.upload(params)
           flash.success = "Imatge creada amb èxit"
           redirect '/multimedias'
@@ -24,14 +21,10 @@ module CMS
       end
 
       get '/video/create' do
-        protect!
-
         haml :'multimedia/video/create'
       end
 
       post '/video/create' do
-        protect!
-
         if Controllers::Video.upload(params)
           flash.success = "Vídeo creat amb èxit"
           redirect '/multimedias'
@@ -42,14 +35,10 @@ module CMS
       end
 
       get '/audio/create' do
-        protect!
-
         haml :'multimedia/audio/create'
       end
 
       post '/audio/create' do
-        protect!
-
         if Controllers::Audio.upload(params)
           flash.success = "Locució creada amb èxit"
           redirect '/multimedias'
@@ -60,15 +49,11 @@ module CMS
       end
 
       get '/multimedias' do
-        protect!
-
         @multimedia_list = Models::Multimedia.all
         haml :'multimedia/all'
       end
 
       post '/multimedias/publish' do
-        protect!
-
         if Controllers::Multimedia.publish(params)
           flash.success = "Multimèdia publicat amb èxit"
         else
@@ -78,8 +63,6 @@ module CMS
       end
 
       post '/multimedias/unpublish' do
-        protect!
-
         if Controllers::Multimedia.unpublish(params)
           flash.success = "Multimèdia ocultat amb èxit"
         else
@@ -89,8 +72,6 @@ module CMS
       end
 
       post '/multimedias/destroy' do
-        protect!
-
         if Controllers::Multimedia.destroy(params)
           flash.success = "Multimedia destruït amb èxit"
         else
@@ -100,8 +81,6 @@ module CMS
       end
 
       get '/multimedia' do
-        protect!
-
         @current_multimedia = Models::Multimedia.get(params['id'])
         if @current_multimedia.nil?
           flash.error = "El multimèdia especificat no existeix"
@@ -112,8 +91,6 @@ module CMS
       end
 
       get '/multimedia/edit' do
-        protect!
-
         @current_multimedia = Models::Multimedia.get(params['id'])
         if @current_multimedia.nil?
           flash.error = "El multimèdia especificat no existeix"
@@ -124,8 +101,6 @@ module CMS
       end
 
       post '/multimedia/edit' do
-        protect!
-
         multimedia_id = params['id']
 
         unless Controllers::Multimedia.edit(params)

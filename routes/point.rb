@@ -2,12 +2,11 @@ module CMS
   module Routes
     class Point < Base
       before do
+        protect!
         @path = :point
       end
 
       get '/point' do
-        protect!
-
         @current_point = Controllers::Point.get(params)
         if @current_point.nil?
           flash.error = "El punt no existeix"
@@ -18,21 +17,15 @@ module CMS
       end
 
       get '/points' do
-        protect!
-
         @point_list = Models::Point.all(:order => [:weight.asc])
         haml :'point/all'
       end
 
       get '/point/create' do
-        protect!
-
         haml :'point/create'
       end
 
       post '/point/create' do
-        protect!
-
         if Controllers::Point.create(params)
           flash.success = "POI creat amb èxit"
           redirect '/points'
@@ -43,8 +36,6 @@ module CMS
       end
 
       post '/point/destroy' do
-        protect!
-
         if Controllers::Point.destroy(params)
           flash.success = "POI esborrat amb èxit"
         else
@@ -54,8 +45,6 @@ module CMS
       end
 
       post '/point/publish' do
-        protect!
-
         if Controllers::Point.publish(params)
           flash.success = "POI publicat amb èxit"
         else
@@ -65,8 +54,6 @@ module CMS
       end
 
       post '/point/unpublish' do
-        protect!
-
         if Controllers::Point.unpublish(params)
           flash.success = "POI ocultat amb èxit"
         else
@@ -76,22 +63,16 @@ module CMS
       end
 
       post '/point/up' do
-        protect!
-
         Controllers::Point.up(params)
         redirect '/points'
       end
 
       post '/point/down' do
-        protect!
-
         Controllers::Point.down(params)
         redirect '/points'
       end
 
       get '/point/edit' do
-        protect!
-
         @current_point = Controllers::Point.get(params)
         if @current_point.nil?
           redirect '/points'
@@ -101,8 +82,6 @@ module CMS
       end
 
       post '/point/edit' do
-        protect!
-
         if Controllers::Point.edit(params)
           flash.success = "POI actualitzat amb èxit"
           redirect '/points'
@@ -113,8 +92,6 @@ module CMS
       end
 
       get '/point/multimedia/edit' do
-        protect!
-
         @current_point = Controllers::Point.get(params)
         if @current_point.nil?
           redirect '/points'
@@ -124,8 +101,6 @@ module CMS
       end
 
       post '/point/multimedia/edit' do
-        protect!
-
         point_id = params['point']
 
         unless Controllers::Point.edit_multimedia(params)
@@ -135,8 +110,6 @@ module CMS
       end
 
       post '/point/multimedia/up' do
-        protect!
-
         point_id = params['point']
         unless Controllers::Point.multimedia_up(params)
           flash.error = "No s'ha pogut moure el multimèdia"
@@ -145,8 +118,6 @@ module CMS
       end
 
       post '/point/multimedia/down' do
-        protect!
-
         point_id = params['point']
         unless Controllers::Point.multimedia_down(params)
           flash.error = "No s'ha pogut moure el multimèdia"
@@ -155,15 +126,11 @@ module CMS
       end
 
       get '/point/extra/edit' do
-        protect!
-
         @current_point = Controllers::Point.get(params)
         haml :'point/extra/edit'
       end
 
       post '/point/extra/edit' do
-        protect!
-
         unless Controllers::Point.edit_extra(params)
           flash.error = "No s'ha pogut modificar la relació"
         end
@@ -171,8 +138,6 @@ module CMS
       end
 
       post '/point/extra/up' do
-        protect!
-
         unless Controllers::Point.extra_up(params)
           flash.error = "No s'ha pogut moure el multimèdia"
         end
@@ -180,8 +145,6 @@ module CMS
       end
 
       post '/point/extra/down' do
-        protect!
-
         unless Controllers::Point.extra_down(params)
           flash.error = "No s'ha pogut moure el multimèdia"
         end

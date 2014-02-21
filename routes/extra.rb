@@ -2,19 +2,20 @@ module CMS
   module Routes
     class Extra < Base
       before do
+        protect!
         @path = :extra
       end
 
       get '/extras' do
-        protect!
-
         haml :'extra/all'
       end
 
       get '/extra/create' do
-        protect!
-
         haml :'extra/create'
+      end
+
+      get '/extra' do
+        haml :'extra/view'
       end
 
       post '/extra/create' do

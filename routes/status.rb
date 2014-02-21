@@ -2,6 +2,7 @@ module CMS
   module Routes
     class Status < Base
       before do
+        admin!
         @path = :status
       end
 
