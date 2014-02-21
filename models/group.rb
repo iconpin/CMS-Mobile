@@ -38,6 +38,10 @@ module CMS
         self.deleted_at = nil
         self.save
       end
+
+      def multimedias_sorted
+        group_multimedias.all(:order => [:weight.asc]).multimedia
+      end
     end
   end
 end

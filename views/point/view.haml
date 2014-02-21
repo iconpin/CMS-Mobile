@@ -48,13 +48,13 @@
               - if @current_point.multimedias.size > 0
                 .carousel.slide#carousel-point{:"data-ride" => "carousel", :style => "margin: 0 auto; width: 400px;"}
                   %ol.carousel-indicators
-                    - @current_point.multimedias.all.each_with_index do |m, index|
+                    - @current_point.multimedias_sorted.each_with_index do |m, index|
                       - if index == 0
                         %li.active{"data-target" => "#carousel-point", :"data-slide-to" => "0"}
                       - else
                         %li{"data-target" => "#carousel-point", :"data-slide-to" => "#{index}"}
                   .carousel-inner
-                    - @current_point.multimedias.all.each_with_index do |m, index|
+                    - @current_point.multimedias_sorted.each_with_index do |m, index|
                       - if index == 0
                         .item.active
                           %img{:src => "#{m.thumbnail_link}", :alt => "Image"}

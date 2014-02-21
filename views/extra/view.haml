@@ -45,13 +45,13 @@
               - if @current_extra.multimedias.size > 0
                 .carousel.slide#carousel-extra{:"data-ride" => "carousel", :style => "margin: 0 auto; width: 400px;"}
                   %ol.carousel-indicators
-                    - @current_extra.multimedias.all.each_with_index do |m, index|
+                    - @current_extra.multimedias_sorted.each_with_index do |m, index|
                       - if index == 0
                         %li.active{"data-target" => "#carousel-extra", :"data-slide-to" => "0"}
                       - else
                         %li{"data-target" => "#carousel-extra", :"data-slide-to" => "#{index}"}
                   .carousel-inner
-                    - @current_extra.multimedias.all.each_with_index do |m, index|
+                    - @current_extra.multimedias_sorted.each_with_index do |m, index|
                       - if index == 0
                         .item.active
                           %img{:src => "#{m.thumbnail_link}", :alt => "Image"}
