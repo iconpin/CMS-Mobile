@@ -1,0 +1,74 @@
+.panel.panel-success
+  .panel-heading
+    %span.glyphicon.glyphicon-play
+    Multimedia enllaçat
+  .panel-body
+    %table.table.table-striped
+      %tr
+        %th
+          %span.glyphicon.glyphicon-link
+        %th Ordre
+        %th
+        %th Nom fitxer
+        %th Tipus
+      - @current_extra.extra_multimedias.all(:order => [:weight.asc]).each do |em|
+        %tr
+          %td
+            %form.form-inline{:role => "form", :action => "/extra/multimedia/edit?extra=#{@current_extra.id}&multimedia=#{em.multimedia.id}", :method => "POST"}
+              .form-group
+                %button.btn.btn-xs.btn-warning{:type => "submit", :name => "action", :value => "unlink"}
+                  %span.glyphicon.glyphicon-minus
+          %td= em.weight
+          %td
+            %ul.list-inline
+              %li
+                %form.form-inline{:role => "form", :action => "/extra/multimedia/up?extra=#{@current_extra.id}&multimedia=#{em.multimedia.id}", :method => "POST"}
+                  .form-group
+                    %button.btn.btn-xs.btn-default{:type => "submit"}
+                      %span.glyphicon.glyphicon-chevron-up
+              %li
+                %form.form-inline{:role => "form", :action => "/extra/multimedia/down?extra=#{@current_extra.id}&multimedia=#{em.multimedia.id}", :method => "POST"}
+                  .form-group
+                    %button.btn.btn-xs.btn-default{:type => "submit"}
+                      %span.glyphicon.glyphicon-chevron-down
+
+          %td
+            %a{:href => em.multimedia.link, :target => "_blank"}= em.multimedia.name
+          %td
+            - if em.multimedia.image?
+              %span.glyphicon.glyphicon-picture
+            - else
+              %span.glyphicon.glyphicon-play
+.panel.panel-info
+  .panel-heading
+    %span.glyphicon.glyphicon-play
+    Multimedia disponible
+  .panel-body
+    %table.table.table-striped
+      %tr
+        %th
+          %span.glyphicon.glyphicon-link
+        %th Nom
+        %th Tipus
+      - CMS::Models::Multimedia.all.each do |m|
+        - if @current_extra.multimedias.include?(m)
+        - else
+          %tr
+            %td
+              %form.form-inline{:role => "form", :action => "/extra/multimedia/edit?extra=#{@current_extra.id}&multimedia=#{m.id}", :method => "POST"}
+                .form-group
+                  %button.btn.btn-xs.btn-primary{:type => "submit", :name => "action", :value => "link"}
+                    %span.glyphicon.glyphicon-plus
+            %td
+              %a{:href => m.link, :target => "_blank"}= m.name
+            %td
+              - if m.image?
+                %span.glyphicon.glyphicon-picture
+              - else
+                %span.glyphicon.glyphicon-play
+
+%ul.list-inline
+  %li
+    %a.btn.btn-warning{:href => @current_extra.link}
+      %span.glyphicon.glyphicon-chevron-left
+      Enrere

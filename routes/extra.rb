@@ -53,7 +53,7 @@ module CMS
         end
       end
 
-      get '/extra/multimedia/edit' do
+      get '/extra/multimedia' do
         @current_extra = Controllers::Extra.get(params)
         haml :'extra/multimedia/edit'
       end
@@ -62,10 +62,24 @@ module CMS
         extra = Controllers::Extra.get(params)
         unless Controllers::Extra.edit_multimedia(params)
           flash.error = "No s'ha pogut editar l'extra"
-          redirect extra.edit_multimedia_link
-        else
-          redirect extra.link
         end
+        redirect extra.multimedia_link
+      end
+
+      post '/extra/multimedia/up' do
+        extra = Controllers::Extra.get(params)
+        unless Controllers::Extra.multimedia_up(params)
+          flash.error = "No s'ha pogut modificar l'ordre"
+        end
+        redirect extra.multimedia_link
+      end
+
+      post '/extra/multimedia/down' do
+        extra = Controllers::Extra.get(params)
+        unless Controllers::Extra.multimedia_down(params)
+          flash.error = "No s'ha pogut modificar l'ordre"
+        end
+        redirect extra.multimedia_link
       end
     end
   end
