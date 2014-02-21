@@ -1,0 +1,103 @@
+- if @current_extra
+  .panel.panel-default
+    .panel-heading
+      %h3
+        = @current_extra.name
+        - if @current_extra.published?
+          %span.label.label-success
+            Publicat
+        - else
+          %span.label.label-warning
+            Privat
+    .panel-body
+      .panel.panel-primary
+        .panel-heading
+          %span.glyphicon.glyphicon-info-sign
+          Informació
+        .panel-body
+          .well.well-sm
+            %strong Descripció:
+            = @current_extra.description
+          .well.well-sm
+            %strong Bocata Muncunill:
+            = @current_extra.tip
+
+          %ul.list-inline
+            %li
+              %form{:action => "/extra/edit", :method => "GET"}
+                %button.btn.btn-sm.btn-primary{:type => "submit", :name => "id", :value => @current_extra.id}
+                  %span.glyphicon.glyphicon-edit
+                  Edita
+            %li
+              %form{:action => "/extra/destroy", :method => "POST"}
+                %button.btn.btn-sm.btn-danger{:type => "submit", :name => "id", :value => @current_extra.id}
+                  %span.glyphicon.glyphicon-remove
+                  Esborra
+      .panel.panel-primary
+        .panel-heading
+          %span.glyphicon.glyphicon-play
+          Multimedia principal
+        .panel-body
+          .panel.panel-default
+            .panel-heading
+              Vista prèvia
+            .panel-body
+              - if @current_extra.multimedias.size > 0
+                .carousel.slide#carousel-extra{:"data-ride" => "carousel", :style => "margin: 0 auto; width: 400px;"}
+                  %ol.carousel-indicators
+                    - @current_extra.multimedias.all.each_with_index do |m, index|
+                      - if index == 0
+                        %li.active{"data-target" => "#carousel-extra", :"data-slide-to" => "0"}
+                      - else
+                        %li{"data-target" => "#carousel-extra", :"data-slide-to" => "#{index}"}
+                  .carousel-inner
+                    - @current_extra.multimedias.all.each_with_index do |m, index|
+                      - if index == 0
+                        .item.active
+                          %img{:src => "#{m.thumbnail_link}", :alt => "Image"}
+                          .carousel-caption
+                            = m.description
+                      - else
+                        .item
+                          %img{:src => "#{m.thumbnail_link}", :alt => "Image"}
+                          .carousel-caption
+                            = m.description
+                        <!-- Caption -->
+                  %a.left.carousel-control{:href => "#carousel-extra", :"data-slide" => "prev"}
+                    %span.glyphicon.glyphicon-chevron-left
+                  %a.right.carousel-control{:href => "#carousel-extra", :"data-slide" => "next"}
+                    %span.glyphicon.glyphicon-chevron-right
+
+          .panel.panel-default
+            .panel-heading
+              Multimedia enllaçat
+            .panel-body
+              %table.table.table-striped
+                - if @current_extra.multimedias.size > 0
+                  - @current_extra.multimedias.each do |m|
+                    %tr
+                      %td
+                        - if m.image?
+                          %span.glyphicon.glyphicon-picture
+                        - else
+                          %span.glyphicon.glyphicon-play
+                      %td
+                        - if m.published?
+                          %span.label.label-success
+                            Publicat
+                        - else
+                          %span.label.label-warning
+                            Privat
+                      %td
+                        %a{:href => m.link, :target => "_blank"}= m.name
+                      %td
+                        = m.description
+                - else
+                  .well.well-sm
+                    No hi ha cap multimèdia enllaçat
+          %ul.list-inline
+            %li
+              %form{:action => "/extra/multimedia/edit", :method => "GET"}
+                %button.btn.btn-sm.btn-primary{:type => "submit", :name => "id", :value => @current_extra.id}
+                  %span.glyphicon.glyphicon-edit
+                  Edita

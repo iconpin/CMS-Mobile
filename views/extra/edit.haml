@@ -1,0 +1,26 @@
+%form.form-big{:role => "form", :action => "/extra/edit", :method => "POST"}
+  .form-group
+    %input.form-control{:type => "text", :name => "name", :value => @current_extra.name, :placeholder => "Nom", :required => true, :autofocus => true}
+  .form-group
+    %textarea.form-control{:rows => "5", :name => "description", :placeholder => "Descripció"}
+      = @current_extra.description
+  .form-group
+    %textarea.form-control{:rows => "1", :name => "tip", :placeholder => "Bocata Muncunill"}
+      = @current_extra.tip
+  .form-group
+    .checkbox
+      - if @current_extra.published
+        %input{:type => "checkbox", :name => "published", :checked => true}
+      - else
+        %input{:type => "checkbox", :name => "published"}
+      %label Públic
+  %ul.list-inline
+    %li
+      .form-group.form-inline
+        %button.btn.btn-primary{:name => "id", :value => @current_extra.id, :type => "submit"}
+          %span.glyphicon.glyphicon-ok
+          Actualitza
+    %li
+      %a.btn.btn-warning{:href => "/extras"}
+        %span.glyphicon.glyphicon-chevron-left
+        Cancel·la

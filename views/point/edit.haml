@@ -2,10 +2,10 @@
   .form-group
     %input.form-control{:type => "text", :name => "name", :value => @current_point.name, :placeholder => "Nom", :required => true, :autofocus => true}
   .form-group
-    %textarea.form-control{:rows => "5", :name => "description", :placeholder => "Descripció", :required => true, :autofocus => true}
+    %textarea.form-control{:rows => "5", :name => "description", :placeholder => "Descripció"}
       = @current_point.description
   .form-group
-    %textarea.form-control{:rows => "1", :name => "tip", :placeholder => "Bocata Muncunill", :required => true}
+    %textarea.form-control{:rows => "1", :name => "tip", :placeholder => "Bocata Muncunill"}
       = @current_point.tip
   .form-group
     %input.form-control{:type => "text", :name => "coords", :value => "#{@current_point.coord_x}, #{@current_point.coord_y}", :placeholder => "Coordenades (latitud i longitud)", :required => true}
