@@ -35,9 +35,9 @@
           %td
             %a{:href => pe.extra.link, :target => "_blank"}= pe.extra.name
           %td
-            - if pe.extra.image?
+            - if pe.extra.has_image?
               %span.glyphicon.glyphicon-picture
-            - else
+            - if pe.extra.has_video?
               %span.glyphicon.glyphicon-play
 .panel.panel-info
   .panel-heading
@@ -50,18 +50,25 @@
           %span.glyphicon.glyphicon-link
         %th Nom
         %th Tipus
-      - CMS::Models::Extra.all.each do |m|
-        - if @current_point.extras.include?(m)
+      - CMS::Models::Extra.all.each do |extra|
+        - if @current_point.extras.include?(extra)
         - else
           %tr
             %td
-              %form.form-inline{:role => "form", :action => "/point/extra/edit?point=#{@current_point.id}&extra=#{m.id}", :method => "POST"}
+              %form.form-inline{:role => "form", :action => "/point/extra/edit?point=#{@current_point.id}&extra=#{extra.id}", :method => "POST"}
                 .form-group
                   %button.btn.btn-xs.btn-primary{:type => "submit", :name => "action", :value => "link"}
                     %span.glyphicon.glyphicon-plus
             %td
-              %a{:href => m.link, :target => "_blank"}= m.name
+              %a{:href => extra.link, :target => "_blank"}= extra.name
             %td
+              - if extra.has_image?
+                %span.glyphicon.glyphicon-picture
+              - if extra.has_video?
+                %span.glyphicon.glyphicon-play
+              - if extra.has_audio?
+                %span.glyphicon.glyphicon-headphones
+
 %ul.list-inline
   %li
     %a.btn.btn-warning{:href => @current_point.link}

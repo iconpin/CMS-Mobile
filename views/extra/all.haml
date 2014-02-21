@@ -7,7 +7,7 @@
     %th Data última actualització
     %th Accions
     %th
-  - CMS::Models::Extra.all_sorted.each do |e|
+  - CMS::Models::Extra.all_sorted.not_deleted.each do |e|
     %tr
       %td
         %ul.list-inline

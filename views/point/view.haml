@@ -115,10 +115,12 @@
               - @current_point.extras.each do |m|
                 %tr
                   %td
-                    - if m.image?
+                    - if m.has_image?
                       %span.glyphicon.glyphicon-picture
-                    - else
+                    - if m.has_video?
                       %span.glyphicon.glyphicon-play
+                    - if m.has_audio?
+                      %span.glyphicon.glyphicon-headphones
                   %td
                     %a{:href => m.link, :target => "_blank"}= m.name
             - else
