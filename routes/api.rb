@@ -16,7 +16,7 @@ module CMS
         builder do |xml|
           xml.instruct!
           xml.points do
-            CMS::Models::Point.all(
+            CMS::Models::Point.published.not_deleted.all(
               :published => true,
               :order => [:weight.desc]
             ).each_with_index do |p, i|

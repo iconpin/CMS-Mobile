@@ -9,6 +9,10 @@ module CMS
             property :tip, DataMapper::Property::Text
             property :published, DataMapper::Property::Boolean, :required => true, :default => false
 
+            def self.published
+              all(:published => true)
+            end
+
             def published?
               self.published
             end

@@ -17,7 +17,6 @@ module CMS
       end
 
       get '/points' do
-        @point_list = Models::Point.all(:order => [:weight.asc])
         haml :'point/all'
       end
 
