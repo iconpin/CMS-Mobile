@@ -9,10 +9,6 @@ module CMS
         end
       end
 
-      def self.all_sorted
-        self.all
-      end
-
       def extra_multimedias
         self.group_multimedias
       end
