@@ -1,8 +1,10 @@
 module CMS
   module Controllers
     class Point
+      @model = Models::Point
+
       def self.get params
-        id = params['id']
+        id = params['id'] || params['point']
         Models::Point.get(id)
       end
 
@@ -12,22 +14,15 @@ module CMS
         tip = params['tip']
         coord_x, coord_y = Utils::Coordinates.parse(params['coords'])
 
-        point = Models::Point.create(
+        point = @model.create(
           :name => name,
           :description => description,
           :tip => tip,
           :coord_x => coord_x,
           :coord_y => coord_y,
-          :created_at => Time.now,
-          :updated_at => Time.now,
-          :weight => Models::Point.count + 1
         )
 
-        if point.saved?
-          true
-        else
-          false
-        end
+        point.saved?
       end
 
       def self.destroy params
@@ -39,16 +34,11 @@ module CMS
       def self.publish params
         id = params['id']
         point = Models::Point.get(id)
+        return false if point.nil?
         if point.nil?
-          return false
-        end
-
-        point.published = true
-
-        if point.save
-          true
-        else
           false
+        else
+          point.publish!
         end
       end
 
@@ -56,20 +46,16 @@ module CMS
         id = params['id']
         point = Models::Point.get(id)
         if point.nil?
-          return false
-        end
-
-        point.published = false
-
-        if point.save
-          true
-        else
           false
+        else
+          point.unpublish!
         end
       end
 
       def self.edit params
-        id = params['id']
+        point = self.get(params)
+        return false if point.nil?
+
         name = params['name']
         description = params['description']
         tip = params['tip']
@@ -77,18 +63,12 @@ module CMS
         published = (params['published'] == 'on')
         multimedia_main = params['multimedia-main']
 
-        point = Models::Point.get(id)
-        if point.nil?
-          return false
-        end
-
         success = point.update(
           :name => name,
           :description => description,
           :tip => tip,
           :coord_x => coord_x,
           :coord_y => coord_y,
-          :updated_at => Time.now,
           :published => published
         )
         if success
@@ -99,31 +79,20 @@ module CMS
       end
 
       def self.up params
-        id = params['id']
+        point = self.get(params)
+        return false if point.nil?
 
-        point = Models::Point.get(id)
-
-        if point.nil?
-          false
-        else
-          point.up!
-        end
+        point.up!
       end
 
       def self.down params
-        id = params['id']
-
-        point = Models::Point.get(id)
-
-        if point.nil?
-          false
-        else
-          point.down!
-        end
+        point = self.get(params['id'])
+        return false if point.nil?
+        point.down!
       end
 
       def self.edit_multimedia params
-        point = Models::Point.get(params['point'])
+        point = self.get(params)
         return false if point.nil?
 
         multimedia = Models::Multimedia.get(params['multimedia'])
@@ -135,20 +104,20 @@ module CMS
             :group => point,
             :multimedia => multimedia,
           )
-          return gm.saved?
+          gm.saved?
         when 'unlink'
           gm = Models::GroupMultimedia.first(
             :group => point,
             :multimedia => multimedia
           )
-          return gm.destroy
+          gm.destroy
         else
-          return false
+          false
         end
       end
 
       def self.multimedia_up params
-        point = Models::Point.get(params['point'])
+        point = self.get(params)
         return false if point.nil?
 
         multimedia = Models::Multimedia.get(params['multimedia'])
@@ -157,11 +126,11 @@ module CMS
         gm = Models::GroupMultimedia.first(:group => point, :multimedia => multimedia)
         return false if gm.nil?
 
-        return gm.up!(:group => point)
+        gm.up!(:group => point)
       end
 
       def self.multimedia_down params
-        point = Models::Point.get(params['point'])
+        point = self.get(params)
         return false if point.nil?
 
         multimedia = Models::Multimedia.get(params['multimedia'])
@@ -170,11 +139,11 @@ module CMS
         gm = Models::GroupMultimedia.first(:group => point, :multimedia => multimedia)
         return false if gm.nil?
 
-        return gm.down!(:group => point)
+        gm.down!(:group => point)
       end
 
       def self.edit_extra params
-        point = Models::Point.get(params['point'])
+        point = self.get(params)
         return false if point.nil?
 
         extra = Models::Extra.get(params['extra'])
@@ -186,16 +155,42 @@ module CMS
             :point => point,
             :extra => extra,
           )
-          return pe.saved?
+          pe.saved?
         when 'unlink'
           pe = Models::PointExtra.first(
             :point => point,
             :extra => extra
           )
-          return pe.destroy
+          pe.destroy
         else
-          return false
+          false
         end
+      end
+
+      def self.extra_up params
+        point = get(params)
+        return false if point.nil?
+
+        extra = Models::Extra.get(params['extra'])
+        return false if extra.nil?
+
+        pe = Models::PointExtra.first(:point => point, :extra => extra)
+        return false if pe.nil?
+
+        pe.up!(:point => point)
+      end
+
+      def self.extra_down params
+        point = get(params)
+        return false if point.nil?
+
+        extra = Models::Extra.get(params['extra'])
+        return false if extra.nil?
+
+        pe = Models::PointExtra.first(:point => point, :extra => extra)
+        return false if pe.nil?
+
+        pe.down!(:point => point)
       end
     end
   end
