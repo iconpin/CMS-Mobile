@@ -3,6 +3,12 @@ module CMS
     class Extra < Group
       include Core::SortFields
 
+      before :destroy do |extra|
+        PointExtra.all(:extra => extra).each do |pe|
+          pe.destroy
+        end
+      end
+
       def self.all_sorted
         self.all
       end
