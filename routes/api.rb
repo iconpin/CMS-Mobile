@@ -33,7 +33,7 @@ module CMS
                 :order => i + 1,
                 :id => p.id,
                 :name => p.name,
-                :url => "/api/point/#{p.id}"
+                :url => link_to("/api/point/#{p.id}")
               })
             end
           end
@@ -51,7 +51,7 @@ module CMS
                 xml.multimedia :order => i + 1, :id => m.id, :name => m.name do
                   xml.description m.description
                   xml.tip m.tip
-                  xml.url m.static_link
+                  xml.url link_to(m.static_link)
                 end
               end
             end
@@ -59,7 +59,7 @@ module CMS
               p.extras_sorted.each_with_index do |e, i|
                 xml.extra :order => i + 1, :id => e.id, :name => e.name do
                   xml.description e.description
-                  xml.url "/api/extra/#{e.id}"
+                  xml.url link_to("/api/extra/#{e.id}")
                 end
               end
             end

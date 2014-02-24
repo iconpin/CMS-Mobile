@@ -63,6 +63,25 @@ module CMS
             redirect '/'
           end
         end
+
+        def link_to url_fragment, mode = :path
+          # As seen in: https://gist.github.com/emk/98310
+          case mode
+          when :path
+            base = request.script_name
+          when :full
+            if (request.scheme == 'http' && request.port == 80 ||
+                request.scheme == 'https' && request.port == 443)
+              port = ''
+            else
+              port = ":#{request.port}"
+            end
+            base = "#{request.scheme}://#{request.host}#{port}#{request.script_name}"
+          else
+            raise "Unknown script_url mode #{mode}"
+          end
+          "#{base}#{url_fragment}"
+        end
       end
 
       get '/' do
