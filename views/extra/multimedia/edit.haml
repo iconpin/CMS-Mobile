@@ -14,7 +14,7 @@
       - @current_extra.extra_multimedias.all(:order => [:weight.asc]).each do |em|
         %tr
           %td
-            %form.form-inline{:role => "form", :action => "/extra/multimedia/edit?extra=#{@current_extra.id}&multimedia=#{em.multimedia.id}", :method => "POST"}
+            %form.form-inline{:role => "form", :action => "/extra/multimedia?extra=#{@current_extra.id}&multimedia=#{em.multimedia.id}", :method => "POST"}
               .form-group
                 %button.btn.btn-xs.btn-warning{:type => "submit", :name => "action", :value => "unlink"}
                   %span.glyphicon.glyphicon-minus
@@ -55,7 +55,7 @@
         - else
           %tr
             %td
-              %form.form-inline{:role => "form", :action => "/extra/multimedia/edit?extra=#{@current_extra.id}&multimedia=#{m.id}", :method => "POST"}
+              %form.form-inline{:role => "form", :action => "/extra/multimedia?extra=#{@current_extra.id}&multimedia=#{m.id}", :method => "POST"}
                 .form-group
                   %button.btn.btn-xs.btn-primary{:type => "submit", :name => "action", :value => "link"}
                     %span.glyphicon.glyphicon-plus

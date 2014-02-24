@@ -58,7 +58,7 @@ module CMS
         haml :'extra/multimedia/edit'
       end
 
-      post '/extra/multimedia/edit' do
+      post '/extra/multimedia' do
         extra = Controllers::Extra.get(params)
         unless Controllers::Extra.edit_multimedia(params)
           flash.error = "No s'ha pogut editar l'extra"
