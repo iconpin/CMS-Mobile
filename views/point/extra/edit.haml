@@ -50,7 +50,7 @@
           %span.glyphicon.glyphicon-link
         %th Nom
         %th Tipus
-      - CMS::Models::Extra.all.each do |extra|
+      - CMS::Models::Extra.all_sorted.not_deleted.each do |extra|
         - if @current_point.extras.include?(extra)
         - else
           %tr
