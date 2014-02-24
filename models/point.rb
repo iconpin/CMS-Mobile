@@ -16,7 +16,11 @@ module CMS
       end
 
       def point_multimedias
-        self.group_multimedias
+        group_multimedias
+      end
+
+      def extras_sorted
+        point_extras(:order => [:weight.asc]).extra
       end
 
       def link
