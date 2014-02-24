@@ -74,7 +74,7 @@
             .panel-body
               %table.table.table-striped
                 - if @current_extra.multimedias.size > 0
-                  - @current_extra.multimedias.each do |m|
+                  - @current_extra.multimedias_sorted.each do |m|
                     %tr
                       %td
                         - if m.image?
