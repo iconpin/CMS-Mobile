@@ -40,7 +40,11 @@ module CMS
       end
 
       def multimedias_sorted
-        self.group_multimedias.all(:order => [:weight.asc]).multimedia
+        multimedias = []
+        self.group_multimedias.all(:order => [:weight.asc]).each do |gm|
+          multimedias << gm.multimedia
+        end
+        multimedias
       end
 
       def has_image?

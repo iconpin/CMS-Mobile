@@ -20,7 +20,11 @@ module CMS
       end
 
       def extras_sorted
-        point_extras(:order => [:weight.asc]).extra
+        extras = []
+        point_extras(:order => [:weight.asc]).each do |pe|
+          extras << pe.extra
+        end
+        extras
       end
 
       def link
