@@ -1,0 +1,14 @@
+.panel.panel-primary
+  .panel-heading
+    Info
+  .panel-body
+    .well.well-sm
+      = @info.text
+    .well.well-sm
+      %strong Actualitzat a:
+      = @info.updated_at_pretty
+    %ul.list-inline
+      %li
+        %a.btn.btn-primary{:href => "/info/edit"}
+          %span.glyphicon.glyphicon-edit
+          Actualitza

@@ -36,6 +36,7 @@ module CMS
     require_relative 'models/point_extra'
 
     require_relative 'models/user'
+    require_relative 'models/info'
 
     DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/database.db")
     DataMapper.finalize
@@ -47,6 +48,7 @@ module CMS
     Models::Point.auto_upgrade!
     Models::PointExtra.auto_upgrade!
     Models::User.auto_upgrade!
+    Models::Info.auto_upgrade!
 
     # Controllers
     require_relative 'controllers/user'
@@ -64,6 +66,7 @@ module CMS
     require_relative 'routes/multimedia'
     require_relative 'routes/point'
     require_relative 'routes/extra'
+    require_relative 'routes/info'
     require_relative 'routes/status'
     require_relative 'routes/api'
 
@@ -72,6 +75,7 @@ module CMS
     use Routes::Multimedia
     use Routes::Point
     use Routes::Extra
+    use Routes::Info
     use Routes::Status
     use Routes::API
   end

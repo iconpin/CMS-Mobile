@@ -1,0 +1,14 @@
+%form.form-big{:role => "form", :action => "/info/edit", :method => "POST"}
+  .form-group
+    %textarea.form-control{:rows => "5", :name => "text", :placeholder => "Text"}
+      = @info.text
+  %ul.list-inline
+    %li
+      .form-group.form-inline
+        %button.btn.btn-primary{:type => "submit"}
+          %span.glyphicon.glyphicon-ok
+          Actualitza
+    %li
+      %a.btn.btn-warning{:href => "/info"}
+        %span.glyphicon.glyphicon-chevron-left
+        Cancel·la
