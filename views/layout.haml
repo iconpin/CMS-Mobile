@@ -27,7 +27,7 @@
     <![endif]-->
 
   %body
-    .container
+    .container#content
       .navbar.navbar-default.navbar-fixed-top{:role => "navigation"}
         .container
           .navbar-header
@@ -151,6 +151,4 @@
               = @flash.success
         = yield
 
-    .footer
-      .container
-        = haml :footer
+    = haml :footer
