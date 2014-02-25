@@ -6,7 +6,7 @@ module CMS
       property :coord_x, Float
       property :coord_y, Float
 
-      has n, :point_extras
+      has n, :point_extras, :order => [:weight.asc]
       has n, :extras, :through => :point_extras
 
       before :destroy do |point|
@@ -25,6 +25,10 @@ module CMS
           extras << pe.extra
         end
         extras
+      end
+
+      def extras_sorted_published
+        extras_sorted.select {|e| e.published && !e.deleted?}
       end
 
       def link

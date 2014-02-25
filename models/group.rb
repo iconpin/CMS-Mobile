@@ -9,7 +9,7 @@ module CMS
       property :deleted_at, ParanoidDateTime
       property :type, Discriminator
 
-      has n, :group_multimedias
+      has n, :group_multimedias, :order => [:weight.asc]
       has n, :multimedias, :through => :group_multimedias
 
       before :destroy do |group|
@@ -45,6 +45,10 @@ module CMS
           multimedias << gm.multimedia
         end
         multimedias
+      end
+
+      def multimedias_sorted_published
+        multimedias.select {|m| m.published? }
       end
 
       def has_image?
