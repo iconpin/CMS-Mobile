@@ -8,4 +8,6 @@
 
 - Flash on erroring login?
 
-- Stuff written and piled up on my desktop
+# Known Bugs
+
+- Cannot erase Point/Extra if it has any multimedia associated
