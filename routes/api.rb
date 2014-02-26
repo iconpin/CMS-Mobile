@@ -138,6 +138,93 @@ module CMS
           end
         end
       end
+
+      get '/api/2/all' do
+        builder do |xml|
+          xml.instruct!
+          xml.MNACTEC do
+            xml.Text :id => "PoIScreenTitleId", :cat => "PUNTS D'INTERÈS" do; end
+            Models::Point.all_sorted.published.not_deleted.each_with_index do |point, i|
+              xml.PoI :NameId => "name#{point.id}" do
+                xml.textMultimedia(
+                  :type => "short",
+                  :TitleId => "title#{point.id}",
+                  :DescriptionID => "shortInfo#{point.id}",
+                  :imagePath => "borrable"
+                ) do; end
+                xml.textMultimedia(
+                  :type => "large",
+                  :TitleId => "title#{point.id}",
+                  :DescriptionID => "largeInfo#{point.id}",
+                  :imagePath => "borrable"
+                ) do; end
+
+                image_paths = []
+                video_paths = []
+                item_texts = []
+                point.multimedias_sorted_published.each_with_index do |multimedia, j|
+                  image_paths << {:"imagePath#{j + 1}" => File.join('images', File.basename(multimedia.path))} if multimedia.image?
+                  video_paths << {:"videoPath#{j + 1}" => File.join('videos', File.basename(multimedia.path))} if multimedia.video?
+
+                  item_texts << {:"itemTextId#{j + 1}" => "itemText#{multimedia.id}"}
+                end
+
+                xml.imageView *image_paths, *video_paths, *item_texts do; end
+
+                xml.GPSPoint :latitude => point.coord_x, :longitude => point.coord_y do; end
+                xml.RA :has => true do; end
+              end
+
+              xml.Text :id => "name#{point.id}", :cat => point.name do; end
+              xml.Text :id => "title#{point.id}", :cat => point.name do; end
+              xml.Text :id => "shortInfo#{point.id}", :cat => point.description do; end
+              xml.Text :id => "largeInfo#{point.id}", :cat => point.description do; end
+
+              point.multimedias_sorted_published.each_with_index do |multimedia, j|
+                xml.Text :id => "itemText#{multimedia.id}", :cat => multimedia.description do; end
+              end
+            end
+
+            Models::Extra.all_sorted.published.not_deleted.each_with_index do |extra, i|
+              xml.PoI :NameId => "name#{extra.id}", :Extra => true do
+                xml.textMultimedia(
+                  :type => "short",
+                  :TitleId => "title#{extra.id}",
+                  :DescriptionID => "shortInfo#{extra.id}",
+                  :imagePath => "borrable"
+                ) do; end
+                xml.textMultimedia(
+                  :type => "large",
+                  :TitleId => "title#{extra.id}",
+                  :DescriptionID => "largeInfo#{extra.id}",
+                  :imagePath => "borrable"
+                ) do; end
+
+                image_paths = []
+                video_paths = []
+                item_texts = []
+                extra.multimedias_sorted_published.each_with_index do |multimedia, j|
+                  image_paths << {:"imagePath#{j + 1}" => File.join('images', File.basename(multimedia.path))} if multimedia.image?
+                  video_paths << {:"videoPath#{j + 1}" => File.join('videos', File.basename(multimedia.path))} if multimedia.video?
+
+                  item_texts << {:"itemTextId#{j + 1}" => "itemText#{multimedia.id}"}
+                end
+
+                xml.imageView *image_paths, *video_paths, *item_texts do; end
+              end
+
+              xml.Text :id => "name#{extra.id}", :cat => extra.name do; end
+              xml.Text :id => "title#{extra.id}", :cat => extra.name do; end
+              xml.Text :id => "shortInfo#{extra.id}", :cat => extra.description do; end
+              xml.Text :id => "largeInfo#{extra.id}", :cat => extra.description do; end
+
+              extra.multimedias_sorted_published.each_with_index do |multimedia, j|
+                xml.Text :id => "itemText#{multimedia.id}", :cat => multimedia.description do; end
+              end
+            end
+          end
+        end
+      end
     end
   end
 end
