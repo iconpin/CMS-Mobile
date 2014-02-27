@@ -32,6 +32,8 @@
           %span.glyphicon.glyphicon-picture
         - elsif m.video?
           %span.glyphicon.glyphicon-play
+        - elsif m.audio?
+          %span.glyphicon.glyphicon-headphones
       %td= m.description
       %td= m.tip
       %td= m.updated_at_pretty

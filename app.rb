@@ -59,6 +59,7 @@ module CMS
     # Workers
     require_relative 'workers/image_converter'
     require_relative 'workers/video_converter'
+    require_relative 'workers/audio_converter'
 
     # Routes
     require_relative 'routes/base'

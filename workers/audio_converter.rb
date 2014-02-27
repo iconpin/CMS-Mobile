@@ -13,8 +13,10 @@ module CMS
 
       def perform audio_id
         @audio_id = audio_id
-
-        # TODO conversion
+        audio = Models::Audio.get(@audio_id)
+        audio.ready = true
+        audio.save
+        # TODO conversion?
       end
     end
   end

@@ -131,14 +131,14 @@ module CMS
     end
 
     class Audio < Multimedia
-      @@extensions = ['.wav', '.mp3', '.ogg']
-      @@type = Models::Audio
+      @extensions = ['.wav', '.mp3', '.ogg', '.aif']
+      @type = Models::Audio
 
       def self.upload params
         audio = super(params)
         return nil if audio.nil?
 
-        audio.path = File.join(CMS::Multimedia, "#{audio.id}.mp3")
+        audio.path = File.join(CMS::MULTIMEDIA_DIR, "#{audio.id}.mp3")
 
         if audio.save
           Workers::AudioConverter.perform_async(audio.id)

@@ -37,8 +37,10 @@
           %td
             - if pm.multimedia.image?
               %span.glyphicon.glyphicon-picture
-            - else
+            - elsif pm.multimedia.video?
               %span.glyphicon.glyphicon-play
+            - elsif pm.multimedia.audio?
+              %span.glyphicon.glyphicon-headphones
 .panel.panel-info
   .panel-heading
     %span.glyphicon.glyphicon-play
@@ -64,8 +66,10 @@
             %td
               - if m.image?
                 %span.glyphicon.glyphicon-picture
-              - else
+              - elsif m.video?
                 %span.glyphicon.glyphicon-play
+              - elsif m.audio?
+                %span.glyphicon.glyphicon-headphones
 
 %ul.list-inline
   %li

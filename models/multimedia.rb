@@ -80,6 +80,10 @@ module CMS
       def audio?
         true
       end
+
+      def thumbnail_link
+        ""
+      end
     end
   end
 end

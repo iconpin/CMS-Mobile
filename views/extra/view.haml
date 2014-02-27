@@ -79,8 +79,10 @@
                       %td
                         - if m.image?
                           %span.glyphicon.glyphicon-picture
-                        - else
+                        - elsif m.video?
                           %span.glyphicon.glyphicon-play
+                        - elsif m.audio?
+                          %span.glyphicon.glyphicon-headphones
                       %td
                         - if m.published?
                           %span.label.label-success

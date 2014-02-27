@@ -16,8 +16,9 @@
       .well.well-sm
         %strong Bocata Muncunill:
         = @current_multimedia.tip
-      .well.well-sm
-        %img.img-thumbnail{:src => @current_multimedia.thumbnail_link, :alt => "Miniatura"}
+      - unless @current_multimedia.audio?
+        .well.well-sm
+          %img.img-thumbnail{:src => @current_multimedia.thumbnail_link, :alt => "Miniatura"}
       .well.well-sm
         %strong Utilitzat a:
         - if @current_multimedia.points.size == 0

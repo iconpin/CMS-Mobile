@@ -37,8 +37,10 @@
           %td
             - if em.multimedia.image?
               %span.glyphicon.glyphicon-picture
-            - else
+            - elsif em.multimedia.video?
               %span.glyphicon.glyphicon-play
+            - elsif em.multimedia.audio?
+              %span.glyphicon.glyphicon-headphones
 .panel.panel-info
   .panel-heading
     %span.glyphicon.glyphicon-play
