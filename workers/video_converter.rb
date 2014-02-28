@@ -15,10 +15,17 @@ module CMS
         @video_id = video_id
         video = CMS::Models::Video.get(video_id)
         movie = FFMPEG::Movie.new(video.path_tmp.to_s)
-        movie.transcode(video.path.to_s)
+        movie.transcode(
+          video.path.to_s,
+          {
+            :video_codec => 'libx264',
+            :x264_vprofile => 'baseline',
+            :audio_codec => 'libvo_aacenc'
+          }
+        )
         movie.screenshot(
           video.path_thumbnail.to_s,
-          { :resolution => '400x400' },
+          { :resolution => '512x512' },
           :preserve_aspect_ratio => :width
         )
 
