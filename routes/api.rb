@@ -171,6 +171,13 @@ module CMS
 
                 xml.imageView *image_paths, *video_paths, *item_texts do; end
 
+                extra_ids = []
+                point.extras_sorted_published.each_with_index do |extra, j|
+                  extra_ids << {:"extraId#{j + 1}" => "name#{extra.id}"}
+                end
+
+                xml.extraList *extra_ids do; end
+
                 xml.GPSPoint :latitude => point.coord_x, :longitude => point.coord_y do; end
                 xml.RA :has => true do; end
               end

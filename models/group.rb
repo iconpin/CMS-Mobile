@@ -28,9 +28,9 @@ module CMS
 
       def deleted?
         if self.deleted_at.nil?
-          true
-        else
           false
+        else
+          true
         end
       end
 
