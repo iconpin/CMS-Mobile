@@ -159,19 +159,18 @@ module CMS
                   :imagePath => "borrable"
                 ) do; end
 
-                image_paths = []
-                video_paths = []
+                item_paths = []
                 item_texts = []
                 audio_path = nil
                 point.multimedias_sorted_published.each_with_index do |multimedia, j|
                   path = File.join('multimedia', File.basename(multimedia.path))
-                  image_paths << {:"imagePath#{j + 1}" => path} if multimedia.image?
-                  video_paths << {:"videoPath#{j + 1}" => path} if multimedia.video?
+                  item_paths << {:"imagePath#{j + 1}" => path} if multimedia.image?
+                  item_paths << {:"videoPath#{j + 1}" => path} if multimedia.video?
                   audio_path ||= {:audioPath => path} if multimedia.audio?
                   item_texts << {:"itemTextId#{j + 1}" => "itemText#{multimedia.id}"}
                 end
 
-                xml.imageView *image_paths, *video_paths, *item_texts, audio_path do; end
+                xml.imageView *item_paths, *item_texts, audio_path do; end
 
                 extra_ids = []
                 point.extras_sorted_published.each_with_index do |extra, j|
@@ -209,17 +208,16 @@ module CMS
                   :imagePath => "borrable"
                 ) do; end
 
-                image_paths = []
-                video_paths = []
+                item_paths = []
                 item_texts = []
                 extra.multimedias_sorted_published.each_with_index do |multimedia, j|
-                  image_paths << {:"imagePath#{j + 1}" => File.join('images', File.basename(multimedia.path))} if multimedia.image?
-                  video_paths << {:"videoPath#{j + 1}" => File.join('videos', File.basename(multimedia.path))} if multimedia.video?
+                  item_paths << {:"imagePath#{j + 1}" => File.join('images', File.basename(multimedia.path))} if multimedia.image?
+                  item_paths << {:"videoPath#{j + 1}" => File.join('videos', File.basename(multimedia.path))} if multimedia.video?
 
                   item_texts << {:"itemTextId#{j + 1}" => "itemText#{multimedia.id}"}
                 end
 
-                xml.imageView *image_paths, *video_paths, *item_texts do; end
+                xml.imageView *item_paths, *item_texts do; end
               end
 
               xml.Text :id => "name#{extra.id}", :cat => extra.name do; end
