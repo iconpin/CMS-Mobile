@@ -14,20 +14,37 @@ module CMS
       def perform(video_id)
         @video_id = video_id
         video = CMS::Models::Video.get(video_id)
-        movie = FFMPEG::Movie.new(video.path_tmp.to_s)
+
+        input_path = video.path_tmp.to_s
+        output_path = video.path.to_s
+        thumbnail_path = video.path_thumbnail.to_s
+
+        movie = FFMPEG::Movie.new(input_path)
+
         movie.transcode(
-          video.path.to_s,
+          output_path,
           {
             :video_codec => 'libx264',
             :x264_vprofile => 'baseline',
-            :audio_codec => 'libvo_aacenc'
+            :audio_codec => 'libvo_aacenc',
+            :custom => '-filter:v "scale=iw*min(480/iw\,320/ih):ih*min(480/iw\,320/ih), pad=480:320:(480-iw*min(480/iw\,320/ih))/2:(320-ih*min(480/iw\,320/ih))/2"'
           }
         )
+
         movie.screenshot(
           video.path_thumbnail.to_s,
           { :resolution => '512x512' },
           :preserve_aspect_ratio => :width
         )
+
+        image = MiniMagick::Image.open thumbnail_path
+        result = image.composite(MiniMagick::Image.open(File.join(CMS::App.root, 'workers', 'play.png'))) do |c|
+          c.gravity 'center'
+        end
+        result.write thumbnail_path
+
+        cmd = "convert #{thumbnail_path} -type TrueColorMatte -define png:color-type=6 #{thumbnail_path}"
+        Kernel.system(cmd)
 
         video.ready = true
         video.save

@@ -11,17 +11,38 @@ module CMS
         image.save
       end
 
+      MAX_ASPECT_RATIO = (685.0) / (400.0)
+      MAX_SIZE = "512x#{(512.0 / MAX_ASPECT_RATIO).to_i}"
+
       def perform(image_id)
         @image_id = image_id
         image = CMS::Models::Image.get(image_id)
 
-        i = MiniMagick::Image.open(image.path_tmp.to_s)
-        i.resize('1024x1024')
-        i.write(image.path.to_s)
+        input_path = image.path_tmp.to_s
+        output_path = image.path.to_s
+        thumbnail_path = image.path_thumbnail.to_s
 
-        j = MiniMagick::Image.open(image.path_tmp.to_s)
-        j.resize('400x400')
-        j.write(image.path_thumbnail.to_s)
+        i = MiniMagick::Image.open input_path
+        i.resize '512x512'
+
+        aspect_ratio = i[:width].to_f/i[:height].to_f
+        if aspect_ratio > MAX_ASPECT_RATIO
+          i.combine_options do |c|
+            c.background 'black'
+            c.gravity 'center'
+            c.extent MAX_SIZE
+          end
+        end
+
+        i.combine_options do |c|
+          c.colorspace 'rgb'
+          c.type 'truecolor'
+        end
+
+        i.write output_path
+
+        i.resize '256x256'
+        i.write thumbnail_path
 
         image.ready = true
         image.save
