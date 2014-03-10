@@ -161,6 +161,7 @@ module CMS
 
                 item_paths = []
                 item_texts = []
+                item_tips = []
                 audio_path = nil
                 point.multimedias_sorted_published.each_with_index do |multimedia, j|
                   path = File.join('multimedia', File.basename(multimedia.path))
@@ -168,9 +169,15 @@ module CMS
                   item_paths << {:"videoPath#{j + 1}" => path} if multimedia.video?
                   audio_path ||= {:audioPath => path} if multimedia.audio?
                   item_texts << {:"itemTextId#{j + 1}" => "itemText#{multimedia.id}"}
+                  muncu_text_id = if multimedia.tip.nil? || multimedia.tip.strip.empty?
+                                    "null"
+                                  else
+                                    "muncuText#{multimedia.id}"
+                                  end
+                  item_tips << {:"muncuTextId#{j + 1}" => muncu_text_id}
                 end
 
-                xml.imageView *item_paths, *item_texts, audio_path do; end
+                xml.imageView *item_paths, *item_texts, audio_path, *item_tips do; end
 
                 extra_ids = []
                 point.extras_sorted_published.each_with_index do |extra, j|
@@ -190,6 +197,9 @@ module CMS
 
               point.multimedias_sorted_published.each_with_index do |multimedia, j|
                 xml.Text :id => "itemText#{multimedia.id}", :cat => multimedia.description do; end
+                unless multimedia.tip.nil?
+                  xml.Text :id => "muncuText#{multimedia.id}", :cat => multimedia.tip do; end
+                end
               end
             end
 
@@ -210,14 +220,21 @@ module CMS
 
                 item_paths = []
                 item_texts = []
+                item_tips = []
                 extra.multimedias_sorted_published.each_with_index do |multimedia, j|
-                  item_paths << {:"imagePath#{j + 1}" => File.join('images', File.basename(multimedia.path))} if multimedia.image?
-                  item_paths << {:"videoPath#{j + 1}" => File.join('videos', File.basename(multimedia.path))} if multimedia.video?
+                  item_paths << {:"imagePath#{j + 1}" => File.join('multimedia', File.basename(multimedia.path))} if multimedia.image?
+                  item_paths << {:"videoPath#{j + 1}" => File.join('multimedia', File.basename(multimedia.path))} if multimedia.video?
 
                   item_texts << {:"itemTextId#{j + 1}" => "itemText#{multimedia.id}"}
+                  muncu_text_id = if multimedia.tip.nil? || multimedia.tip.strip.empty?
+                                    "null"
+                                  else
+                                    "muncuText#{multimedia.id}"
+                                  end
+                  item_tips << {:"muncuTextId#{j + 1}" => muncu_text_id}
                 end
 
-                xml.imageView *item_paths, *item_texts do; end
+                xml.imageView *item_paths, *item_texts, *item_tips do; end
               end
 
               xml.Text :id => "name#{extra.id}", :cat => extra.name do; end
@@ -227,6 +244,9 @@ module CMS
 
               extra.multimedias_sorted_published.each_with_index do |multimedia, j|
                 xml.Text :id => "itemText#{multimedia.id}", :cat => multimedia.description do; end
+                unless multimedia.tip.nil?
+                  xml.Text :id => "muncuText#{multimedia.id}", :cat => multimedia.tip do; end
+                end
               end
             end
           end
