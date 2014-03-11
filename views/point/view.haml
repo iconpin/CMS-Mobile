@@ -49,12 +49,14 @@
                 .carousel.slide#carousel-point{:"data-ride" => "carousel", :style => "margin: 0 auto; width: 400px;"}
                   %ol.carousel-indicators
                     - @current_point.multimedias_sorted.each_with_index do |m, index|
+                      - next if m.audio?
                       - if index == 0
                         %li.active{"data-target" => "#carousel-point", :"data-slide-to" => "0"}
                       - else
                         %li{"data-target" => "#carousel-point", :"data-slide-to" => "#{index}"}
                   .carousel-inner
                     - @current_point.multimedias_sorted.each_with_index do |m, index|
+                      - next if m.audio?
                       - if index == 0
                         .item.active
                           %img{:src => "#{m.thumbnail_link}", :alt => "Image"}
