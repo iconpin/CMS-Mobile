@@ -142,7 +142,7 @@ module CMS
       get '/api/2/all' do
         builder do |xml|
           xml.instruct!
-          xml.MNACTEC do
+          xml.MNACTEC do |root|
             xml.Text :id => "PoIScreenTitleId", :cat => "PUNTS D'INTERÈS" do; end
             Models::Point.all_sorted.published.not_deleted.each_with_index do |point, i|
               xml.PoI :NameId => "name#{point.id}" do
@@ -187,7 +187,11 @@ module CMS
                 xml.extraList *extra_ids do; end
 
                 xml.GPSPoint :latitude => point.coord_x, :longitude => point.coord_y do; end
-                xml.RA :has => true do; end
+
+                ar_image_path = CMS::Static::AUGMENTED_REALITY[point.id]
+                unless ar_image_path.nil?
+                  xml.RA :has => true, :imagePath => ar_image_path do; end
+                end
               end
 
               xml.Text :id => "name#{point.id}", :cat => point.name do; end
@@ -249,6 +253,7 @@ module CMS
                 end
               end
             end
+            root << CMS::Static::EXTRA_XML_DATA
           end
         end
       end
