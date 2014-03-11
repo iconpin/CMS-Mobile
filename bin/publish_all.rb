@@ -1,4 +1,6 @@
-require_relative 'app'
+#!/usr/bin/env ruby
+
+require_relative '../app'
 
 multimedias = CMS::Models::Multimedia.all
 points = CMS::Models::Point.all
