@@ -1,6 +1,7 @@
 module CMS
   module Static
     AUGMENTED_REALITY = {
+      1 => "ARImages/aymeric/aymeric.jpg",
       2 => "ARImages/masia/masia.jpg",
       3 => "ARImages/mercat/mercat.jpg",
       4 => "ARImages/ajuntament/ajuntament.jpg",
