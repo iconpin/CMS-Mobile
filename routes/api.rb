@@ -205,6 +205,10 @@ module CMS
                   xml.Text :id => "muncuText#{multimedia.id}", :cat => multimedia.tip do; end
                 end
               end
+
+              if point.id == CMS::Static::POI_XML_DATA[:after]
+                root << CMS::Static::POI_XML_DATA[:data]
+              end
             end
 
             Models::Extra.all_sorted.published.not_deleted.each_with_index do |extra, i|
