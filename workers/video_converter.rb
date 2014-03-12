@@ -31,6 +31,7 @@ module CMS
           }
         )
 
+        movie = FFMPEG::Movie.new(output_path)
         movie.screenshot(
           video.path_thumbnail.to_s,
           { :resolution => '512x512' },
