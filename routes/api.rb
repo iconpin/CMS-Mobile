@@ -194,15 +194,15 @@ module CMS
                 end
               end
 
-              xml.Text :id => "name#{point.id}", :cat => point.name do; end
-              xml.Text :id => "title#{point.id}", :cat => point.name do; end
-              xml.Text :id => "shortInfo#{point.id}", :cat => point.description do; end
-              xml.Text :id => "largeInfo#{point.id}", :cat => point.description do; end
+              xml.Text :id => "name#{point.id}", :cat => point.name.strip do; end
+              xml.Text :id => "title#{point.id}", :cat => point.name.strip do; end
+              xml.Text :id => "shortInfo#{point.id}", :cat => point.description.strip do; end
+              xml.Text :id => "largeInfo#{point.id}", :cat => point.description.strip do; end
 
               point.multimedias_sorted_published.each_with_index do |multimedia, j|
-                xml.Text :id => "itemText#{multimedia.id}", :cat => multimedia.description do; end
+                xml.Text :id => "itemText#{multimedia.id}", :cat => multimedia.description.strip do; end
                 unless multimedia.tip.nil?
-                  xml.Text :id => "muncuText#{multimedia.id}", :cat => multimedia.tip do; end
+                  xml.Text :id => "muncuText#{multimedia.id}", :cat => multimedia.tip.strip do; end
                 end
               end
 
@@ -245,15 +245,15 @@ module CMS
                 xml.imageView *item_paths, *item_texts, *item_tips do; end
               end
 
-              xml.Text :id => "name#{extra.id}", :cat => extra.name do; end
-              xml.Text :id => "title#{extra.id}", :cat => extra.name do; end
-              xml.Text :id => "shortInfo#{extra.id}", :cat => extra.description do; end
-              xml.Text :id => "largeInfo#{extra.id}", :cat => extra.description do; end
+              xml.Text :id => "name#{extra.id}", :cat => extra.name.strip do; end
+              xml.Text :id => "title#{extra.id}", :cat => extra.name.strip do; end
+              xml.Text :id => "shortInfo#{extra.id}", :cat => extra.description.strip do; end
+              xml.Text :id => "largeInfo#{extra.id}", :cat => extra.description.strip do; end
 
               extra.multimedias_sorted_published.each_with_index do |multimedia, j|
-                xml.Text :id => "itemText#{multimedia.id}", :cat => multimedia.description do; end
+                xml.Text :id => "itemText#{multimedia.id}", :cat => multimedia.description.strip do; end
                 unless multimedia.tip.nil?
-                  xml.Text :id => "muncuText#{multimedia.id}", :cat => multimedia.tip do; end
+                  xml.Text :id => "muncuText#{multimedia.id}", :cat => multimedia.tip.strip do; end
                 end
               end
             end
