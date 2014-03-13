@@ -56,3 +56,7 @@ TODO
 - `views`: HAML views
 - `workers`: sidekiq workers
 - `utils`: helper modules
+
+## License
+
+See the [LICENSE](/LICENSE) file for more information.
