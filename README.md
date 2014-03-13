@@ -2,10 +2,10 @@
 
 A CMS.
 
-## What it should do?
+## What it does
 
 - Transcoding of multimedia (audio, video, images)
-- Allows management of PoI data
+- Management of PoI data
 
 ## Ruby dependencies
 
@@ -51,8 +51,8 @@ TODO
 ## Project structure
 
 - `app.rb`: main Sinatra application
+- `models`: application models
 - `routes`: Sinatra apps that are mounted in `app.rb`
 - `views`: HAML views
 - `workers`: sidekiq workers
 - `utils`: helper modules
-
