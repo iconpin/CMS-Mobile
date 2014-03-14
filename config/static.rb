@@ -32,6 +32,7 @@ module CMS
     }
 
     EXTRA_XML_DATA = %(
+
       <Text 	id="HomeButtonName"
           cat="Inici"
           cast="Inicio"
@@ -68,14 +69,32 @@ module CMS
           ang="info.mnactec@gencat.cat?">
       </Text>
       <Text 	id="mnactecStreet"
-          cat="Rambla d'ègara, 270\n08221 Terrassa"
-          cast="Rambla d'ègara, 270\n08221 Terrassa"
-          ang="Rambla d'ègara, 270\n08221 Terrassa">
+          cat="Rambla d'ègara, 270
+08221 Terrassa"
+          cast="Rambla d'ègara, 270
+08221 Terrassa"
+          ang="Rambla d'ègara, 270
+08221 Terrassa">
       </Text>
       <Text 	id="mnactecHours"
-          cat="Horari d'hivern (1/9 - 30/6)\nDimarts a divendres de 10 a 19 h\nDissabtes, diumenges i festius de 10 a 14.30 h\n \nHorari d'estiu (1/7 - 31/8)\nDimarts a diumenge de 10 a 14.30"
-          cast="Horari d'hivern (1/9 - 30/6)\nDimarts a divendres de 10 a 19 h\nDissabtes, diumenges i festius de 10 a 14.30 h\n \nHorari d'estiu (1/7 - 31/8)\nDimarts a diumenge de 10 a 14.30"
-          ang="Horari d'hivern (1/9 - 30/6)\nDimarts a divendres de 10 a 19 h\nDissabtes, diumenges i festius de 10 a 14.30 h\n \nHorari d'estiu (1/7 - 31/8)\nDimarts a diumenge de 10 a 14.30">
+          cat="Horari d'hivern (1/9 - 30/6)
+Dimarts a divendres de 10 a 19 h
+Dissabtes, diumenges i festius de 10 a 14.30 h
+
+Horari d'estiu (1/7 - 31/8)
+Dimarts a diumenge de 10 a 14.30"
+          cast="Horari d'hivern (1/9 - 30/6)
+Dimarts a divendres de 10 a 19 h
+Dissabtes, diumenges i festius de 10 a 14.30 h
+
+Horari d'estiu (1/7 - 31/8)
+Dimarts a diumenge de 10 a 14.30"
+          ang="Horari d'hivern (1/9 - 30/6)
+Dimarts a divendres de 10 a 19 h
+Dissabtes, diumenges i festius de 10 a 14.30 h
+
+Horari d'estiu (1/7 - 31/8)
+Dimarts a diumenge de 10 a 14.30">
       </Text>
       <Text 	id="mnactecMuseum"
           cat="El Museu de la Ciència i de la Tècnica de Catalunya enceta aquest any 2013 una nova etapa després d'una llarga i fructífera història de més de 30 anys d'existència amb el seu anterior director, Eusebi Casanelles al capdavant d'aquesta destacada institució cultural catalana."
@@ -83,9 +102,27 @@ module CMS
           ang="El Museu de la Ciència i de la Tècnica de Catalunya enceta aquest any 2013 una nova etapa després d'una llarga i fructífera història de més de 30 anys d'existència amb el seu anterior director, Eusebi Casanelles al capdavant d'aquesta destacada institució cultural catalana.">
       </Text>
       <Text 	id="ajuntamentText"
-          cat="Telèfon: 93 739 70 00\nAdreça: Raval Montserrat, 14,\n        08221 Terrassa, Barcelona\n \nAmb més de 216.000 habitants, Terrassa poseseix un ric patrimoni cultural i artístic al bell mig d'un paisatge dominat pel Parc Natural de Sant Llorenç. La Seu d'Ègara, situada al costat del parc de Vallparadís on s'han fet importants troballes paleontològiques, la Torre del Palau i el Castell-Cartoixa configuren el seu patrimoni medieval.\n \nUn salt en el temps ens porta a l'època del Modernisme i a la industrialització: Vapor Aymeric, Amat i Jover (actual mNACTEC), Masia Freixa, Casa Alegre de Sagrera..."
-          cast="Telèfon: 93 739 70 00\nAdreça: Raval Montserrat, 14,\n        08221 Terrassa, Barcelona\n \nAmb més de 216.000 habitants, Terrassa poseseix un ric patrimoni cultural i artístic al bell mig d'un paisatge dominat pel Parc Natural de Sant Llorenç. La Seu d'Ègara, situada al costat del parc de Vallparadís on s'han fet importants troballes paleontològiques, la Torre del Palau i el Castell-Cartoixa configuren el seu patrimoni medieval.\n \nUn salt en el temps ens porta a l'època del Modernisme i a la industrialització: Vapor Aymeric, Amat i Jover (actual mNACTEC), Masia Freixa, Casa Alegre de Sagrera..."
-          ang="Telèfon: 93 739 70 00\nAdreça: Raval Montserrat, 14,\n        08221 Terrassa, Barcelona\n \nAmb més de 216.000 habitants, Terrassa poseseix un ric patrimoni cultural i artístic al bell mig d'un paisatge dominat pel Parc Natural de Sant Llorenç. La Seu d'Ègara, situada al costat del parc de Vallparadís on s'han fet importants troballes paleontològiques, la Torre del Palau i el Castell-Cartoixa configuren el seu patrimoni medieval.\n \nUn salt en el temps ens porta a l'època del Modernisme i a la industrialització: Vapor Aymeric, Amat i Jover (actual mNACTEC), Masia Freixa, Casa Alegre de Sagrera...">
+          cat="Telèfon: 93 739 70 00
+Adreça: Raval Montserrat, 14,
+        08221 Terrassa, Barcelona
+
+Amb més de 216.000 habitants, Terrassa poseseix un ric patrimoni cultural i artístic al bell mig d'un paisatge dominat pel Parc Natural de Sant Llorenç. La Seu d'Ègara, situada al costat del parc de Vallparadís on s'han fet importants troballes paleontològiques, la Torre del Palau i el Castell-Cartoixa configuren el seu patrimoni medieval.
+
+Un salt en el temps ens porta a l'època del Modernisme i a la industrialització: Vapor Aymeric, Amat i Jover (actual mNACTEC), Masia Freixa, Casa Alegre de Sagrera..."
+          cast="Telèfon: 93 739 70 00
+Adreça: Raval Montserrat, 14,
+        08221 Terrassa, Barcelona
+
+Amb més de 216.000 habitants, Terrassa poseseix un ric patrimoni cultural i artístic al bell mig d'un paisatge dominat pel Parc Natural de Sant Llorenç. La Seu d'Ègara, situada al costat del parc de Vallparadís on s'han fet importants troballes paleontològiques, la Torre del Palau i el Castell-Cartoixa configuren el seu patrimoni medieval.
+
+Un salt en el temps ens porta a l'època del Modernisme i a la industrialització: Vapor Aymeric, Amat i Jover (actual mNACTEC), Masia Freixa, Casa Alegre de Sagrera..."
+          ang="Telèfon: 93 739 70 00
+Adreça: Raval Montserrat, 14,
+        08221 Terrassa, Barcelona
+
+Amb més de 216.000 habitants, Terrassa poseseix un ric patrimoni cultural i artístic al bell mig d'un paisatge dominat pel Parc Natural de Sant Llorenç. La Seu d'Ègara, situada al costat del parc de Vallparadís on s'han fet importants troballes paleontològiques, la Torre del Palau i el Castell-Cartoixa configuren el seu patrimoni medieval.
+
+Un salt en el temps ens porta a l'època del Modernisme i a la industrialització: Vapor Aymeric, Amat i Jover (actual mNACTEC), Masia Freixa, Casa Alegre de Sagrera...">
       </Text>
       <Text 	id="creditsTitle"
           cat="CRÈDITS"
@@ -98,37 +135,32 @@ module CMS
           ang="u'r here">
       </Text>
       <Text 	id="muncuTextIdIntro"
-          cat="Si muncu te vasila tu te calla i lo asimila!!1! asdasda!!"
-          cast="tas aqui"
-          ang="u'r here">
-      </Text>
-      <Text 	id="muncuTextIdIntro2"
-          cat="ola k ase"
+          cat="Què és cada botó?"
           cast="tas aqui"
           ang="u'r here">
       </Text>
       <Text 	id="muncuTextMap"
-          cat="Navega per cada punt d’interès de l’aplicació! Fes doble clic a les icones i descobreix tot el que s’hi amaga!"
+      cat="Navega per cada punt d’interès de l’aplicació i fes doble clic a les icones"
           cast="tas aqui"
           ang="u'r here">
       </Text>
       <Text 	id="muncuTextMapRA"
-          cat="Fes doble clic i visita cada punt amb Realitat Augmentada del mapa!"
+      cat="Fes doble clic i visita cada punt amb Realitat Augmentada del mapa!"
           cast="tas aqui"
           ang="u'r here">
       </Text>
       <Text 	id="muncuTextRA"
-          cat="Atenció: Realitat Augmentada! Enquadra el teu voltant!"
+      cat="Realitat Augmentada! Busca els marcadors al terra i enquadra el teu voltant!"
           cast="tas aqui"
           ang="u'r here">
       </Text>
       <Text 	id="muncuTextRAVapor"
-          cat="Atenció: realitat Augmentada! Entra al pati i també puja a la Terrassa del Museu! Enquadra el teu voltant!"
+          cat="Atenció: entra al pati del museu, situa't al marcador i enquadra!"
           cast="tas aqui"
           ang="u'r here">
       </Text>
       <Text 	id="muncuTextRAEspecialOne"
-          cat="Descobreix la Terrassa de les xemeneies de fa 100 anys"
+          cat="Puja al mirador del museu, busca el marcador i enquadra el teu voltant!"
           cast="tas aqui"
           ang="u'r here">
       </Text>
@@ -142,6 +174,11 @@ module CMS
           cast="tas aqui"
           ang="u'r here">
       </Text>
+  <Text 	id="ajuntamentScreenBlock"
+    cat="Ajuntament de Terrassa\nRaval de Montserrat, 14\n08221\nTel: 93 739 70 00\n \nOficina de Turisme\nMasia Freixa - Parc de Sant Jordi\nPl. Freixa i Argemí, 11\n08224\nTel: 93 739 70 19\n \n \n \nTerrassa és una ciutat universitària i industrial amb un ric patrimoni cultural i artístic. Està situada a 20 minuts de la ciutat de Barcelona i a 25 minuts en cotxe de l’aeroport del Prat. La ciutat té més de 216.000 habitants i està dominada pel paisatge del parc natural de Sant Llorenç del Munt i l’Obac.\n \nGràcies al ric patrimoni que té la ciutat, pots viatjar en la història catalana. La Seu d’Ègara -on s’hi han fet importants troballes paleontològiques-, la Torre del Palau i el Castell Cartoixa de Vallparadís, configuren el seu patrimoni medieval.\n \nUn salt en el temps ens porta a l’època del modernisme i la industrialització, on el sector tèxtil, especialitzat en la indústria de la llana, va impulsar la creació del que és avui un patrimoni únic en el seu gènere a Catalunya. Les antigues fàbriques i vapors, els habitatges, els magatzems, les xemeneies... et permetran conèixer de prop l’arquitectura, les arts, l’estil de vida del segle XIX i començaments del segle XX, com el Vapor Aymerich, Amat i Jover (actual mNACTEC), la Masia Freixa, la Casa Alegre de Sagrera...\n \nEl Festival de Jazz, la Fira Modernista, l’hoquei, les temporades de dansa, música i teatre, les exhibicions castelleres o el golf, completen una àmplia oferta per gaudir d’una ciutat dinàmica i de serveis."
+      cast=""
+      ang="">
+  </Text>
       <Text 	id="credits1"
           cat="Organització"
           cast=""
@@ -168,7 +205,13 @@ module CMS
           ang="">
       </Text>
       <Text 	id="credits3content"
-          cat="Eusebi Casanelles\nDomènec Ferran\nTeresa Llordés\nConxa Bayó\nEvaristo Gonzalez\nJosep Dalmau\nAbel Gálvez"
+          cat="Eusebi Casanelles
+Domènec Ferran
+Teresa Llordés
+Conxa Bayó
+Evaristo Gonzalez
+Josep Dalmau
+Abel Gálvez"
           cast=""
           ang="">
       </Text>
@@ -178,7 +221,8 @@ module CMS
           ang="">
       </Text>
       <Text 	id="credits4content"
-          cat="Anna Verdaguer\nGisela Gonzalo"
+          cat="Anna Verdaguer
+Gisela Gonzalo"
           cast=""
           ang="">
       </Text>
@@ -198,7 +242,9 @@ module CMS
           ang="">
       </Text>
       <Text 	id="credits6content"
-          cat="Sergi Fernández\nMercè López\nNúria Campreciós"
+          cat="Sergi Fernández
+Mercè López
+Núria Campreciós"
           cast=""
           ang="">
       </Text>
@@ -208,7 +254,8 @@ module CMS
           ang="">
       </Text>
       <Text 	id="credits7content"
-          cat="Marc Fernández Vanaclocha\nIgnacio Contreras Pinilla"
+          cat="Marc Fernández Vanaclocha
+Ignacio Contreras Pinilla"
           cast=""
           ang="">
       </Text>
@@ -228,7 +275,9 @@ module CMS
           ang="">
       </Text>
       <Text 	id="credits9content"
-          cat="Eusebi Casanelles\nDomènec Ferran\nJoan Mallarach"
+          cat="Eusebi Casanelles
+Domènec Ferran
+Joan Mallarach"
           cast=""
           ang="">
       </Text>
@@ -238,7 +287,10 @@ module CMS
           ang="">
       </Text>
       <Text 	id="credits10content"
-          cat="Guió i realització: Joan Mallarach\nEdició: Rita Solà\nVeus: Àfrica Victory i Jan Canosa\nProducció: La Cofradia de Gràcia"
+          cat="Guió i realització: Joan Mallarach
+Edició: Rita Solà
+Veus: Àfrica Victory i Jan Canosa
+Producció: La Cofradia de Gràcia"
           cast=""
           ang="">
       </Text>
@@ -248,7 +300,10 @@ module CMS
           ang="">
       </Text>
       <Text 	id="credits11content"
-          cat="Arxiu Tobella\nArxiu Municipal\nArxiu Teresa Llordés\nArxiu Rafel Comas"
+          cat="Arxiu Tobella
+Arxiu Municipal
+Arxiu Teresa Llordés
+Arxiu Rafel Comas"
           cast=""
           ang="">
       </Text>
@@ -258,7 +313,12 @@ module CMS
           ang="">
       </Text>
       <Text 	id="credits12content"
-          cat="INS Torre del Palau\nFamília Barata i Salvans\nToni Verdaguer\nPawel Antas\nAnna Fernandez\nMarta Terès"
+          cat="INS Torre del Palau
+Família Barata i Salvans
+Toni Verdaguer
+Pawel Antas
+Anna Fernandez
+Marta Terès"
           cast=""
           ang="">
       </Text>
