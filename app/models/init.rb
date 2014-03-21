@@ -14,7 +14,7 @@ require_relative 'info'
 
 module CMS
   class App
-    DataMapper::setup(:default, "sqlite3://#{App.root}/database.db")
+    DataMapper::setup(:default, "sqlite3://#{App.root}/db/database.db")
     DataMapper.finalize
 
     Models::Multimedia.auto_upgrade!

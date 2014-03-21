@@ -10,9 +10,8 @@ require 'mini_magick'
 
 module CMS
   class App < Sinatra::Base
-    # Sinatra options
-    set :views, 'views'
-    set :root, File.dirname(__FILE__)
+    set :root, File.join(File.dirname(__FILE__), '..')
+    set :views, 'app/views'
 
     require_relative 'config/init'
     require_relative 'utils/init'
