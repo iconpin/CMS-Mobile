@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+
 gem 'sinatra'
 gem 'thin'
 gem 'rack'
@@ -13,3 +14,4 @@ gem 'rerun'
 gem 'haml'
 gem 'builder'
 gem 'redcarpet'
+gem 'unicorn'
