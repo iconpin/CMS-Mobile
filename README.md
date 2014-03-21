@@ -46,7 +46,25 @@ $ bundle exec sidekiq -r ./app.rb
 
 ## Deployment
 
-TODO
+### Settin up nginx
+
+See the [nginx.conf](/nginx.conf) sample file.
+
+### Running unicorn
+
+See the [unicorn.rb](/unicorn.rb) file.
+
+```
+$ unicorn -c unicorn.rb -E development -D
+```
+
+### Stopping unicorn
+
+```
+$ cat tmp/pids/unicorn.pid | xargs kill -KILL
+```
+
+**More info [here][unicorn-nginx]**
 
 ## Project structure
 
@@ -56,7 +74,10 @@ TODO
 - `views`: HAML views
 - `workers`: sidekiq workers
 - `utils`: helper modules
+- `bin`: maintenance scripts
 
 ## License
 
 See the [LICENSE](/LICENSE) file for more information.
+
+[unicorn-sinatra]: http://recipes.sinatrarb.com/p/deployment/nginx_proxied_to_unicorn
