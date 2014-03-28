@@ -135,7 +135,7 @@ Un salt en el temps ens porta a l'època del Modernisme i a la industrialitzaci�
           ang="u'r here">
       </Text>
       <Text 	id="muncuTextIdIntro"
-          cat="Què és cada botó?"
+          cat="Sóc Lluís Muncunill i et portaré a fer una ruta per l'itinerari industrial"
           cast="tas aqui"
           ang="u'r here">
       </Text>
