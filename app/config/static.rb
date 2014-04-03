@@ -97,13 +97,7 @@ Horari d'estiu (1/7 - 31/8)
 Dimarts a diumenge de 10 a 14.30">
       </Text>
       <Text id="mnactecMuseum"
-        cat="El Museu de la Ciència i de la Tècnica de Catalunya (mNACTEC) mostra l'evolució dels avenços científics i tècnics a Catalunya i, particularment, la seva aplicació industrial. Té 22.000 m2 de superfície total, dels quals 11.000 m2 corresponen a l'antiga nau de producció, de planta rectangular, del Vapor Aymerich, Amat i Jover. En aquesta gran sala s'hi troben avui les exposicions Enérgeia, La Fàbrica Tèxtil, Homo Faber, El Transport, l'Enigma del ordinador i CERN: Explorant els inicis del univers, entre moltes altres!
-
-Pots visitar el museu de dimarts a divendres de 10 a 19 h i dissabtes, diumenges i festius de 10 a 14.30 h.
-
-A més, hi ha un seguit de dies de l'any que pots fer-ho gratuïtament: l'últim dimarts de mes (d'octubre a juny), per Sant Jordi (23 d'abril), durant la Fira Modernista de Terrassa (segon cap de setmana de maig), el Dia Internacional dels Museus (18 de maig), el dilluns de Festa Major de Terrassa (primer dilluns de juliol), la Diada Nacional de Catalunya (11 de setembre) i durant les Jornades Europees del Patrimoni (darrer cap de setmana de setembre).
-
-Per conèixer a fons el mNACTEC consulta la nostra web www.mnactec.cat." cast="" ang="">
+        cat="El Museu de la Ciència i de la Tècnica de Catalunya (mNACTEC) mostra l'evolució dels avenços científics i tècnics a Catalunya i, particularment, la seva aplicació industrial. Té 22.000 m2 de superfície total, dels quals 11.000 m2 corresponen a l'antiga nau de producció, de planta rectangular, del Vapor Aymerich, Amat i Jover. En aquesta gran sala s'hi troben avui les exposicions Enérgeia, La Fàbrica Tèxtil, Homo Faber, El Transport, l'Enigma del ordinador i CERN: Explorant els inicis del univers, entre moltes altres!\n \nPots visitar el museu de dimarts a divendres de 10 a 19 h i dissabtes, diumenges i festius de 10 a 14.30 h.\n \nA més, hi ha un seguit de dies de l'any que pots fer-ho gratuïtament: l'últim dimarts de mes (d'octubre a juny), per Sant Jordi (23 d'abril), durant la Fira Modernista de Terrassa (segon cap de setmana de maig), el Dia Internacional dels Museus (18 de maig), el dilluns de Festa Major de Terrassa (primer dilluns de juliol), la Diada Nacional de Catalunya (11 de setembre) i durant les Jornades Europees del Patrimoni (darrer cap de setmana de setembre).\n \nPer conèixer a fons el mNACTEC consulta la nostra web www.mnactec.cat." cast="" ang="">
       </Text>
       <Text 	id="ajuntamentText"
           cat="Telèfon: 93 739 70 00
